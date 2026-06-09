@@ -433,8 +433,7 @@
         function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
 
         function checkAccess() {
-            const login = document.getElementById("loginPanel");
-            login.classList.remove("hidden");
+            document.getElementById("loginPanel").classList.remove("hidden");
         }
 
         function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
@@ -498,12 +497,11 @@
         // UI: MOSTRAR LOGIN
         function showLogin() {
             document.getElementById("adminPanel").classList.add("hidden");
-            document.getElementById("loginPanel").classList.remove("hidden");
+            document.getElementById("loginPanel").classList.add("hidden");
         }
 
         // INICIALIZAR
-        checkSession();
-
+       
 
 
 
