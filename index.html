@@ -3,115 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOOT Hardware Lab | Tienda de Servicios</title>
+    <title>LOOT Hardware Lab | Catálogo Avanzado</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
     </style>
 </head>
 <body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-[#00ffcc] selection:text-black">
 
-    <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-50 h-20 flex items-center px-6">
+    <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40 h-20 flex items-center px-6">
         <div class="max-w-6xl mx-auto w-full flex justify-between items-center relative">
             <a href="#" class="absolute left-0 top-1/2 -translate-y-1/2 block">
                 <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
             </a>
             <div class="ml-auto flex items-center gap-4">
                 <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ LAB_STATUS: ONLINE ]</span>
-                <a href="#catalogo" class="bg-neutral-800 text-white font-mono text-xs px-4 py-2 rounded border border-neutral-700 hover:border-[#00ffcc] transition-all">VER_TIENDA</a>
             </div>
         </div>
     </header>
 
     <main class="max-w-6xl w-full mx-auto p-6 my-8 flex-grow">
-        
         <div class="border-b border-neutral-900 pb-6 mb-10">
-            <h2 class="text-3xl font-extrabold text-white tracking-tight">Tienda de Reparaciones</h2>
-            <p class="text-neutral-400 text-sm mt-1">Seleccioná tu falla y reservá el service al toque por WhatsApp.</p>
+            <h2 class="text-3xl font-extrabold text-white tracking-tight">Catálogo de Soluciones</h2>
+            <p class="text-neutral-400 text-sm mt-1">Hacé clic en cualquier tarjeta para ver los detalles técnicos y garantía.</p>
         </div>
 
         <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group">
-                <div>
-                    <div class="w-full h-48 bg-neutral-900 overflow-hidden relative border-b border-neutral-900">
-                        <img src="./img/pantalla.jpg" alt="Cambio de Módulo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">DISPLAY_FIX</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">Cambio de Módulo / Pantalla</h3>
-                        <p class="text-neutral-400 text-xs mt-2 leading-relaxed">Instalación de pantallas OLED / Incell. Solución a vidrios rotos, manchas o pantallas fantasma. Incluye sellado contra polvo.</p>
-                    </div>
-                </div>
-                <div class="p-5 pt-0">
-                    <div class="flex justify-between items-baseline mb-4">
-                        <span class="text-neutral-500 text-xs font-mono">DESDE:</span>
-                        <span class="text-[#00ffcc] text-xl font-extrabold font-mono">$18.000</span>
-                    </div>
-                    <a href="https://wa.me/5492211234567?text=Hola!%20Quiero%20consultar%20por%20un%20Cambio%20de%20Módulo" target="_blank" class="w-full block text-center bg-white text-black font-semibold text-xs py-3 rounded-lg hover:bg-[#00ffcc] transition-colors tracking-wide">
-                        CONSULTAR MODELO
-                    </a>
-                </div>
             </div>
-
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group">
-                <div>
-                    <div class="w-full h-48 bg-neutral-900 overflow-hidden relative border-b border-neutral-900">
-                        <img src="./img/bateria.jpg" alt="Cambio de Batería" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">POWER_CELL</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">Cambio de Batería Alta Densidad</h3>
-                        <p class="text-neutral-400 text-xs mt-2 leading-relaxed">Reemplazo de baterías infladas o degradadas. Recuperá la autonomía original con repuestos homologados que no dañan tu placa base.</p>
-                    </div>
-                </div>
-                <div class="p-5 pt-0">
-                    <div class="flex justify-between items-baseline mb-4">
-                        <span class="text-neutral-500 text-xs font-mono">DESDE:</span>
-                        <span class="text-[#00ffcc] text-xl font-extrabold font-mono">$12.500</span>
-                    </div>
-                    <a href="https://wa.me/5492211234567?text=Hola!%20Quiero%20consultar%20por%20un%20Cambio%20de%20Batería" target="_blank" class="w-full block text-center bg-white text-black font-semibold text-xs py-3 rounded-lg hover:bg-[#00ffcc] transition-colors tracking-wide">
-                        RESERVAR SERVICE
-                    </a>
-                </div>
-            </div>
-
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group">
-                <div>
-                    <div class="w-full h-48 bg-neutral-900 overflow-hidden relative border-b border-neutral-900">
-                        <img src="./img/micro.jpg" alt="Micro-soldadura" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">MICRO_CORE</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">Micro-soldadura de Placa Base</h3>
-                        <p class="text-neutral-400 text-xs mt-2 leading-relaxed">Reparación avanzada de integrados de carga (Tristar/Hydra), cortos por humedad, rebaling de memoria y reconstrucción de pistas rotas.</p>
-                    </div>
-                </div>
-                <div class="p-5 pt-0">
-                    <div class="flex justify-between items-baseline mb-4">
-                        <span class="text-neutral-500 text-xs font-mono">DIAGNÓSTICO:</span>
-                        <span class="text-white text-sm font-bold font-mono">A CONVENIR</span>
-                    </div>
-                    <a href="https://wa.me/5492211234567?text=Hola!%20Tengo%20un%20celular%20apagado%20para%20revisar%20la%20placa" target="_blank" class="w-full block text-center bg-neutral-900 text-neutral-300 border border-neutral-800 font-semibold text-xs py-3 rounded-lg hover:border-[#00ffcc] hover:text-[#00ffcc] transition-colors tracking-wide">
-                        INGRESAR EQUIPO
-                    </a>
-                </div>
-            </div>
-
-        </div>
     </main>
 
-    <footer class="border-t border-neutral-900 p-6 bg-[#121212] text-center text-xs text-neutral-600 font-mono">
-        &copy; 2026 LOOT HARDWARE LAB - LAB_REPAIR_SHOP
+    <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// AGREGAR NUEVO SERVICIO O PRODUCTO</h3>
+            <button onclick="toggleAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar ×</button>
+        </div>
+        <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo iPhone 11)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pPrice" placeholder="Precio (Ej: 45000 o A Convenir)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pImg" placeholder="Ruta de imagen (Ej: ./img/pantalla.jpg)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pTag" placeholder="Etiqueta corta (Ej: IPHONE, MOTOROLA, PLACA)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <textarea id="pDesc" placeholder="Descripción extendida tipo Mercado Libre..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
+            <button type="submit" class="md:col-span-2 bg-[#00ffcc] text-black font-bold text-xs py-3 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">CARGAR_AL_CATALOGO</button>
+        </form>
+    </div>
+
+    <div id="mlModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-neutral-800 w-full max-w-4xl rounded-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
+            
+            <div class="w-full md:w-1/2 bg-neutral-950 flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-neutral-900">
+                <img id="modalImg" src="" alt="" class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded">
+            </div>
+            
+            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
+                <div>
+                    <span id="modalTag" class="text-neutral-500 font-mono text-[10px] uppercase tracking-widest block mb-2"></span>
+                    <h3 id="modalTitle" class="text-white font-extrabold text-xl md:text-2xl leading-tight mb-2"></h3>
+                    <div id="modalPrice" class="text-[#00ffcc] text-3xl font-extrabold font-mono my-4"></div>
+                    
+                    <div class="border-t border-neutral-900 pt-4 mt-4">
+                        <h4 class="text-xs text-neutral-400 font-mono uppercase mb-2">Descripción del Servicio</h4>
+                        <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed whitespace-pre-line"></p>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">
+                        CONSULTAR_POR_WHATSAPP
+                    </a>
+                    <p class="text-[10px] text-neutral-500 text-center mt-2 font-mono">⚡ Respuesta inmediata dentro del horario laboral</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
+        <div>&copy; 2026 LOOT HARDWARE LAB - LAB_REPAIR_SHOP</div>
+        <button onclick="toggleAdminPanel()" class="text-[11px] text-neutral-700 hover:text-neutral-500 transition-colors cursor-pointer">[ KEY_ACCESS ]</button>
     </footer>
 
+    <script>
+        const WHATSAPP_NUMBER = "5492211234567"; // Poné tu número real acá
+
+        let productos = [
+            {
+                id: 1,
+                title: "Cambio de Módulo / Pantalla",
+                price: "$18.000",
+                img: "./img/pantalla.jpg",
+                tag: "DISPLAY_FIX",
+                desc: "Características del servicio:\n• Instalación de pantallas OLED / Incell de alta calidad.\n• Solución definitiva a vidrios estallados, manchas líquidas o táctil fantasma.\n• Incluye pegado industrial de alta precisión y sellado básico contra polvo.\n\nGarantía oficial de laboratorio por fallas de fábrica."
+            },
+            {
+                id: 2,
+                title: "Cambio de Batería Alta Densidad",
+                price: "$12.500",
+                img: "./img/bateria.jpg",
+                tag: "POWER_CELL",
+                desc: "Características del servicio:\n• Reemplazo de celdas de litio degradadas o infladas.\n• Componentes homologados con chip de control térmico activo.\n• Recupera la autonomía original del dispositivo sin sobrecalentar el procesador.\n\nSe entrega con certificación de ciclos de carga en cero."
+            },
+            {
+                id: 3,
+                title: "Micro-soldadura de Placa Base",
+                price: "A Convenir",
+                img: "./img/micro.jpg",
+                tag: "MICRO_CORE",
+                desc: "Análisis avanzado en microscopio:\n• Reparación estructural de integrados complejos (PMIC, Tristar, Códec de Audio).\n• Solución a cortos totales por humedad, sobretensión o cargadores genéricos.\n• Reconstrucción de pistas microscópicas bajo técnica de jumpering.\n\nDiagnóstico inicial sin cargo en equipos no manoseados."
+            }
+        ];
+
+        function renderProducts() {
+            const container = document.getElementById('catalogo');
+            container.innerHTML = "";
+
+            productos.forEach(p => {
+                const card = `
+                    <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+                        <div>
+                            <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
+                                <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
+                                <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag}</span>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">${p.title}</h3>
+                                <p class="text-neutral-400 text-xs mt-2 line-clamp-2">${p.desc}</p>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-0">
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-neutral-500 text-xs font-mono">PRECIO:</span>
+                                <span class="text-[#00ffcc] text-lg font-extrabold font-mono">${p.price}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        function openModal(id) {
+            const item = productos.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById('modalImg').src = item.img;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalPrice').innerText = item.price;
+            document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
+            document.getElementById('modalDesc').innerText = item.desc;
+
+            const msj = encodeURIComponent(`Hola! Vi en tu catálogo el servicio "${item.title}" y me interesa consultar por un equipo.`);
+            document.getElementById('modalWaBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msj}`;
+
+            document.getElementById('mlModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('mlModal').classList.add('hidden');
+        }
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('hidden');
+            if(!panel.classList.contains('hidden')) {
+                // Hace un scroll automático suave hacia el panel cuando se abre
+                panel.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function addProduct(e) {
+            e.preventDefault();
+            
+            const newProduct = {
+                id: Date.now(),
+                title: document.getElementById('pTitle').value,
+                price: document.getElementById('pPrice').value.includes('$') || isNaN(document.getElementById('pPrice').value) ? document.getElementById('pPrice').value : '$' + document.getElementById('pPrice').value,
+                img: document.getElementById('pImg').value,
+                tag: document.getElementById('pTag').value,
+                desc: document.getElementById('pDesc').value
+            };
+
+            productos.push(newProduct);
+            renderProducts();
+            document.getElementById('productForm').reset();
+            toggleAdminPanel();
+        }
+
+        renderProducts();
+    </script>
 </body>
 </html>
