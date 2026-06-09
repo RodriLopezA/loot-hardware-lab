@@ -1,380 +1,93 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOOT Hardware Lab | Inicio y Catálogo</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>RepaCel - Panel Técnico</title>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .group:hover .mega-menu { display: block; }
+        /* Estilos generales modernos y oscuros */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #121212; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        
+        /* Contenedor del Login */
+        .login-container { background-color: #1e1e1e; border: 1px solid #333; padding: 30px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center; }
+        h2 { margin-bottom: 20px; color: #00adb5; font-size: 24px; }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 6px; color: #aaaaaa; font-size: 14px; }
+        .input-group input { width: 100%; padding: 12px; background-color: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: white; font-size: 16px; outline: none; transition: border 0.3s; }
+        .input-group input:focus { border-color: #00adb5; }
+        
+        button { width: 100%; padding: 12px; background-color: #00adb5; color: #121212; font-weight: bold; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background-color: #00f5ff; }
+        
+        /* Panel Oculto (Se muestra al entrar correctamente) */
+        #adminPanel { background-color: #1e1e1e; border: 2px solid #00adb5; padding: 40px; border-radius: 12px; width: 100%; max-width: 800px; margin-top: 20px; text-align: center; box-shadow: 0 8px 30px rgba(0, 173, 181, 0.2); }
+        .panel-header { color: #00adb5; margin-bottom: 15px; }
+        
+        /* Clase para ocultar elementos */
+        .hidden { display: none !important; }
     </style>
 </head>
-<body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-[#00ffcc] selection:text-black">
+<body>
 
-    <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto w-full h-20 flex items-center justify-between px-6 relative">
-            <a href="#" onclick="showSection('inicio')" class="absolute left-6 top-1/2 -translate-y-1/2 block">
-                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
-            </a>
-            
-            <nav class="hidden md:flex items-center gap-8 mx-auto font-mono text-xs tracking-wider">
-                <button onclick="showSection('inicio')" id="nav-inicio" class="text-[#00ffcc] hover:text-[#00ffcc] transition-colors cursor-pointer font-bold">INICIO</button>
-                <button onclick="filterCategory('TODOS')" id="nav-catalogo" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">CATÁLOGO_COMPLETO</button>
-                
-                <div class="relative group py-7">
-                    <button class="text-neutral-400 group-hover:text-[#00ffcc] transition-colors flex items-center gap-1 cursor-pointer">
-                        REPARACIONES <span class="text-[9px] text-neutral-600">▼</span>
-                    </button>
-                    <div class="mega-menu hidden absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-[#121212] border border-neutral-800 rounded-xl p-6 shadow-2xl mt-1">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_MARCA</h4>
-                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
-                                    <li><button onclick="filterCategory('IPHONE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Apple iPhone</button></li>
-                                    <li><button onclick="filterCategory('SAMSUNG')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Samsung Galaxy</button></li>
-                                    <li><button onclick="filterCategory('MOTOROLA')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Motorola Moto</button></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_COMPONENTE</h4>
-                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
-                                    <li><button onclick="filterCategory('DISPLAY_FIX')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Pantallas / Módulos</button></li>
-                                    <li><button onclick="filterCategory('POWER_CELL')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Baterías</button></li>
-                                    <li><button onclick="filterCategory('MICRO_CORE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Placas / Soldadura</button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button onclick="filterCategory('ACCESORIOS')" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">ACCESORIOS</button>
-            </nav>
-
-            <div class="flex items-center gap-4">
-                <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ LAB: ONLINE ]</span>
-            </div>
+    <div id="loginBox" class="login-container">
+        <h2>RepaCel - Ingreso</h2>
+        <div class="input-group">
+            <label for="usuario">Usuario Técnico</label>
+            <input type="text" id="usuario" placeholder="Ej: admin" autocomplete="off">
         </div>
-    </header>
-
-    <section id="filterBar" class="hidden bg-[#0e0e0e] border-b border-neutral-900 px-6 py-4">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="text-xs text-neutral-400 font-mono">
-                FILTRO_ACTIVO: <span id="activeSection" class="text-[#00ffcc]">TODOS</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <label for="sortPrices" class="text-xs text-neutral-500 font-mono">ORDENAR_POR:</label>
-                <select id="sortPrices" onchange="sortProducts(this.value)" class="bg-[#121212] border border-neutral-800 text-xs text-neutral-300 rounded px-3 py-1.5 focus:outline-none focus:border-[#00ffcc] font-mono cursor-pointer">
-                    <option value="default">Relevancia</option>
-                    <option value="low">Menor Precio</option>
-                    <option value="high">Mayor Precio</option>
-                </select>
-            </div>
+        <div class="input-group">
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" placeholder="••••••••">
         </div>
-    </section>
-
-    <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
-        
-        <section class="relative bg-[#121212] border border-neutral-900 rounded-3xl overflow-hidden p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
-            <div class="flex-1 space-y-4">
-                <span class="text-xs bg-neutral-950 border border-neutral-800 text-[#00ffcc] px-3 py-1 rounded-full font-mono tracking-widest uppercase">✨ SERVICIO TÉCNICO ESPECIALIZADO</span>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-none">
-                    Reviví tu dispositivo con precisión de laboratorio.
-                </h1>
-                <p class="text-neutral-400 text-sm md:text-base leading-relaxed max-w-lg">
-                    En LOOT Hardware Lab nos especializamos en microsoldadura de placas, cambios de módulos táctiles y restauración de batería con componentes testeados de máxima calidad.
-                </p>
-                <div class="pt-2 flex flex-wrap gap-4">
-                    <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-cyan-400 transition-colors tracking-wider cursor-pointer">
-                        VER_CATALOGO_COMPLETO_→
-                    </button>
-                    <a href="https://wa.me/5492211234567" target="_blank" class="bg-neutral-900 border border-neutral-800 text-white text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-neutral-800 transition-colors tracking-wider">
-                        EVALUACIÓN_DIRECTA
-                    </a>
-                </div>
-            </div>
-            <div class="w-full md:w-1/2 h-64 md:h-80 bg-neutral-950 rounded-2xl overflow-hidden border border-neutral-900">
-                <img src="https://images.unsplash.com/photo-1601524909162-be87252be298?w=800" alt="Laboratorio Técnico Celulares" class="w-full h-full object-cover">
-            </div>
-        </section>
-
-        <section class="space-y-6">
-            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
-                <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
-                <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
-            </div>
-            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
-        </section>
-
-        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
-                <div class="text-[#00ffcc] font-bold text-sm">📍 UBICACIÓN</div>
-                <p class="text-neutral-400 font-sans">Calle Falsa 123, La Plata, Buenos Aires. Podés traer tu equipo sin turno previo de lunes a viernes.</p>
-            </div>
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
-                <div class="text-[#00ffcc] font-bold text-sm">⏱️ HORARIOS</div>
-                <p class="text-neutral-400 font-sans">Lunes a Viernes de 09:00 a 19:00 hs.<br>Sábados de 10:00 a 14:00 hs.</p>
-            </div>
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
-                <div class="text-[#00ffcc] font-bold text-sm">🛡️ GARANTÍA REAL</div>
-                <p class="text-neutral-400 font-sans">Todas nuestras reparaciones de hardware cuentan con 3 a 6 meses de cobertura firmada por escrito.</p>
-            </div>
-        </section>
+        <button onclick="login()">Iniciar Sesión</button>
     </div>
 
-    <main id="view-catalogo" class="hidden max-w-6xl w-full mx-auto p-6 my-4 flex-grow">
-        <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
-    </main>
-
-    <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CARGAR_PRODUCTO_O_OFERTA</h3>
-            <button onclick="closeAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
-        </div>
-        <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <input type="text" id="pImg" placeholder="Ruta de imagen" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <input type="text" id="pTag" placeholder="Categorías (Ej: MOTOROLA DISPLAY_FIX)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            
-            <select id="pIsOffer" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] font-mono">
-                <option value="false">No destacar en Inicio</option>
-                <option value="true">Destacar como Oferta en Inicio</option>
-            </select>
-            
-            <textarea id="pDesc" placeholder="Detalles técnicos..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
-            <button type="submit" class="md:col-span-2 bg-[#00ffcc] text-black font-bold text-xs py-3 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">PUBLICAR_ELEMENTO</button>
-        </form>
+    <div id="adminPanel" class="hidden">
+        <h1 class="panel-header">¡Acceso Autorizado!</h1>
+        <p>Bienvenido al Sistema de Gestión de Reparaciones de <strong>RepaCel</strong>.</p>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #333;">
+        <p style="color: #888;">[ Acá podés continuar metiendo el resto de tus herramientas, tablas o datos del taller ]</p>
     </div>
-
-    <div id="mlModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-[#121212] border border-neutral-800 w-full max-w-4xl rounded-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
-            <div class="w-full md:w-1/2 bg-neutral-950 flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-neutral-900">
-                <img id="modalImg" src="" alt="" class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded">
-            </div>
-            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
-                <div>
-                    <span id="modalTag" class="text-neutral-500 font-mono text-[10px] uppercase tracking-widest block mb-2"></span>
-                    <h3 id="modalTitle" class="text-white font-extrabold text-xl md:text-2xl leading-tight mb-2"></h3>
-                    <div id="modalPrice" class="text-[#00ffcc] text-3xl font-extrabold font-mono my-4"></div>
-                    <div class="border-t border-neutral-900 pt-4 mt-4">
-                        <h4 class="text-xs text-neutral-400 font-mono uppercase mb-2">Descripción del Servicio</h4>
-                        <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed whitespace-pre-line"></p>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">
-                        CONSULTAR_POR_WHATSAPP
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
-        <div>&copy; 2026 LOOT HARDWARE LAB - SYSTEM_REPAIR_LAB</div>
-        <button onclick="checkAccess()" class="text-[11px] text-neutral-700 hover:text-neutral-500 transition-colors cursor-pointer">[ KEY_ACCESS ]</button>
-    </footer>
 
     <script>
-        const WHATSAPP_NUMBER = "5492211234567";
-
-        // Hashes correctos y estandarizados de tus accesos
-        const HASHED_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // "admin"
-        const HASHED_PASS = "43b17d0954b423376fc6d01589ff9ee95e8b68832a8740e793cb74665893e450"; // "loot2026"
-
-        // Función criptográfica corregida sin espacios invisibles extraños
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
+        // 1. Función obligatoria asíncrona para calcular el SHA-256 en el navegador
+        async function generarSHA256(mensaje) {
+            const msgBuffer = new TextEncoder().encode(mensaje);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
             const hashArray = Array.from(new Uint8Array(hashBuffer));
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        let productos = [
-            {
-                id: 1,
-                title: "Cambio de Módulo / Pantalla iPhone 11",
-                price: 18000,
-                img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500",
-                tag: "IPHONE DISPLAY_FIX",
-                isOffer: true,
-                desc: "Oferta destacada de la semana. Incluye sellado perimetral contra humedad y limpieza interna del auricular."
-            },
-            {
-                id: 2,
-                title: "Batería Alta Densidad Premium Motorola",
-                price: 12500,
-                img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500",
-                tag: "MOTOROLA POWER_CELL",
-                isOffer: true,
-                desc: "Recuperá las horas de pantalla de tu equipo con celdas de litio certificadas Grado A."
-            },
-            {
-                id: 3,
-                title: "Micro-soldadura de Placa Base Avanzada",
-                price: 32000,
-                img: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=500",
-                tag: "IPHONE SAMSUNG MICRO_CORE",
-                isOffer: false,
-                desc: "Diagnósticos con osciloscopio e integrados originales."
-            },
-            {
-                id: 4,
-                title: "Funda Blindada de Impacto Ring Case",
-                price: 4500,
-                img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500",
-                tag: "ACCESORIOS",
-                isOffer: true,
-                desc: "¡Súper promo en accesorios de protección extrema!"
-            }
-        ];
+        // 2. Función de validación del Login
+        async function login() {
+            const usuarioInput = document.getElementById('usuario').value.trim();
+            const contrasenaInput = document.getElementById('contrasena').value; 
 
-        let currentCategory = "TODOS";
-        let currentSort = "default";
+            // === HASH DE LA CONTRASEÑA ===
+            // Este hash corresponde exactamente a la palabra: loot2026
+            const hashEsperado = "7864f1e311229048a1a47321e25e0e0f76906a5b4be4cf4a179619572635a9b3"; 
 
-        function showSection(section) {
-            const viewInicio = document.getElementById('view-inicio');
-            const viewCatalogo = document.getElementById('view-catalogo');
-            const filterBar = document.getElementById('filterBar');
-            const navInicio = document.getElementById('nav-inicio');
-            const navCatalogo = document.getElementById('nav-catalogo');
+            // Calculamos el hash de lo que el usuario escribió
+            const hashIngresado = await generarSHA256(contrasenaInput);
 
-            if (section === 'inicio') {
-                viewInicio.classList.remove('hidden');
-                viewCatalogo.classList.add('hidden');
-                filterBar.classList.add('hidden');
-                navInicio.className = "text-[#00ffcc] font-bold cursor-pointer";
-                navCatalogo.className = "text-neutral-400 hover:text-[#00ffcc] cursor-pointer";
+            // Ayuda técnica en Consola (F12) para revisar errores de tipeo
+            console.log("--- INTENTO DE CONEXIÓN ---");
+            console.log("Usuario ingresado:", usuarioInput);
+            console.log("Hash generado en vivo:", hashIngresado);
+
+            // Verificación estricta
+            if (usuarioInput === "admin" && hashIngresado === hashEsperado) {
+                // Login correcto: ocultamos el login y mostramos el sistema
+                document.getElementById('loginBox').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
             } else {
-                viewInicio.classList.add('hidden');
-                viewCatalogo.classList.remove('hidden');
-                filterBar.classList.remove('hidden');
-                navInicio.className = "text-neutral-400 hover:text-[#00ffcc] cursor-pointer";
-                navCatalogo.className = "text-[#00ffcc] font-bold cursor-pointer";
+                // Login incorrecto
+                alert("Acceso denegado: Usuario o contraseña incorrectos.");
             }
         }
-
-        function renderAll() {
-            const gridOfertas = document.getElementById('ofertas-grilla');
-            if(gridOfertas) {
-                gridOfertas.innerHTML = "";
-                let ofertas = productos.filter(p => p.isOffer === true);
-                ofertas.forEach(p => { gridOfertas.innerHTML += buildCard(p); });
-            }
-
-            const gridCatalogo = document.getElementById('catalogo');
-            if(gridCatalogo) {
-                gridCatalogo.innerHTML = "";
-                let filtered = productos.filter(p => {
-                    if (currentCategory === "TODOS") return true;
-                    return p.tag.toUpperCase().includes(currentCategory.toUpperCase());
-                });
-
-                if (currentSort === "low") {
-                    filtered.sort((a, b) => a.price - b.price);
-                } else if (currentSort === "high") {
-                    filtered.sort((a, b) => b.price - a.price);
-                }
-
-                filtered.forEach(p => { gridCatalogo.innerHTML += buildCard(p); });
-            }
-        }
-
-        function buildCard(p) {
-            return `
-                <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
-                    <div>
-                        <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
-                            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
-                            <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">${p.title}</h3>
-                            <p class="text-neutral-400 text-xs mt-2 line-clamp-2">${p.desc}</p>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0">
-                        <div class="flex justify-between items-baseline">
-                            <span class="text-neutral-500 text-xs font-mono">PRECIO:</span>
-                            <span class="text-[#00ffcc] text-lg font-extrabold font-mono">$${p.price.toLocaleString('es-AR')}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function filterCategory(cat) {
-            currentCategory = cat;
-            const activeSec = document.getElementById('activeSection');
-            if(activeSec) activeSec.innerText = cat;
-            showSection('catalogo');
-            renderAll();
-        }
-
-        function sortProducts(order) {
-            currentSort = order;
-            renderAll();
-        }
-
-        function openModal(id) {
-            const item = productos.find(p => p.id === id);
-            if (!item) return;
-            document.getElementById('modalImg').src = item.img;
-            document.getElementById('modalTitle').innerText = item.title;
-            document.getElementById('modalPrice').innerText = `$${item.price.toLocaleString('es-AR')}`;
-            document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
-            document.getElementById('modalDesc').innerText = item.desc;
-            const msj = encodeURIComponent(`Hola! Vi "${item.title}" en LOOT Lab y quiero consultar.`);
-            document.getElementById('modalWaBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msj}`;
-            document.getElementById('mlModal').classList.remove('hidden');
-        }
-
-        function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
-
-        async function checkAccess() {
-            const u = prompt("USER:"); if (u === null) return;
-            const p = prompt("PASSWORD:"); if (p === null) return;
-            
-            const hashedUserInput = await sha256(u);
-            const hashedPassInput = await sha256(p);
-
-            if (hashedUserInput === HASHED_USER && hashedPassInput === HASHED_PASS) {
-                const panel = document.getElementById('adminPanel');
-                panel.classList.remove('hidden');
-                panel.scrollIntoView({ behavior: 'smooth' });
-            } else { 
-                alert("Acceso denegado."); 
-            }
-        }
-
-        function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
-
-        function addProduct(e) {
-            e.preventDefault();
-            const newProduct = {
-                id: Date.now(),
-                title: document.getElementById('pTitle').value,
-                price: parseFloat(document.getElementById('pPrice').value),
-                img: document.getElementById('pImg').value,
-                tag: document.getElementById('pTag').value.toUpperCase(),
-                isOffer: document.getElementById('pIsOffer').value === "true",
-                desc: document.getElementById('pDesc').value
-            };
-            productos.push(newProduct);
-            renderAll();
-            document.getElementById('productForm').reset();
-            document.getElementById('adminPanel').classList.add('hidden');
-        }
-
-        renderAll();
     </script>
+
 </body>
 </html>
