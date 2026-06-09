@@ -165,7 +165,7 @@
     <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CARGAR_PRODUCTO_O_OFERTA</h3>
-            <button onclick="closeAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
+            <button onclick="logout()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
         </div>
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
@@ -242,8 +242,8 @@
 
     <script>
         const WHATSAPP_NUMBER = "542215676073";
-        const ADMIN_USER = "admin";
-        const ADMIN_PASS = "loot2026";
+        
+        
 
         const SUPABASE_URL = "https://kgzffjbwhlrlgxforfgv.supabase.co";
 
@@ -440,6 +440,75 @@
         }
 
         function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
+
+
+        // ==========================
+        // 🔐 SUPABASE AUTH SYSTEM
+        // ==========================
+
+        // LOGIN
+        async function login() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            const { data, error } = await db.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) {
+                document.getElementById("loginError").innerText = error.message;
+                return;
+            }
+
+            document.getElementById("loginError").innerText = "";
+            showAdmin();
+        }
+
+        // LOGOUT
+        async function logout() {
+            await db.auth.signOut();
+            showLogin();
+        }
+
+        // VER SESIÓN ACTUAL
+        async function checkSession() {
+            const { data } = await db.auth.getSession();
+
+            if (data.session) {
+                showAdmin();
+            } else {
+                showLogin();
+            }
+        }
+
+        // DETECTAR CAMBIOS EN LOGIN/LOGOUT
+        db.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                showAdmin();
+            } else {
+                showLogin();
+            }
+        });
+
+        // UI: MOSTRAR ADMIN
+        function showAdmin() {
+            document.getElementById("loginPanel").classList.add("hidden");
+            document.getElementById("adminPanel").classList.remove("hidden");
+        }
+
+        // UI: MOSTRAR LOGIN
+        function showLogin() {
+            document.getElementById("adminPanel").classList.add("hidden");
+            document.getElementById("loginPanel").classList.remove("hidden");
+        }
+
+        // INICIALIZAR
+        checkSession();
+
+
+
+
 
         async function addProduct(e) {
 
