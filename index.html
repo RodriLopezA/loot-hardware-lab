@@ -1,93 +1,120 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RepaCel - Panel Técnico</title>
+    <title>LOOT Hardware Lab | Inicio y Catálogo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Estilos generales modernos y oscuros */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #121212; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        
-        /* Contenedor del Login */
-        .login-container { background-color: #1e1e1e; border: 1px solid #333; padding: 30px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center; }
-        h2 { margin-bottom: 20px; color: #00adb5; font-size: 24px; }
-        
-        .input-group { margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; margin-bottom: 6px; color: #aaaaaa; font-size: 14px; }
-        .input-group input { width: 100%; padding: 12px; background-color: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: white; font-size: 16px; outline: none; transition: border 0.3s; }
-        .input-group input:focus { border-color: #00adb5; }
-        
-        button { width: 100%; padding: 12px; background-color: #00adb5; color: #121212; font-weight: bold; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s; }
-        button:hover { background-color: #00f5ff; }
-        
-        /* Panel Oculto (Se muestra al entrar correctamente) */
-        #adminPanel { background-color: #1e1e1e; border: 2px solid #00adb5; padding: 40px; border-radius: 12px; width: 100%; max-width: 800px; margin-top: 20px; text-align: center; box-shadow: 0 8px 30px rgba(0, 173, 181, 0.2); }
-        .panel-header { color: #00adb5; margin-bottom: 15px; }
-        
-        /* Clase para ocultar elementos */
-        .hidden { display: none !important; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .group:hover .mega-menu { display: block; }
     </style>
 </head>
-<body>
+<body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col selection:bg-[#00ffcc] selection:text-black">
 
-    <div id="loginBox" class="login-container">
-        <h2>RepaCel - Ingreso</h2>
-        <div class="input-group">
-            <label for="usuario">Usuario Técnico</label>
-            <input type="text" id="usuario" placeholder="Ej: admin" autocomplete="off">
+    <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto w-full h-20 flex items-center justify-between px-6 relative">
+            <a href="#" onclick="showSection('inicio')" class="cursor-pointer">
+                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-16 w-auto object-contain">
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 mx-auto font-mono text-xs tracking-wider">
+                <button onclick="showSection('inicio')" id="nav-inicio" class="text-[#00ffcc] font-bold cursor-pointer">INICIO</button>
+                <button onclick="filterCategory('TODOS')" id="nav-catalogo" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">CATÁLOGO_COMPLETO</button>
+                
+                <div class="relative group py-7">
+                    <button class="text-neutral-400 group-hover:text-[#00ffcc] transition-colors flex items-center gap-1 cursor-pointer">
+                        REPARACIONES <span class="text-[9px] text-neutral-600">▼</span>
+                    </button>
+                    <div class="mega-menu hidden absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-[#121212] border border-neutral-800 rounded-xl p-6 shadow-2xl mt-1">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_MARCA</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('IPHONE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Apple iPhone</button></li>
+                                    <li><button onclick="filterCategory('SAMSUNG')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Samsung Galaxy</button></li>
+                                    <li><button onclick="filterCategory('MOTOROLA')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Motorola Moto</button></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_COMPONENTE</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('DISPLAY_FIX')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Pantallas / Módulos</button></li>
+                                    <li><button onclick="filterCategory('POWER_CELL')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Baterías</button></li>
+                                    <li><button onclick="filterCategory('MICRO_CORE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Placas / Soldadura</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <div class="input-group">
-            <label for="contrasena">Contraseña</label>
-            <input type="password" id="contrasena" placeholder="••••••••">
-        </div>
-        <button onclick="login()">Iniciar Sesión</button>
+    </header>
+
+    <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
+        <section class="bg-[#121212] border border-neutral-900 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1 space-y-4">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Reviví tu dispositivo con precisión.</h1>
+                <p class="text-neutral-400">Especialistas en microsoldadura y restauración de hardware.</p>
+                <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black font-bold py-3 px-6 rounded-xl">VER CATÁLOGO</button>
+            </div>
+            <div class="w-full md:w-1/2 h-64 bg-neutral-950 rounded-2xl overflow-hidden border border-neutral-900">
+                <img src="https://images.unsplash.com/photo-1601524909162-be87252be298?w=800" class="w-full h-full object-cover">
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <h2 class="text-2xl font-extrabold text-white">🔥 Súper Ofertas</h2>
+            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
     </div>
 
-    <div id="adminPanel" class="hidden">
-        <h1 class="panel-header">¡Acceso Autorizado!</h1>
-        <p>Bienvenido al Sistema de Gestión de Reparaciones de <strong>RepaCel</strong>.</p>
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #333;">
-        <p style="color: #888;">[ Acá podés continuar metiendo el resto de tus herramientas, tablas o datos del taller ]</p>
-    </div>
+    <main id="view-catalogo" class="hidden max-w-6xl w-full mx-auto p-6 my-4">
+        <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </main>
 
     <script>
-        // 1. Función obligatoria asíncrona para calcular el SHA-256 en el navegador
-        async function generarSHA256(mensaje) {
-            const msgBuffer = new TextEncoder().encode(mensaje);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
+        const productos = [
+            { id: 1, title: "Cambio Módulo iPhone 11", price: 18000, img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500", tag: "IPHONE DISPLAY_FIX", isOffer: true, desc: "Calidad Premium." },
+            { id: 2, title: "Batería Motorola", price: 12500, img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500", tag: "MOTOROLA POWER_CELL", isOffer: true, desc: "Celdas certificadas." }
+        ];
 
-        // 2. Función de validación del Login
-        async function login() {
-            const usuarioInput = document.getElementById('usuario').value.trim();
-            const contrasenaInput = document.getElementById('contrasena').value; 
-
-            // === HASH DE LA CONTRASEÑA ===
-            // Este hash corresponde exactamente a la palabra: loot2026
-            const hashEsperado = "7864f1e311229048a1a47321e25e0e0f76906a5b4be4cf4a179619572635a9b3"; 
-
-            // Calculamos el hash de lo que el usuario escribió
-            const hashIngresado = await generarSHA256(contrasenaInput);
-
-            // Ayuda técnica en Consola (F12) para revisar errores de tipeo
-            console.log("--- INTENTO DE CONEXIÓN ---");
-            console.log("Usuario ingresado:", usuarioInput);
-            console.log("Hash generado en vivo:", hashIngresado);
-
-            // Verificación estricta
-            if (usuarioInput === "admin" && hashIngresado === hashEsperado) {
-                // Login correcto: ocultamos el login y mostramos el sistema
-                document.getElementById('loginBox').classList.add('hidden');
-                document.getElementById('adminPanel').classList.remove('hidden');
-            } else {
-                // Login incorrecto
-                alert("Acceso denegado: Usuario o contraseña incorrectos.");
+        function renderAll() {
+            const gridOfertas = document.getElementById('ofertas-grilla');
+            const gridCatalogo = document.getElementById('catalogo');
+            
+            if(gridOfertas) {
+                gridOfertas.innerHTML = productos.filter(p => p.isOffer).map(p => buildCard(p)).join('');
+            }
+            if(gridCatalogo) {
+                gridCatalogo.innerHTML = productos.map(p => buildCard(p)).join('');
             }
         }
-    </script>
 
+        function buildCard(p) {
+            return `
+                <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 hover:border-[#00ffcc] transition-all">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded mb-4">
+                    <h3 class="text-white font-bold">${p.title}</h3>
+                    <p class="text-[#00ffcc] font-mono mt-2">$${p.price.toLocaleString()}</p>
+                </div>
+            `;
+        }
+
+        function showSection(s) {
+            document.getElementById('view-inicio').classList.toggle('hidden', s !== 'inicio');
+            document.getElementById('view-catalogo').classList.toggle('hidden', s !== 'catalogo');
+        }
+
+        function filterCategory(cat) {
+            showSection('catalogo');
+            // Lógica de filtrado...
+        }
+
+        // Ejecución al cargar
+        document.addEventListener('DOMContentLoaded', renderAll);
+    </script>
 </body>
 </html>
