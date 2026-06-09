@@ -12,12 +12,14 @@
 </head>
 <body class="bg-[#121212] text-neutral-200 min-h-screen flex flex-col justify-between">
 
-    <header class="border-b border-neutral-800 px-6 py-2 bg-[#161616]">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <a href="#" class="flex items-center">
-                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-16 w-auto object-contain block">
+    <header class="border-b border-neutral-800 bg-[#161616] relative z-50 h-16 flex items-center px-6">
+        <div class="max-w-5xl mx-auto w-full flex justify-between items-center relative">
+            <a href="#" class="absolute left-0 top-1/2 -translate-y-1/2 block">
+                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-20 w-auto object-contain block max-w-none">
             </a>
-            <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ SYS_STATUS: ACTIVE ]</span>
+            <div class="ml-auto">
+                <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ SYS_STATUS: ACTIVE ]</span>
+            </div>
         </div>
     </header>
 
