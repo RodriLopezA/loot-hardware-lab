@@ -173,6 +173,13 @@
             <textarea id="pDesc" placeholder="Detalles técnicos..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
             <button type="submit" class="md:col-span-2 bg-[#00ffcc] text-black font-bold text-xs py-3 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">PUBLICAR_ELEMENTO</button>
         </form>
+        <div class="mt-8 border-t border-neutral-800 pt-6">
+            <h3 class="text-[#00ffcc] font-mono text-sm mb-4">
+                // PRODUCTOS_PUBLICADOS
+            </h3>
+
+            <div id="adminProductsList" class="space-y-3"></div>
+        </div>
     </div>
 
     <div id="mlModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -245,6 +252,7 @@
             }));
 
             renderAll();
+            renderAdminProducts();
         }
 
         let currentCategory = "TODOS";
@@ -301,6 +309,45 @@
             filtered.forEach(p => {
                 gridCatalogo.innerHTML += buildCard(p);
             });
+        }
+        function renderAdminProducts() {
+
+            const container = document.getElementById('adminProductsList');
+
+            if (!container) return;
+
+            container.innerHTML = "";
+
+            productos.forEach(p => {
+
+                container.innerHTML += `
+                    <div class="flex items-center justify-between bg-[#181818] border border-neutral-800 rounded-lg p-3">
+
+                        <div>
+                            <div class="font-bold text-white">
+                                ${p.title}
+                            </div>
+
+                            <div class="text-xs text-neutral-500">
+                                $${p.price.toLocaleString('es-AR')}
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2">
+
+                            <button
+                                onclick="deleteProduct(${p.id})"
+                                class="bg-red-600 hover:bg-red-500 px-3 py-1 rounded text-xs font-bold"
+                            >
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+            });
+
         }
 
         function buildCard(p) {
@@ -417,6 +464,27 @@
             alert("Producto publicado correctamente");
 
             document.getElementById('productForm').reset();
+
+            await cargarProductos();
+        }
+        async function deleteProduct(id) {
+
+            const confirmar = confirm(
+                "¿Eliminar este producto?"
+            );
+
+            if (!confirmar) return;
+
+            const { error } = await db
+                .from("productos")
+                .delete()
+                .eq("id", id);
+
+            if (error) {
+                console.error(error);
+                alert("Error al eliminar");
+                return;
+            }
 
             await cargarProductos();
         }
