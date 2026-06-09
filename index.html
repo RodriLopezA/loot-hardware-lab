@@ -191,11 +191,25 @@
         const HASHED_PASS = "43b17d0954b423376fc6d01589ff9ee95e8b68832a8740e793cb74665893e450"; // "loot2026"
 
         // Función criptográfica corregida sin espacios invisibles extraños
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        async function checkAccess() {
+            const u = prompt("USER:"); if (u === null) return;
+            const p = prompt("PASSWORD:"); if (p === null) return;
+            
+            // Generamos los hashes de lo que escribiste
+            const hashedUserInput = await sha256(u);
+            const hashedPassInput = await sha256(p);
+
+            // ESTO ES PARA DEBUGEAR: Abrí la consola (F12) y mirá qué hashes se generan
+            console.log("Tu hash de usuario:", hashedUserInput);
+            console.log("Tu hash de password:", hashedPassInput);
+
+            if (hashedUserInput === HASHED_USER && hashedPassInput === HASHED_PASS) {
+                const panel = document.getElementById('adminPanel');
+                panel.classList.remove('hidden');
+                panel.scrollIntoView({ behavior: 'smooth' });
+            } else { 
+                alert("Acceso denegado. Revisá la consola (F12) para ver los hashes."); 
+            }
         }
 
         let productos = [
