@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOOT Hardware Lab | Catálogo Avanzado</title>
+    <title>LOOT Hardware Lab | Catálogo Protegido</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,8 +38,8 @@
 
     <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// AGREGAR NUEVO SERVICIO O PRODUCTO</h3>
-            <button onclick="toggleAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar ×</button>
+            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CONFIGURACIÓN_SISTEMA (SESIÓN INICIADA)</h3>
+            <button onclick="closeAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
         </div>
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo iPhone 11)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
@@ -54,28 +54,23 @@
     <div id="mlModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-[#121212] border border-neutral-800 w-full max-w-4xl rounded-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
-            
             <div class="w-full md:w-1/2 bg-neutral-950 flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-neutral-900">
                 <img id="modalImg" src="" alt="" class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded">
             </div>
-            
             <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
                 <div>
                     <span id="modalTag" class="text-neutral-500 font-mono text-[10px] uppercase tracking-widest block mb-2"></span>
                     <h3 id="modalTitle" class="text-white font-extrabold text-xl md:text-2xl leading-tight mb-2"></h3>
                     <div id="modalPrice" class="text-[#00ffcc] text-3xl font-extrabold font-mono my-4"></div>
-                    
                     <div class="border-t border-neutral-900 pt-4 mt-4">
                         <h4 class="text-xs text-neutral-400 font-mono uppercase mb-2">Descripción del Servicio</h4>
                         <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed whitespace-pre-line"></p>
                     </div>
                 </div>
-                
                 <div class="mt-8">
                     <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">
                         CONSULTAR_POR_WHATSAPP
                     </a>
-                    <p class="text-[10px] text-neutral-500 text-center mt-2 font-mono">⚡ Respuesta inmediata dentro del horario laboral</p>
                 </div>
             </div>
         </div>
@@ -83,11 +78,15 @@
 
     <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
         <div>&copy; 2026 LOOT HARDWARE LAB - LAB_REPAIR_SHOP</div>
-        <button onclick="toggleAdminPanel()" class="text-[11px] text-neutral-700 hover:text-neutral-500 transition-colors cursor-pointer">[ KEY_ACCESS ]</button>
+        <button onclick="checkAccess()" class="text-[11px] text-neutral-700 hover:text-neutral-500 transition-colors cursor-pointer">[ KEY_ACCESS ]</button>
     </footer>
 
     <script>
-        const WHATSAPP_NUMBER = "5492211234567"; // Poné tu número real acá
+        const WHATSAPP_NUMBER = "5492211234567"; 
+
+        // CREDENCIALES COMPROBACIÓN INTERNA
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "loot2026"; 
 
         let productos = [
             {
@@ -119,7 +118,6 @@
         function renderProducts() {
             const container = document.getElementById('catalogo');
             container.innerHTML = "";
-
             productos.forEach(p => {
                 const card = `
                     <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
@@ -145,19 +143,38 @@
             });
         }
 
+        // 🔒 SISTEMA DE CONTROL DE ACCESO
+        function checkAccess() {
+            const userInput = prompt("Introduce tu identificador [USER]:");
+            if (userInput === null) return; // Cancelado
+
+            const passInput = prompt("Introduce tu clave de cifrado [PASSWORD]:");
+            if (passInput === null) return; // Cancelado
+
+            if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
+                const panel = document.getElementById('adminPanel');
+                panel.classList.remove('hidden');
+                panel.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert("❌ ACCESO DENEGADO: Credenciales incorrectas. Evento reportado.");
+            }
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function openModal(id) {
             const item = productos.find(p => p.id === id);
             if (!item) return;
-
             document.getElementById('modalImg').src = item.img;
             document.getElementById('modalTitle').innerText = item.title;
             document.getElementById('modalPrice').innerText = item.price;
             document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
             document.getElementById('modalDesc').innerText = item.desc;
-
             const msj = encodeURIComponent(`Hola! Vi en tu catálogo el servicio "${item.title}" y me interesa consultar por un equipo.`);
             document.getElementById('modalWaBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msj}`;
-
             document.getElementById('mlModal').classList.remove('hidden');
         }
 
@@ -165,18 +182,8 @@
             document.getElementById('mlModal').classList.add('hidden');
         }
 
-        function toggleAdminPanel() {
-            const panel = document.getElementById('adminPanel');
-            panel.classList.toggle('hidden');
-            if(!panel.classList.contains('hidden')) {
-                // Hace un scroll automático suave hacia el panel cuando se abre
-                panel.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
         function addProduct(e) {
             e.preventDefault();
-            
             const newProduct = {
                 id: Date.now(),
                 title: document.getElementById('pTitle').value,
@@ -185,11 +192,11 @@
                 tag: document.getElementById('pTag').value,
                 desc: document.getElementById('pDesc').value
             };
-
             productos.push(newProduct);
             renderProducts();
             document.getElementById('productForm').reset();
-            toggleAdminPanel();
+            document.getElementById('adminPanel').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         renderProducts();
