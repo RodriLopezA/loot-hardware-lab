@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOOT Hardware Lab | Inicio y Catálogo</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -185,49 +186,46 @@
     </footer>
 
     <script>
-        const WHATSAPP_NUMBER = "5492211234567";
+        const WHATSAPP_NUMBER = "542215676073";
         const ADMIN_USER = "admin";
         const ADMIN_PASS = "loot2026";
 
+        const SUPABASE_URL = "https://kgzffjbwhlrlgxforfgv.supabase.co";
+
+        const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnemZmamJ3aGxybGd4Zm9yZmd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODE3MDUsImV4cCI6MjA5NjU1NzcwNX0.FkaQALy1TU2_S8ae0gxAcmsikNLO72qm0_k3knNw2jo";
+
+        const supabase = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
         // Agregamos el parámetro 'isOffer' para saber cuáles se renderizan directo en el Inicio
-        let productos = [
-            {
-                id: 1,
-                title: "Cambio de Módulo / Pantalla iPhone 11",
-                price: 18000,
-                img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500",
-                tag: "IPHONE DISPLAY_FIX",
-                isOffer: true,
-                desc: "Oferta destacada de la semana. Incluye sellado perimetral contra humedad y limpieza interna del auricular."
-            },
-            {
-                id: 2,
-                title: "Batería Alta Densidad Premium Motorola",
-                price: 12500,
-                img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500",
-                tag: "MOTOROLA POWER_CELL",
-                isOffer: true,
-                desc: "Recuperá las horas de pantalla de tu equipo con celdas de litio certificadas Grado A."
-            },
-            {
-                id: 3,
-                title: "Micro-soldadura de Placa Base Avanzada",
-                price: 32000,
-                img: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=500",
-                tag: "IPHONE SAMSUNG MICRO_CORE",
-                isOffer: false,
-                desc: "Diagnósticos con osciloscopio e integrados originales."
-            },
-            {
-                id: 4,
-                title: "Funda Blindada de Impacto Ring Case",
-                price: 4500,
-                img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500",
-                tag: "ACCESORIOS",
-                isOffer: true,
-                desc: "¡Súper promo en accesorios de protección extrema!"
+        let productos = [];
+            async function cargarProductos() {
+
+            const { data, error } = await supabase
+                .from("productos")
+                .select("*")
+                .order("id", { ascending: false });
+
+            if (error) {
+                console.error(error);
+                return;
             }
-        ];
+
+            productos = data.map(p => ({
+                id: p.id,
+                title: p.title,
+                price: Number(p.price),
+                img: p.img,
+                tag: p.tag,
+                isOffer: p.is_offer,
+                desc: p.descripcion
+            }));
+
+            renderAll();
+        }
 
         let currentCategory = "TODOS";
         let currentSort = "default";
@@ -348,25 +346,40 @@
 
         function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
 
-        function addProduct(e) {
+        async function addProduct(e) {
+
             e.preventDefault();
-            const newProduct = {
-                id: Date.now(),
+
+            const nuevoProducto = {
                 title: document.getElementById('pTitle').value,
                 price: parseFloat(document.getElementById('pPrice').value),
                 img: document.getElementById('pImg').value,
                 tag: document.getElementById('pTag').value.toUpperCase(),
-                isOffer: document.getElementById('pIsOffer').value === "true",
-                desc: document.getElementById('pDesc').value
+                is_offer: document.getElementById('pIsOffer').value === "true",
+                descripcion: document.getElementById('pDesc').value
             };
-            productos.push(newProduct);
-            renderAll();
+
+            const { error } = await supabase
+                .from('productos')
+                .insert([nuevoProducto]);
+
+            if (error) {
+                console.error(error);
+                alert("Error al guardar");
+                return;
+            }
+
+            alert("Producto publicado");
+
             document.getElementById('productForm').reset();
             document.getElementById('adminPanel').classList.add('hidden');
+
+            await cargarProductos();
         }
 
         // Ejecución inicial
-        renderAll();
+        cargarProductos();
     </script>
+    
 </body>
 </html>
