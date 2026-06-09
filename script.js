@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnWhatsapp = document.getElementById('btn-whatsapp');
 
     // Cambia tu número acá (ejemplo: 5492211234567 sin el signo +)
-    const TU_NUMERO_WHATSAPP = "5492211234567"; 
+    const TU_NUMERO_WHATSAPP = "542215676073"; 
 
     function actualizarDiagnostico() {
         const dispositivo = dispositivoSelect.value;
