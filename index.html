@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOOT Hardware Lab | Inicio y Catálogo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -12,16 +14,16 @@
         .group:hover .mega-menu { display: block; }
     </style>
 </head>
-<body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col selection:bg-[#00ffcc] selection:text-black">
+<body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-[#00ffcc] selection:text-black">
 
     <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40">
         <div class="max-w-6xl mx-auto w-full h-20 flex items-center justify-between px-6 relative">
-            <a href="#" onclick="showSection('inicio')" class="cursor-pointer">
-                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-16 w-auto object-contain">
+            <a href="#" onclick="showSection('inicio')" class="absolute left-6 top-1/2 -translate-y-1/2 block">
+                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
             </a>
             
             <nav class="hidden md:flex items-center gap-8 mx-auto font-mono text-xs tracking-wider">
-                <button onclick="showSection('inicio')" id="nav-inicio" class="text-[#00ffcc] font-bold cursor-pointer">INICIO</button>
+                <button onclick="showSection('inicio')" id="nav-inicio" class="text-[#00ffcc] hover:text-[#00ffcc] transition-colors cursor-pointer font-bold">INICIO</button>
                 <button onclick="filterCategory('TODOS')" id="nav-catalogo" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">CATÁLOGO_COMPLETO</button>
                 
                 <div class="relative group py-7">
@@ -49,72 +51,330 @@
                         </div>
                     </div>
                 </div>
+
+                <button onclick="filterCategory('ACCESORIOS')" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">ACCESORIOS</button>
             </nav>
+
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ LAB: ONLINE ]</span>
+            </div>
         </div>
     </header>
 
-    <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
-        <section class="bg-[#121212] border border-neutral-900 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
-            <div class="flex-1 space-y-4">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Reviví tu dispositivo con precisión.</h1>
-                <p class="text-neutral-400">Especialistas en microsoldadura y restauración de hardware.</p>
-                <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black font-bold py-3 px-6 rounded-xl">VER CATÁLOGO</button>
+    <section id="filterBar" class="hidden bg-[#0e0e0e] border-b border-neutral-900 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="text-xs text-neutral-400 font-mono">
+                FILTRO_ACTIVO: <span id="activeSection" class="text-[#00ffcc]">TODOS</span>
             </div>
-            <div class="w-full md:w-1/2 h-64 bg-neutral-950 rounded-2xl overflow-hidden border border-neutral-900">
-                <img src="https://images.unsplash.com/photo-1601524909162-be87252be298?w=800" class="w-full h-full object-cover">
+            <div class="flex items-center gap-2">
+                <label for="sortPrices" class="text-xs text-neutral-500 font-mono">ORDENAR_POR:</label>
+                <select id="sortPrices" onchange="sortProducts(this.value)" class="bg-[#121212] border border-neutral-800 text-xs text-neutral-300 rounded px-3 py-1.5 focus:outline-none focus:border-[#00ffcc] font-mono cursor-pointer">
+                    <option value="default">Relevancia</option>
+                    <option value="low">Menor Precio</option>
+                    <option value="high">Mayor Precio</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
+        
+        <section class="relative bg-[#121212] border border-neutral-900 rounded-3xl overflow-hidden p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1 space-y-4">
+                <span class="text-xs bg-neutral-950 border border-neutral-800 text-[#00ffcc] px-3 py-1 rounded-full font-mono tracking-widest uppercase">✨ SERVICIO TÉCNICO ESPECIALIZADO</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-none">
+                    Reviví tu dispositivo con precisión de laboratorio.
+                </h1>
+                <p class="text-neutral-400 text-sm md:text-base leading-relaxed max-w-lg">
+                    En LOOT Hardware Lab nos especializamos en microsoldadura de placas, cambios de módulos táctiles y restauración de batería con componentes testeados de máxima calidad.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-4">
+                    <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-cyan-400 transition-colors tracking-wider cursor-pointer">
+                        VER_CATALOGO_COMPLETO_→
+                    </button>
+                    <a href="https://wa.me/5492211234567" target="_blank" class="bg-neutral-900 border border-neutral-800 text-white text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-neutral-800 transition-colors tracking-wider">
+                        EVALUACIÓN_DIRECTA
+                    </a>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 h-64 md:h-80 bg-neutral-950 rounded-2xl overflow-hidden border border-neutral-900">
+                <img src="https://images.unsplash.com/photo-1601524909162-be87252be298?w=800" alt="Laboratorio Técnico Celulares" class="w-full h-full object-cover">
             </div>
         </section>
 
         <section class="space-y-6">
-            <h2 class="text-2xl font-extrabold text-white">🔥 Súper Ofertas</h2>
-            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
+                <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
+            </div>
+            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
+                <div class="text-[#00ffcc] font-bold text-sm">📍 UBICACIÓN</div>
+                <p class="text-neutral-400 font-sans">Calle Falsa 123, La Plata, Buenos Aires. Podés traer tu equipo sin turno previo de lunes a viernes.</p>
+            </div>
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
+                <div class="text-[#00ffcc] font-bold text-sm">⏱️ HORARIOS</div>
+                <p class="text-neutral-400 font-sans">Lunes a Viernes de 09:00 a 19:00 hs.<br>Sábados de 10:00 a 14:00 hs.</p>
+            </div>
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
+                <div class="text-[#00ffcc] font-bold text-sm">🛡️ GARANTÍA REAL</div>
+                <p class="text-neutral-400 font-sans">Todas nuestras reparaciones de hardware cuentan con 3 a 6 meses de cobertura firmada por escrito.</p>
+            </div>
         </section>
     </div>
 
-    <main id="view-catalogo" class="hidden max-w-6xl w-full mx-auto p-6 my-4">
-        <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <main id="view-catalogo" class="hidden max-w-6xl w-full mx-auto p-6 my-4 flex-grow">
+        <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
     </main>
 
+    <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CARGAR_PRODUCTO_O_OFERTA</h3>
+            <button onclick="closeAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
+        </div>
+        <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pImg" placeholder="Ruta de imagen" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pTag" placeholder="Categorías (Ej: MOTOROLA DISPLAY_FIX)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            
+            <select id="pIsOffer" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] font-mono">
+                <option value="false">No destacar en Inicio</option>
+                <option value="true">Destacar como Oferta en Inicio</option>
+            </select>
+            
+            <textarea id="pDesc" placeholder="Detalles técnicos..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
+            <button type="submit" class="md:col-span-2 bg-[#00ffcc] text-black font-bold text-xs py-3 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">PUBLICAR_ELEMENTO</button>
+        </form>
+    </div>
+
+    <div id="mlModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-[#121212] border border-neutral-800 w-full max-w-4xl rounded-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
+            <div class="w-full md:w-1/2 bg-neutral-950 flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-neutral-900">
+                <img id="modalImg" src="" alt="" class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded">
+            </div>
+            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
+                <div>
+                    <span id="modalTag" class="text-neutral-500 font-mono text-[10px] uppercase tracking-widest block mb-2"></span>
+                    <h3 id="modalTitle" class="text-white font-extrabold text-xl md:text-2xl leading-tight mb-2"></h3>
+                    <div id="modalPrice" class="text-[#00ffcc] text-3xl font-extrabold font-mono my-4"></div>
+                    <div class="border-t border-neutral-900 pt-4 mt-4">
+                        <h4 class="text-xs text-neutral-400 font-mono uppercase mb-2">Descripción del Servicio</h4>
+                        <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed whitespace-pre-line"></p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">
+                        CONSULTAR_POR_WHATSAPP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
+        <div>&copy; 2026 LOOT HARDWARE LAB - SYSTEM_REPAIR_LAB</div>
+        <button onclick="checkAccess()" class="text-[11px] text-neutral-700 hover:text-neutral-500 transition-colors cursor-pointer">[ KEY_ACCESS ]</button>
+    </footer>
+
     <script>
-        const productos = [
-            { id: 1, title: "Cambio Módulo iPhone 11", price: 18000, img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500", tag: "IPHONE DISPLAY_FIX", isOffer: true, desc: "Calidad Premium." },
-            { id: 2, title: "Batería Motorola", price: 12500, img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500", tag: "MOTOROLA POWER_CELL", isOffer: true, desc: "Celdas certificadas." }
+        const WHATSAPP_NUMBER = "5492211234567";
+
+        // Hashes correctos y estandarizados de tus accesos
+        const HASHED_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // "admin"
+        const HASHED_PASS = "43b17d0954b423376fc6d01589ff9ee95e8b68832a8740e793cb74665893e450"; // "loot2026"
+
+        // Función criptográfica corregida sin espacios invisibles extraños
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        let productos = [
+            {
+                id: 1,
+                title: "Cambio de Módulo / Pantalla iPhone 11",
+                price: 18000,
+                img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500",
+                tag: "IPHONE DISPLAY_FIX",
+                isOffer: true,
+                desc: "Oferta destacada de la semana. Incluye sellado perimetral contra humedad y limpieza interna del auricular."
+            },
+            {
+                id: 2,
+                title: "Batería Alta Densidad Premium Motorola",
+                price: 12500,
+                img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500",
+                tag: "MOTOROLA POWER_CELL",
+                isOffer: true,
+                desc: "Recuperá las horas de pantalla de tu equipo con celdas de litio certificadas Grado A."
+            },
+            {
+                id: 3,
+                title: "Micro-soldadura de Placa Base Avanzada",
+                price: 32000,
+                img: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=500",
+                tag: "IPHONE SAMSUNG MICRO_CORE",
+                isOffer: false,
+                desc: "Diagnósticos con osciloscopio e integrados originales."
+            },
+            {
+                id: 4,
+                title: "Funda Blindada de Impacto Ring Case",
+                price: 4500,
+                img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500",
+                tag: "ACCESORIOS",
+                isOffer: true,
+                desc: "¡Súper promo en accesorios de protección extrema!"
+            }
         ];
+
+        let currentCategory = "TODOS";
+        let currentSort = "default";
+
+        function showSection(section) {
+            const viewInicio = document.getElementById('view-inicio');
+            const viewCatalogo = document.getElementById('view-catalogo');
+            const filterBar = document.getElementById('filterBar');
+            const navInicio = document.getElementById('nav-inicio');
+            const navCatalogo = document.getElementById('nav-catalogo');
+
+            if (section === 'inicio') {
+                viewInicio.classList.remove('hidden');
+                viewCatalogo.classList.add('hidden');
+                filterBar.classList.add('hidden');
+                navInicio.className = "text-[#00ffcc] font-bold cursor-pointer";
+                navCatalogo.className = "text-neutral-400 hover:text-[#00ffcc] cursor-pointer";
+            } else {
+                viewInicio.classList.add('hidden');
+                viewCatalogo.classList.remove('hidden');
+                filterBar.classList.remove('hidden');
+                navInicio.className = "text-neutral-400 hover:text-[#00ffcc] cursor-pointer";
+                navCatalogo.className = "text-[#00ffcc] font-bold cursor-pointer";
+            }
+        }
 
         function renderAll() {
             const gridOfertas = document.getElementById('ofertas-grilla');
-            const gridCatalogo = document.getElementById('catalogo');
-            
             if(gridOfertas) {
-                gridOfertas.innerHTML = productos.filter(p => p.isOffer).map(p => buildCard(p)).join('');
+                gridOfertas.innerHTML = "";
+                let ofertas = productos.filter(p => p.isOffer === true);
+                ofertas.forEach(p => { gridOfertas.innerHTML += buildCard(p); });
             }
+
+            const gridCatalogo = document.getElementById('catalogo');
             if(gridCatalogo) {
-                gridCatalogo.innerHTML = productos.map(p => buildCard(p)).join('');
+                gridCatalogo.innerHTML = "";
+                let filtered = productos.filter(p => {
+                    if (currentCategory === "TODOS") return true;
+                    return p.tag.toUpperCase().includes(currentCategory.toUpperCase());
+                });
+
+                if (currentSort === "low") {
+                    filtered.sort((a, b) => a.price - b.price);
+                } else if (currentSort === "high") {
+                    filtered.sort((a, b) => b.price - a.price);
+                }
+
+                filtered.forEach(p => { gridCatalogo.innerHTML += buildCard(p); });
             }
         }
 
         function buildCard(p) {
             return `
-                <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 hover:border-[#00ffcc] transition-all">
-                    <img src="${p.img}" class="w-full h-40 object-cover rounded mb-4">
-                    <h3 class="text-white font-bold">${p.title}</h3>
-                    <p class="text-[#00ffcc] font-mono mt-2">$${p.price.toLocaleString()}</p>
+                <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+                    <div>
+                        <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
+                            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
+                            <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">${p.title}</h3>
+                            <p class="text-neutral-400 text-xs mt-2 line-clamp-2">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-neutral-500 text-xs font-mono">PRECIO:</span>
+                            <span class="text-[#00ffcc] text-lg font-extrabold font-mono">$${p.price.toLocaleString('es-AR')}</span>
+                        </div>
+                    </div>
                 </div>
             `;
         }
 
-        function showSection(s) {
-            document.getElementById('view-inicio').classList.toggle('hidden', s !== 'inicio');
-            document.getElementById('view-catalogo').classList.toggle('hidden', s !== 'catalogo');
-        }
-
         function filterCategory(cat) {
+            currentCategory = cat;
+            const activeSec = document.getElementById('activeSection');
+            if(activeSec) activeSec.innerText = cat;
             showSection('catalogo');
-            // Lógica de filtrado...
+            renderAll();
         }
 
-        // Ejecución al cargar
-        document.addEventListener('DOMContentLoaded', renderAll);
+        function sortProducts(order) {
+            currentSort = order;
+            renderAll();
+        }
+
+        function openModal(id) {
+            const item = productos.find(p => p.id === id);
+            if (!item) return;
+            document.getElementById('modalImg').src = item.img;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalPrice').innerText = `$${item.price.toLocaleString('es-AR')}`;
+            document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
+            document.getElementById('modalDesc').innerText = item.desc;
+            const msj = encodeURIComponent(`Hola! Vi "${item.title}" en LOOT Lab y quiero consultar.`);
+            document.getElementById('modalWaBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msj}`;
+            document.getElementById('mlModal').classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
+
+        async function checkAccess() {
+            const u = prompt("USER:"); if (u === null) return;
+            const p = prompt("PASSWORD:"); if (p === null) return;
+            
+            const hashedUserInput = await sha256(u);
+            const hashedPassInput = await sha256(p);
+
+            if (hashedUserInput === HASHED_USER && hashedPassInput === HASHED_PASS) {
+                const panel = document.getElementById('adminPanel');
+                panel.classList.remove('hidden');
+                panel.scrollIntoView({ behavior: 'smooth' });
+            } else { 
+                alert("Acceso denegado."); 
+            }
+        }
+
+        function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
+
+        function addProduct(e) {
+            e.preventDefault();
+            const newProduct = {
+                id: Date.now(),
+                title: document.getElementById('pTitle').value,
+                price: parseFloat(document.getElementById('pPrice').value),
+                img: document.getElementById('pImg').value,
+                tag: document.getElementById('pTag').value.toUpperCase(),
+                isOffer: document.getElementById('pIsOffer').value === "true",
+                desc: document.getElementById('pDesc').value
+            };
+            productos.push(newProduct);
+            renderAll();
+            document.getElementById('productForm').reset();
+            document.getElementById('adminPanel').classList.add('hidden');
+        }
+
+        renderAll();
     </script>
 </body>
 </html>
