@@ -80,26 +80,7 @@
 
 
 
-    <!-- LOGIN PANEL -->
-    <div id="loginPanel" class="hidden max-w-md mx-auto p-6 bg-[#121212] border border-neutral-800 rounded-xl mt-10">
-        <h2 class="text-[#00ffcc] font-mono mb-4">// ADMIN LOGIN</h2>
-
-        <input id="loginEmail" type="email" placeholder="Email"
-            class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
-
-        <input id="loginPassword" type="password" placeholder="Password"
-            class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
-
-        <button onclick="login()"
-            class="w-full bg-[#00ffcc] text-black font-bold py-3 rounded">
-            INGRESAR
-        </button>
-
-        <p id="loginError" class="text-red-500 text-xs mt-3"></p>
-    </div>
-
-    <!-- TU ADMIN PANEL (ya lo tenés) -->
-    <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
+    
     <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
         
         <section class="relative bg-[#121212] border border-neutral-900 rounded-3xl overflow-hidden p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
@@ -155,7 +136,32 @@
         <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
     </main>
+    <!-- MODAL (si lo tenés arriba no lo toques) -->
 
+    <div id="mlModal" class="hidden fixed inset-0 bg-black/80 ...">
+        ...
+    </div>
+
+    <!-- 👇 PEGAR AQUÍ EL LOGIN PANEL -->
+    <div id="loginPanel" class="hidden max-w-md mx-auto p-6 bg-[#121212] border border-neutral-800 rounded-xl mt-10">
+        <h2 class="text-[#00ffcc] font-mono mb-4">// ADMIN LOGIN</h2>
+
+        <input id="loginEmail" type="email" placeholder="Email"
+            class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
+
+        <input id="loginPassword" type="password" placeholder="Password"
+            class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
+
+        <button onclick="login()"
+            class="w-full bg-[#00ffcc] text-black font-bold py-3 rounded">
+            INGRESAR
+        </button>
+
+        <p id="loginError" class="text-red-500 text-xs mt-3"></p>
+    </div>
+
+    <!-- 👇 TU ADMIN PANEL (YA EXISTE, NO LO TOQUES) -->
+    
     <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CARGAR_PRODUCTO_O_OFERTA</h3>
