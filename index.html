@@ -192,24 +192,18 @@
         const HASHED_PASS = "6e382b6c77045f949c81f7d5440d655f4c5478468759e0a29355152a5c531551";
 
         // Función criptográfica corregida sin espacios invisibles extraños
+        // REEMPLAZÁ TU FUNCIÓN ACTUAL POR ESTA:
         async function checkAccess() {
-            const u = prompt("USER:"); if (u === null) return;
-            const p = prompt("PASSWORD:"); if (p === null) return;
+            const u = prompt("USER:"); 
+            const p = prompt("PASSWORD:");
             
-            // Generamos los hashes de lo que escribiste
-            const hashedUserInput = await sha256(u);
-            const hashedPassInput = await sha256(p);
-
-            // ESTO ES PARA DEBUGEAR: Abrí la consola (F12) y mirá qué hashes se generan
-            console.log("Tu hash de usuario:", hashedUserInput);
-            console.log("Tu hash de password:", hashedPassInput);
-
-            if (hashedUserInput === HASHED_USER && hashedPassInput === HASHED_PASS) {
+            // Verificación directa sin hashes
+            if (u === "admin" && p === "loot2026") {
                 const panel = document.getElementById('adminPanel');
                 panel.classList.remove('hidden');
                 panel.scrollIntoView({ behavior: 'smooth' });
             } else { 
-                alert("Acceso denegado. Revisá la consola (F12) para ver los hashes."); 
+                alert("Acceso denegado. Usuario o contraseña incorrectos."); 
             }
         }
 
