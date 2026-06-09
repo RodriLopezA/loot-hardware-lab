@@ -195,7 +195,7 @@
         const SUPABASE_ANON_KEY =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnemZmamJ3aGxybGd4Zm9yZmd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODE3MDUsImV4cCI6MjA5NjU1NzcwNX0.FkaQALy1TU2_S8ae0gxAcmsikNLO72qm0_k3knNw2jo";
 
-        const supabase = window.supabase.createClient(
+        const db = window.supabase.createClient(
             SUPABASE_URL,
             SUPABASE_ANON_KEY
         );
@@ -204,7 +204,7 @@
         let productos = [];
             async function cargarProductos() {
 
-            const { data, error } = await supabase
+            const { data, error } = await db
                 .from("productos")
                 .select("*")
                 .order("id", { ascending: false });
@@ -359,7 +359,7 @@
                 descripcion: document.getElementById('pDesc').value
             };
 
-            const { error } = await supabase
+            const { error } = await db
                 .from('productos')
                 .insert([nuevoProducto]);
 
