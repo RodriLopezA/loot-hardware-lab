@@ -1,0 +1,10 @@
+* {
+    font-family: 'JetBrains Mono', monospace;
+    scroll-behavior: smooth;
+}
+
+/* Efecto sutil de selección neón */
+::selection {
+    background-color: #00ffcc;
+    color: #121212;
+}

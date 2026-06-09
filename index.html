@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOOT // Hardware Engineering Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#121212] text-neutral-200 min-h-screen flex flex-col justify-between">
+
+    <header class="border-b border-neutral-800 p-6 bg-[#161616]">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-wider text-white select-none">
+                L<span class="text-[#00ffcc] font-extrabold">OO</span>T
+            </h1>
+            <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ SYS_STATUS: ACTIVE ]</span>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-6 my-auto w-full">
+        <section class="mb-12">
+            <p class="text-[#00ffcc] font-mono text-xs mb-2 tracking-widest">// ARCHITECTURE & DIAGNOSTICS</p>
+            <h2 class="text-3xl font-bold text-white mb-4 tracking-tight md:text-4xl max-w-3xl">
+                Hardware Engineering Lab
+            </h2>
+            <p class="text-neutral-400 max-w-2xl text-sm leading-relaxed mb-6">
+                Análisis, micro-soldadura, optimización y reconstrucción de arquitectura de hardware especializado para dispositivos móviles y ordenadores de alto rendimiento.
+            </p>
+            <a href="#cotizador" class="inline-block bg-neutral-900 border border-neutral-700 text-white font-mono text-xs px-5 py-3 rounded tracking-wider hover:border-[#00ffcc] hover:text-[#00ffcc] transition-all duration-300">
+                INIT_DIAGNOSTIC (Cotizar)
+            </a>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="border border-neutral-800 p-5 bg-[#161616] rounded hover:border-neutral-700 transition-colors">
+                <div class="text-[#00ffcc] text-xs font-mono mb-3">[01] MICRO-ELECTRONICS</div>
+                <h3 class="text-white font-bold mb-2 text-sm">Micro-soldadura y Circuitos</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Reparación de placas base, líneas de carga, cortocircuitos internos y fallas complejas de encendido mediante análisis de esquemáticos.</p>
+            </div>
+            <div class="border border-neutral-800 p-5 bg-[#161616] rounded hover:border-neutral-700 transition-colors">
+                <div class="text-[#00ffcc] text-xs font-mono mb-3">[02] COMPONENTS</div>
+                <h3 class="text-white font-bold mb-2 text-sm">Sustitución Periférica</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Reemplazo de módulos de pantalla, displays táctiles, celdas de batería y componentes modulares bajo estándares estrictos de ensamblaje.</p>
+            </div>
+            <div class="border border-neutral-800 p-5 bg-[#161616] rounded hover:border-neutral-700 transition-colors">
+                <div class="text-[#00ffcc] text-xs font-mono mb-3">[03] SYSTEM_OPTIMIZATION</div>
+                <h3 class="text-white font-bold mb-2 text-sm">Mantenimiento y Firmware</h3>
+                <p class="text-neutral-400 text-xs leading-relaxed">Reacondicionamiento térmico (limpieza avanzada y pasta térmica), flasheo de sistemas operativos dañados, BIOS y bricks estructurales.</p>
+            </div>
+        </section>
+
+        <section id="cotizador" class="border border-neutral-800 bg-[#161616] p-6 rounded max-w-xl mx-auto">
+            <h3 class="text-white font-bold text-base mb-2 font-mono text-center sm:text-left">// SIMULADOR_DE_DIAGNÓSTICO</h3>
+            <p class="text-neutral-400 text-xs mb-6 text-center sm:text-left">Seleccioná los parámetros de tu equipo para inicializar un reporte estimado.</p>
+            
+            <div class="space-y-4 font-mono text-xs">
+                <div>
+                    <label class="block text-neutral-500 mb-2">TARGET_DEVICE (Dispositivo):</label>
+                    <select id="dispositivo" class="w-full bg-neutral-900 border border-neutral-800 p-3 rounded text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Seleccionar dispositivo...</option>
+                        <option value="celular">Smartphone / Celular</option>
+                        <option value="pc">PC / Computadora Gamer</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-neutral-500 mb-2">HARDWARE_ISSUE (Falla detectada):</label>
+                    <select id="falla" class="w-full bg-neutral-900 border border-neutral-800 p-3 rounded text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Seleccionar problema...</option>
+                        <option value="pantalla">Pantalla rota / Sin imagen</option>
+                        <option value="encendido">No enciende / Posible corto</option>
+                        <option value="temperatura">Mantenimiento / Temperatura alta</option>
+                    </select>
+                </div>
+
+                <div id="resultado" class="hidden bg-neutral-900 border border-dashed border-neutral-800 p-4 rounded text-neutral-300 leading-relaxed text-[11px]">
+                    </div>
+
+                <button id="btn-whatsapp" class="w-full text-center bg-[#00ffcc] text-neutral-950 font-bold p-3 rounded tracking-wider transition-opacity hover:opacity-90 font-sans text-xs">
+                    SOLICITAR PRESUPUESTO FORMAL
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-neutral-800 p-4 text-center text-[10px] text-neutral-600 font-mono">
+        &copy; 2026 LOOT Hardware Lab. All rights reserved. Powered by HTML/JS.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
