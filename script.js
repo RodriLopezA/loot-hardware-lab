@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const falla = fallaSelect.value || "problema técnico";
         
         // Crear el mensaje formateado para WhatsApp de manera limpia URL encoded
-        const textoOriginal = `Hola LOOT! Quiero solicitar un presupuesto formal para un ${dispositivo} con falla de ${falla}.`;
+        const textoOriginal = `Hola LOOT! Quiero solicitar un presupuesto para un ${dispositivo} con falla de ${falla}.`;
         const textoEncoded = encodeURIComponent(textoOriginal);
         
         // Redireccionar al chat con el mensaje preestablecido
