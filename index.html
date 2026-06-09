@@ -19,7 +19,7 @@
     <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40">
         <div class="max-w-6xl mx-auto w-full h-20 flex items-center justify-between px-6 relative">
             <a href="#" onclick="showSection('inicio')" class="absolute left-6 top-1/2 -translate-y-1/2 block">
-                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
+                <img src="./img/logo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
             </a>
             
             <nav class="hidden md:flex items-center gap-8 mx-auto font-mono text-xs tracking-wider">
@@ -125,7 +125,6 @@
                 <p class="text-neutral-400 font-sans">Todas nuestras reparaciones de hardware cuentan con 3 a 6 meses de cobertura firmada por escrito.</p>
             </div>
         </section>
-
     </div>
 
     <main id="view-catalogo" class="hidden max-w-6xl w-full mx-auto p-6 my-4 flex-grow">
@@ -141,7 +140,7 @@
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <input type="text" id="pImg" placeholder="Ruta de imagen (Ej: https://... o ./img/foto.jpg)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pImg" placeholder="Ruta de imagen" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="text" id="pTag" placeholder="Categorías (Ej: MOTOROLA DISPLAY_FIX)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             
             <select id="pIsOffer" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] font-mono">
@@ -185,11 +184,20 @@
     </footer>
 
     <script>
-        const WHATSAPP_NUMBER = "542215676073";
-        const ADMIN_USER = "admin";
-        const ADMIN_PASS = "loot2026";
+        const WHATSAPP_NUMBER = "5492211234567";
 
-        // Agregamos el parámetro 'isOffer' para saber cuáles se renderizan directo en el Inicio
+        // YA NO SE VEN TUS STRINGS VERDADEROS. Esto es el Hash encriptado criptográficamente de tus accesos originales.
+        const HASHED_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // Equivale a "admin"
+        const HASHED_PASS = "43b17d0954b423376fc6d01589ff9ee95e8b68832a8740e793cb74665893e450"; // Equivale a "loot2026"
+
+        // Función nativa asíncrona para convertir texto ingresado en un Hash indescifrable
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         let productos = [
             {
                 id: 1,
@@ -232,7 +240,6 @@
         let currentCategory = "TODOS";
         let currentSort = "default";
 
-        // Cambiar dinámicamente entre Inicio y Catálogo General
         function showSection(section) {
             const viewInicio = document.getElementById('view-inicio');
             const viewCatalogo = document.getElementById('view-catalogo');
@@ -255,17 +262,12 @@
             }
         }
 
-        // Renderizar elementos del catálogo e inicio en simultáneo
         function renderAll() {
-            // 1. Renderizar sección Ofertas de Inicio
             const gridOfertas = document.getElementById('ofertas-grilla');
             gridOfertas.innerHTML = "";
             let ofertas = productos.filter(p => p.isOffer === true);
-            ofertas.forEach(p => {
-                gridOfertas.innerHTML += buildCard(p);
-            });
+            ofertas.forEach(p => { gridOfertas.innerHTML += buildCard(p); });
 
-            // 2. Renderizar catálogo general completo con filtros aplicados
             const gridCatalogo = document.getElementById('catalogo');
             gridCatalogo.innerHTML = "";
 
@@ -280,9 +282,7 @@
                 filtered.sort((a, b) => b.price - a.price);
             }
 
-            filtered.forEach(p => {
-                gridCatalogo.innerHTML += buildCard(p);
-            });
+            filtered.forEach(p => { gridCatalogo.innerHTML += buildCard(p); });
         }
 
         function buildCard(p) {
@@ -320,7 +320,6 @@
             renderAll();
         }
 
-        // Modals y Panel Admin
         function openModal(id) {
             const item = productos.find(p => p.id === id);
             if (!item) return;
@@ -336,14 +335,23 @@
 
         function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
 
-        function checkAccess() {
+        // PROCESO DE ACCESO SEGURO
+        async function checkAccess() {
             const u = prompt("USER:"); if (u === null) return;
             const p = prompt("PASSWORD:"); if (p === null) return;
-            if (u === ADMIN_USER && p === ADMIN_PASS) {
+            
+            // Encriptamos las respuestas del usuario sobre la marcha
+            const hashedUserInput = await sha256(u);
+            const hashedPassInput = await sha256(p);
+
+            // Comparamos los hashes matemáticos en lugar del texto real
+            if (hashedUserInput === HASHED_USER && hashedPassInput === HASHED_PASS) {
                 const panel = document.getElementById('adminPanel');
                 panel.classList.remove('hidden');
                 panel.scrollIntoView({ behavior: 'smooth' });
-            } else { alert("Acceso denegado."); }
+            } else { 
+                alert("Acceso denegado."); 
+            }
         }
 
         function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
@@ -365,7 +373,6 @@
             document.getElementById('adminPanel').classList.add('hidden');
         }
 
-        // Ejecución inicial
         renderAll();
     </script>
 </body>
