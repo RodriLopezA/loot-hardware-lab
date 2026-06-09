@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOOT Hardware Lab | Catálogo Protegido</title>
+    <title>LOOT Hardware Lab | Catálogo Inteligente</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,42 +11,89 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
+        /* Efecto hover para el Mega Menú */
+        .group:hover .mega-menu { display: block; }
     </style>
 </head>
 <body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-[#00ffcc] selection:text-black">
 
-    <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40 h-20 flex items-center px-6">
-        <div class="max-w-6xl mx-auto w-full flex justify-between items-center relative">
-            <a href="#" class="absolute left-0 top-1/2 -translate-y-1/2 block">
-                <img src="./img/pnglogo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
+    <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto w-full h-20 flex items-center justify-between px-6 relative">
+            <a href="#" onclick="filterCategory('TODOS')" class="absolute left-6 top-1/2 -translate-y-1/2 block">
+                <img src="./img/logo.png" alt="LOOT Logo" class="h-24 w-auto object-contain block max-w-none">
             </a>
-            <div class="ml-auto flex items-center gap-4">
-                <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ LAB_STATUS: ONLINE ]</span>
+            
+            <nav class="hidden md:flex items-center gap-8 mx-auto font-mono text-xs tracking-wider">
+                <button onclick="filterCategory('TODOS')" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">VER_TODO</button>
+                
+                <div class="relative group py-7">
+                    <button class="text-neutral-400 group-hover:text-[#00ffcc] transition-colors flex items-center gap-1 cursor-pointer">
+                        REPARACIONES <span class="text-[9px] text-neutral-600">▼</span>
+                    </button>
+                    <div class="mega-menu hidden absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-[#121212] border border-neutral-800 rounded-xl p-6 shadow-2xl mt-1">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_MARCA</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('IPHONE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Apple iPhone</button></li>
+                                    <li><button onclick="filterCategory('SAMSUNG')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Samsung Galaxy</button></li>
+                                    <li><button onclick="filterCategory('MOTOROLA')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Motorola Moto</button></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_COMPONENTE</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('DISPLAY_FIX')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Pantallas / Módulos</button></li>
+                                    <li><button onclick="filterCategory('POWER_CELL')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Baterías</button></li>
+                                    <li><button onclick="filterCategory('MICRO_CORE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Placas / Soldadura</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="filterCategory('ACCESORIOS')" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">ACCESORIOS</button>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-neutral-500 font-mono hidden sm:inline">[ LAB: ONLINE ]</span>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl w-full mx-auto p-6 my-8 flex-grow">
-        <div class="border-b border-neutral-900 pb-6 mb-10">
-            <h2 class="text-3xl font-extrabold text-white tracking-tight">Catálogo de Soluciones</h2>
-            <p class="text-neutral-400 text-sm mt-1">Hacé clic en cualquier tarjeta para ver los detalles técnicos y garantía.</p>
-        </div>
+    <section class="bg-[#0e0e0e] border-b border-neutral-900 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="text-xs text-neutral-400 font-mono">
+                SECCIÓN: <span id="activeSection" class="text-[#00ffcc]">TODOS</span>
+            </div>
 
+            <div class="flex items-center gap-2">
+                <label for="sortPrices" class="text-xs text-neutral-500 font-mono">ORDENAR_POR:</label>
+                <select id="sortPrices" onchange="sortProducts(this.value)" class="bg-[#121212] border border-neutral-800 text-xs text-neutral-300 rounded px-3 py-1.5 focus:outline-none focus:border-[#00ffcc] font-mono cursor-pointer">
+                    <option value="default">Relevancia</option>
+                    <option value="low">Menor Precio</option>
+                    <option value="high">Mayor Precio</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-6xl w-full mx-auto p-6 my-4 flex-grow">
         <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
     </main>
 
     <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CONFIGURACIÓN_SISTEMA (SESIÓN INICIADA)</h3>
+            <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// AGREGAR_PRODUCTO_SISTEMA</h3>
             <button onclick="closeAdminPanel()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
         </div>
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo iPhone 11)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <input type="text" id="pPrice" placeholder="Precio (Ej: 45000 o A Convenir)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pTitle" placeholder="Título (Ej: Módulo iPhone 11 Pro)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="number" id="pPrice" placeholder="Precio en números (Ej: 45000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="text" id="pImg" placeholder="Ruta de imagen (Ej: ./img/pantalla.jpg)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <input type="text" id="pTag" placeholder="Etiqueta corta (Ej: IPHONE, MOTOROLA, PLACA)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <textarea id="pDesc" placeholder="Descripción extendida tipo Mercado Libre..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
+            <input type="text" id="pTag" placeholder="Categorías separadas por espacio (Ej: IPHONE DISPLAY_FIX)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <textarea id="pDesc" placeholder="Detalles técnicos..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
             <button type="submit" class="md:col-span-2 bg-[#00ffcc] text-black font-bold text-xs py-3 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">CARGAR_AL_CATALOGO</button>
         </form>
     </div>
@@ -82,49 +129,75 @@
     </footer>
 
     <script>
-        const WHATSAPP_NUMBER = "5492211234567"; 
-
-        // CREDENCIALES COMPROBACIÓN INTERNA
+        const WHATSAPP_NUMBER = "5492211234567";
         const ADMIN_USER = "admin";
-        const ADMIN_PASS = "loot2026"; 
+        const ADMIN_PASS = "loot2026";
 
+        // Cambiamos el campo 'price' a número puro para poder ordenarlos de menor a mayor correctamente
         let productos = [
             {
                 id: 1,
-                title: "Cambio de Módulo / Pantalla",
-                price: "$18.000",
+                title: "Cambio de Módulo / Pantalla iPhone",
+                price: 18000,
                 img: "./img/pantalla.jpg",
-                tag: "DISPLAY_FIX",
-                desc: "Características del servicio:\n• Instalación de pantallas OLED / Incell de alta calidad.\n• Solución definitiva a vidrios estallados, manchas líquidas o táctil fantasma.\n• Incluye pegado industrial de alta precisión y sellado básico contra polvo.\n\nGarantía oficial de laboratorio por fallas de fábrica."
+                tag: "IPHONE DISPLAY_FIX",
+                desc: "Características del servicio:\n• Instalación de pantallas OLED / Incell de alta calidad para iPhone.\n• Reparación oficial con TrueTone programado."
             },
             {
                 id: 2,
-                title: "Cambio de Batería Alta Densidad",
-                price: "$12.500",
+                title: "Batería Alta Densidad Motorola / Samsung",
+                price: 12500,
                 img: "./img/bateria.jpg",
-                tag: "POWER_CELL",
-                desc: "Características del servicio:\n• Reemplazo de celdas de litio degradadas o infladas.\n• Componentes homologados con chip de control térmico activo.\n• Recupera la autonomía original del dispositivo sin sobrecalentar el procesador.\n\nSe entrega con certificación de ciclos de carga en cero."
+                tag: "MOTOROLA SAMSUNG POWER_CELL",
+                desc: "Reemplazo de baterías degradadas u originales con celdas de litio certificadas para alta autonomía."
             },
             {
                 id: 3,
-                title: "Micro-soldadura de Placa Base",
-                price: "A Convenir",
+                title: "Micro-soldadura Placa Base Completa",
+                price: 32000,
                 img: "./img/micro.jpg",
-                tag: "MICRO_CORE",
-                desc: "Análisis avanzado en microscopio:\n• Reparación estructural de integrados complejos (PMIC, Tristar, Códec de Audio).\n• Solución a cortos totales por humedad, sobretensión o cargadores genéricos.\n• Reconstrucción de pistas microscópicas bajo técnica de jumpering.\n\nDiagnóstico inicial sin cargo en equipos no manoseados."
+                tag: "IPHONE SAMSUNG MICRO_CORE",
+                desc: "Reparación estructural de integrados complejos de carga, cortos por humedad o rebaling profundo."
+            },
+            {
+                id: 4,
+                title: "Funda Protectora Blindada Ring",
+                price: 4500,
+                img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500",
+                tag: "ACCESORIOS",
+                desc: "Funda de alta resistencia contra impactos con anillo magnético trasero integrado."
             }
         ];
 
+        let currentCategory = "TODOS";
+        let currentSort = "default";
+
+        // Dibujar elementos aplicando filtros y orden al mismo tiempo
         function renderProducts() {
             const container = document.getElementById('catalogo');
             container.innerHTML = "";
-            productos.forEach(p => {
+
+            // 1. Filtrar
+            let filtered = productos.filter(p => {
+                if (currentCategory === "TODOS") return true;
+                return p.tag.toUpperCase().includes(currentCategory.toUpperCase());
+            });
+
+            // 2. Ordenar
+            if (currentSort === "low") {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (currentSort === "high") {
+                filtered.sort((a, b) => b.price - a.price);
+            }
+
+            // 3. Renderizar
+            filtered.forEach(p => {
                 const card = `
                     <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                         <div>
                             <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
                                 <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
-                                <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag}</span>
+                                <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
                             </div>
                             <div class="p-5">
                                 <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">${p.title}</h3>
@@ -134,7 +207,7 @@
                         <div class="p-5 pt-0">
                             <div class="flex justify-between items-baseline">
                                 <span class="text-neutral-500 text-xs font-mono">PRECIO:</span>
-                                <span class="text-[#00ffcc] text-lg font-extrabold font-mono">${p.price}</span>
+                                <span class="text-[#00ffcc] text-lg font-extrabold font-mono">$${p.price.toLocaleString('es-AR')}</span>
                             </div>
                         </div>
                     </div>
@@ -143,60 +216,61 @@
             });
         }
 
-        // 🔒 SISTEMA DE CONTROL DE ACCESO
-        function checkAccess() {
-            const userInput = prompt("Introduce tu identificador [USER]:");
-            if (userInput === null) return; // Cancelado
-
-            const passInput = prompt("Introduce tu clave de cifrado [PASSWORD]:");
-            if (passInput === null) return; // Cancelado
-
-            if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
-                const panel = document.getElementById('adminPanel');
-                panel.classList.remove('hidden');
-                panel.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                alert("❌ ACCESO DENEGADO: Credenciales incorrectas. Evento reportado.");
-            }
+        // Cambiar categoría desde el menú
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.getElementById('activeSection').innerText = cat;
+            renderProducts();
         }
 
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Cambiar ordenamiento de precios
+        function sortProducts(order) {
+            currentSort = order;
+            renderProducts();
         }
 
+        // Modals y accesos
         function openModal(id) {
             const item = productos.find(p => p.id === id);
             if (!item) return;
             document.getElementById('modalImg').src = item.img;
             document.getElementById('modalTitle').innerText = item.title;
-            document.getElementById('modalPrice').innerText = item.price;
+            document.getElementById('modalPrice').innerText = `$${item.price.toLocaleString('es-AR')}`;
             document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
             document.getElementById('modalDesc').innerText = item.desc;
-            const msj = encodeURIComponent(`Hola! Vi en tu catálogo el servicio "${item.title}" y me interesa consultar por un equipo.`);
+            const msj = encodeURIComponent(`Hola! Vi el servicio "${item.title}" en el catálogo y quiero consultar.`);
             document.getElementById('modalWaBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msj}`;
             document.getElementById('mlModal').classList.remove('hidden');
         }
 
-        function closeModal() {
-            document.getElementById('mlModal').classList.add('hidden');
+        function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
+
+        function checkAccess() {
+            const userInput = prompt("USER:"); if (userInput === null) return;
+            const passInput = prompt("PASSWORD:"); if (passInput === null) return;
+            if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
+                const panel = document.getElementById('adminPanel');
+                panel.classList.remove('hidden');
+                panel.scrollIntoView({ behavior: 'smooth' });
+            } else { alert("Acceso denegado."); }
         }
+
+        function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
 
         function addProduct(e) {
             e.preventDefault();
             const newProduct = {
                 id: Date.now(),
                 title: document.getElementById('pTitle').value,
-                price: document.getElementById('pPrice').value.includes('$') || isNaN(document.getElementById('pPrice').value) ? document.getElementById('pPrice').value : '$' + document.getElementById('pPrice').value,
+                price: parseFloat(document.getElementById('pPrice').value),
                 img: document.getElementById('pImg').value,
-                tag: document.getElementById('pTag').value,
+                tag: document.getElementById('pTag').value.toUpperCase(),
                 desc: document.getElementById('pDesc').value
             };
             productos.push(newProduct);
             renderProducts();
             document.getElementById('productForm').reset();
             document.getElementById('adminPanel').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         renderProducts();
