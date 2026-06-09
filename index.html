@@ -193,17 +193,25 @@
 
         // Función criptográfica corregida sin espacios invisibles extraños
         // REEMPLAZÁ TU FUNCIÓN ACTUAL POR ESTA:
-        async function checkAccess() {
+        // Borrá la función antigua 'async function sha256' por completo si no la usas.
+        // Y reemplazá 'checkAccess' con esto:
+
+        function checkAccess() {
             const u = prompt("USER:"); 
-            const p = prompt("PASSWORD:");
+            if (u === null) return;
             
-            // Verificación directa sin hashes
+            const p = prompt("PASSWORD:");
+            if (p === null) return;
+            
+            // Verificación simple y directa
             if (u === "admin" && p === "loot2026") {
                 const panel = document.getElementById('adminPanel');
-                panel.classList.remove('hidden');
-                panel.scrollIntoView({ behavior: 'smooth' });
+                if (panel) {
+                    panel.classList.remove('hidden');
+                    panel.scrollIntoView({ behavior: 'smooth' });
+                }
             } else { 
-                alert("Acceso denegado. Usuario o contraseña incorrectos."); 
+                alert("Acceso denegado."); 
             }
         }
 
