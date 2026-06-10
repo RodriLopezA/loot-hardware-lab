@@ -223,8 +223,22 @@
     <div id="mlModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-[#121212] border border-neutral-800 w-full max-w-4xl rounded-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
-            <div class="w-full md:w-1/2 bg-neutral-950 flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-neutral-900">
-                <img id="modalImg" src="" alt="" class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded">
+            <div class="w-full md:w-1/2 bg-neutral-950 p-4 border-b md:border-b-0 md:border-r border-neutral-900">
+
+                <div class="flex items-center justify-center">
+                    <img
+                        id="modalImg"
+                        src=""
+                        alt=""
+                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded"
+                    >
+                </div>
+
+                <div
+                    id="modalGallery"
+                    class="flex gap-2 mt-4 overflow-x-auto">
+                </div>
+
             </div>
             <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
                 <div>
@@ -267,11 +281,17 @@
         // Agregamos el parámetro 'isOffer' para saber cuáles se renderizan directo en el Inicio
         let productos = [];
         let editingProductId = null;
-            async function cargarProductos() {
+        async function cargarProductos() {
 
             const { data, error } = await db
                 .from("productos")
-                .select("*")
+                .select(`
+                    *,
+                    producto_imagenes (
+                        id,
+                        url
+                    )
+                `)
                 .order("id", { ascending: false });
 
             if (error) {
@@ -280,13 +300,20 @@
             }
 
             productos = data.map(p => ({
+
                 id: p.id,
                 title: p.title,
                 price: Number(p.price),
                 img: p.img,
                 tag: p.tag,
                 isOffer: p.is_offer,
-                desc: p.descripcion
+                desc: p.descripcion,
+
+                images: [
+                    p.img,
+                    ...(p.producto_imagenes || []).map(i => i.url)
+                ]
+
             }));
 
             renderAll();
@@ -433,6 +460,26 @@
             const item = productos.find(p => p.id === id);
             if (!item) return;
             document.getElementById('modalImg').src = item.img;
+            const gallery =
+                document.getElementById("modalGallery");
+
+            gallery.innerHTML = "";
+
+            if (item.images) {
+
+                item.images.forEach(imgUrl => {
+
+                    gallery.innerHTML += `
+                        <img
+                            src="${imgUrl}"
+                            onclick="changeModalImage('${imgUrl}')"
+                            class="w-16 h-16 object-cover rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc]"
+                        >
+                    `;
+
+                });
+
+            }
             document.getElementById('modalTitle').innerText = item.title;
             document.getElementById('modalPrice').innerText = `$${item.price.toLocaleString('es-AR')}`;
             document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
@@ -443,6 +490,12 @@
         }
 
         function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
+        function changeModalImage(url) {
+
+            document.getElementById("modalImg").src =
+                url;
+
+        }
 
         function checkAccess() {
             document.getElementById("loginPanel").classList.remove("hidden");
