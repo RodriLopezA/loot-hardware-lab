@@ -169,6 +169,9 @@
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <label class="text-xs text-neutral-400 font-mono">
+                IMÁGENES DEL PRODUCTO (podés seleccionar varias)
+            </label>
             <input      
                 type="file"
                 id="pImg"
@@ -177,11 +180,12 @@
                 multiple
             >
             <div class="md:col-span-2">
-                <img
-                    id="previewImage"
-                    src=""
-                    class="hidden w-48 h-48 object-cover rounded-lg border border-neutral-800 mt-2"
-                >
+
+                <div
+                    id="previewContainer"
+                    class="hidden flex flex-wrap gap-3 mt-3">
+                </div>
+
             </div>
 
                     <select
@@ -585,9 +589,12 @@
 
                 document.getElementById('productForm').reset();
                 document
-                .getElementById("previewImage")
+                .getElementById("previewContainer")
                 .classList.add("hidden");
 
+                document
+                .getElementById("previewContainer")
+                .innerHTML = "";
                 await cargarProductos();
 
                 return;
@@ -736,12 +743,17 @@
 
             document.getElementById("pIsOffer").value =
                 producto.isOffer ? "true" : "false";
-            const preview =
-                document.getElementById("previewImage");
+            const container =
+                document.getElementById("previewContainer");
 
-            preview.src = producto.img;
+            container.innerHTML = `
+                <img
+                    src="${producto.img}"
+                    class="w-24 h-24 object-cover rounded border border-neutral-700"
+                >
+            `;
 
-            preview.classList.remove("hidden");
+            container.classList.remove("hidden");
 
             window.scrollTo({
                 top: document.getElementById("adminPanel").offsetTop,
@@ -749,21 +761,38 @@
             });
         }
         document
-        .getElementById("pImg")
-        .addEventListener("change", function(e) {
+            .getElementById("pImg")
+            .addEventListener("change", function(e) {
 
-            const file = e.target.files[0];
+                const files = e.target.files;
 
-            if (!file) return;
+                const container =
+                    document.getElementById("previewContainer");
 
-            const preview =
-                document.getElementById("previewImage");
+                container.innerHTML = "";
 
-            preview.src =
-                URL.createObjectURL(file);
+                if (files.length === 0) {
+                    container.classList.add("hidden");
+                    return;
+                }
 
-            preview.classList.remove("hidden");
-        });
+                container.classList.remove("hidden");
+
+                Array.from(files).forEach(file => {
+
+                    const img =
+                        document.createElement("img");
+
+                    img.src =
+                        URL.createObjectURL(file);
+
+                    img.className =
+                        "w-24 h-24 object-cover rounded border border-neutral-700";
+
+                    container.appendChild(img);
+                });
+
+            });
         // Ejecución inicial
         cargarProductos();
     </script>
