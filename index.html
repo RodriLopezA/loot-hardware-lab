@@ -174,6 +174,7 @@
                 id="pImg"
                 accept="image/*"
                 class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"
+                multiple
             >
             <div class="md:col-span-2">
                 <img
@@ -532,8 +533,7 @@
 
                 imageUrl = productoActual.img;
 
-                const file =
-                    document.getElementById('pImg').files[0];
+                const file = document.getElementById('pImg').files[0];
 
                 // Si seleccionó nueva imagen
                 if (file) {
@@ -597,21 +597,22 @@
             // CREAR PRODUCTO NUEVO
             // =====================
 
-            const file =
-                document.getElementById('pImg').files[0];
+            const files = document.getElementById('pImg').files;
 
-            if (!file) {
-                alert("Seleccioná una imagen");
+            if (files.length === 0) {
+                alert("Seleccioná al menos una imagen");
                 return;
             }
 
+            const mainFile = files[0];
+
             const fileName =
-                `${Date.now()}-${file.name}`;
+                `${Date.now()}-${mainFile.name}`;
 
             const { error: uploadError } =
                 await db.storage
                     .from('productos')
-                    .upload(fileName, file);
+                    .upload(fileName, mainFile);
 
             if (uploadError) {
                 console.error(uploadError);
@@ -636,15 +637,52 @@
                 descripcion: document.getElementById('pDesc').value
             };
 
-            const { error } =
+            const { data: insertedProduct, error } =
                 await db
                     .from('productos')
-                    .insert([nuevoProducto]);
+                    .insert([nuevoProducto])
+                    .select()
+                    .single();
 
             if (error) {
                 console.error(error);
                 alert("Error al guardar producto");
                 return;
+            }
+            // =======================
+            // IMÁGENES ADICIONALES
+            // =======================
+
+            for (let i = 1; i < files.length; i++) {
+
+                const extraFile = files[i];
+
+                const extraFileName =
+                    `${Date.now()}-${i}-${extraFile.name}`;
+
+                const { error: uploadExtraError } =
+                    await db.storage
+                        .from('productos')
+                        .upload(extraFileName, extraFile);
+
+                if (uploadExtraError) {
+                    console.error(uploadExtraError);
+                    continue;
+                }
+
+                const { data: extraUrlData } =
+                    db.storage
+                        .from('productos')
+                        .getPublicUrl(extraFileName);
+
+                await db
+                    .from('producto_imagenes')
+                    .insert([
+                        {
+                            producto_id: insertedProduct.id,
+                            url: extraUrlData.publicUrl
+                        }
+                    ]);
             }
 
             alert("Producto publicado correctamente");
