@@ -179,6 +179,13 @@
                 accept="image/*"
                 class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"
             >
+            <div class="md:col-span-2">
+                <img
+                    id="previewImage"
+                    src=""
+                    class="hidden w-48 h-48 object-cover rounded-lg border border-neutral-800 mt-2"
+                >
+            </div>
 
                     <select
                         id="pTag"
@@ -581,6 +588,9 @@
                 editingProductId = null;
 
                 document.getElementById('productForm').reset();
+                document
+                .getElementById("previewImage")
+                .classList.add("hidden");
 
                 await cargarProductos();
 
@@ -692,13 +702,34 @@
 
             document.getElementById("pIsOffer").value =
                 producto.isOffer ? "true" : "false";
+            const preview =
+                document.getElementById("previewImage");
+
+            preview.src = producto.img;
+
+            preview.classList.remove("hidden");
 
             window.scrollTo({
                 top: document.getElementById("adminPanel").offsetTop,
                 behavior: "smooth"
             });
         }
+        document
+        .getElementById("pImg")
+        .addEventListener("change", function(e) {
 
+            const file = e.target.files[0];
+
+            if (!file) return;
+
+            const preview =
+                document.getElementById("previewImage");
+
+            preview.src =
+                URL.createObjectURL(file);
+
+            preview.classList.remove("hidden");
+        });
         // Ejecución inicial
         cargarProductos();
     </script>
