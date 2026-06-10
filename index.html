@@ -115,50 +115,13 @@
         </section>
 
         
-        <section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-5">
-                <div class="flex items-center justify-between gap-4 border-b border-neutral-900 pb-4">
-                    <div>
-                        <p class="text-[#00ffcc] font-mono text-xs">// DIAGNOSTICO_RAPIDO</p>
-                        <h2 class="text-2xl font-extrabold text-white mt-1">Contanos que le pasa a tu equipo</h2>
-                    </div>
-                    <span class="text-neutral-500 font-mono text-xs hidden sm:inline">WHATSAPP_DIRECTO</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <select id="diagDevice" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
-                        <option value="">Tipo de equipo</option>
-                        <option value="celular">Celular</option>
-                        <option value="tablet">Tablet</option>
-                        <option value="notebook">Notebook</option>
-                        <option value="consola">Consola</option>
-                    </select>
-                    <select id="diagIssue" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
-                        <option value="">Falla principal</option>
-                        <option value="pantalla rota o sin imagen">Pantalla rota / sin imagen</option>
-                        <option value="no carga">No carga</option>
-                        <option value="no prende">No prende</option>
-                        <option value="se mojo">Se mojo</option>
-                        <option value="bateria dura poco">Bateria dura poco</option>
-                        <option value="pin de carga flojo">Pin de carga flojo</option>
-                    </select>
-                </div>
-                <textarea id="diagDetail" rows="3" placeholder="Marca, modelo y algun detalle extra..." class="w-full bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"></textarea>
-                <div id="diagResult" class="hidden bg-neutral-950 border border-neutral-800 rounded-lg p-4 text-sm text-neutral-300"></div>
-                <button onclick="sendDiagnostic()" class="w-full sm:w-auto bg-[#00ffcc] text-black font-bold text-xs py-3 px-5 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">
-                    ENVIAR_DIAGNOSTICO
-                </button>
+        <section class="space-y-6">
+            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
+                <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
             </div>
-
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
-                <p class="text-[#00ffcc] font-mono text-xs">// CONFIANZA</p>
-                <h2 class="text-2xl font-extrabold text-white">Como trabajamos</h2>
-                <div class="space-y-3 text-sm text-neutral-300">
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">01</span><p>Revisamos el equipo y te contamos la falla real antes de tocar nada.</p></div>
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">02</span><p>Pasamos presupuesto claro y explicamos que repuesto se usa.</p></div>
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">03</span><p>Reparamos solo si aprobas el trabajo y probamos funciones clave.</p></div>
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">04</span><p>Entregamos con garantia escrita segun el tipo de reparacion.</p></div>
+            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 </div>
-            </div>
         </section>
 
         <section class="space-y-6">
@@ -209,13 +172,50 @@
             </div>
         </section>
 
-<section class="space-y-6">
-            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
-                <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
-                <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
-            </div>
-            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-5">
+                <div class="flex items-center justify-between gap-4 border-b border-neutral-900 pb-4">
+                    <div>
+                        <p class="text-[#00ffcc] font-mono text-xs">// DIAGNOSTICO_RAPIDO</p>
+                        <h2 class="text-2xl font-extrabold text-white mt-1">Contanos que le pasa a tu equipo</h2>
+                    </div>
+                    <span class="text-neutral-500 font-mono text-xs hidden sm:inline">WHATSAPP_DIRECTO</span>
                 </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <select id="diagDevice" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Tipo de equipo</option>
+                        <option value="celular">Celular</option>
+                        <option value="tablet">Tablet</option>
+                        <option value="notebook">Notebook</option>
+                        <option value="consola">Consola</option>
+                    </select>
+                    <select id="diagIssue" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Falla principal</option>
+                        <option value="pantalla rota o sin imagen">Pantalla rota / sin imagen</option>
+                        <option value="no carga">No carga</option>
+                        <option value="no prende">No prende</option>
+                        <option value="se mojo">Se mojo</option>
+                        <option value="bateria dura poco">Bateria dura poco</option>
+                        <option value="pin de carga flojo">Pin de carga flojo</option>
+                    </select>
+                </div>
+                <textarea id="diagDetail" rows="3" placeholder="Marca, modelo y algun detalle extra..." class="w-full bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"></textarea>
+                <div id="diagResult" class="hidden bg-neutral-950 border border-neutral-800 rounded-lg p-4 text-sm text-neutral-300"></div>
+                <button onclick="sendDiagnostic()" class="w-full sm:w-auto bg-[#00ffcc] text-black font-bold text-xs py-3 px-5 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">
+                    ENVIAR_DIAGNOSTICO
+                </button>
+            </div>
+
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
+                <p class="text-[#00ffcc] font-mono text-xs">// CONFIANZA</p>
+                <h2 class="text-2xl font-extrabold text-white">Como trabajamos</h2>
+                <div class="space-y-3 text-sm text-neutral-300">
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">01</span><p>Revisamos el equipo y te contamos la falla real antes de tocar nada.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">02</span><p>Pasamos presupuesto claro y explicamos que repuesto se usa.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">03</span><p>Reparamos solo si aprobas el trabajo y probamos funciones clave.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">04</span><p>Entregamos con garantia escrita segun el tipo de reparacion.</p></div>
+                </div>
+            </div>
         </section>
 
         <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
@@ -387,6 +387,22 @@
             </div>
         </div>
     </div>
+
+
+    <section class="border-t border-neutral-900 bg-[#0e0e0e] px-6 py-8">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div>
+                <p class="text-[#00ffcc] font-mono text-xs">// CONTACTO_DIRECTO</p>
+                <h2 class="text-white text-2xl font-extrabold mt-1">Hablemos de tu equipo</h2>
+                <p class="text-neutral-400 text-sm mt-2">Consultas, presupuestos, turnos y trabajos realizados.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full md:w-auto">
+                <a href="https://wa.me/542215676073" target="_blank" class="bg-[#00ffcc] text-black font-bold text-xs text-center py-3 px-5 rounded hover:bg-cyan-400 transition-colors font-mono">WHATSAPP</a>
+                <a href="https://www.instagram.com/" target="_blank" class="bg-[#181818] border border-neutral-800 text-white font-bold text-xs text-center py-3 px-5 rounded hover:border-[#00ffcc] transition-colors font-mono">INSTAGRAM</a>
+                <a href="https://www.facebook.com/" target="_blank" class="bg-[#181818] border border-neutral-800 text-white font-bold text-xs text-center py-3 px-5 rounded hover:border-[#00ffcc] transition-colors font-mono">FACEBOOK</a>
+            </div>
+        </div>
+    </section>
 
     <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
         <div>&copy; 2026 LOOT HARDWARE LAB - SYSTEM_REPAIR_LAB</div>
