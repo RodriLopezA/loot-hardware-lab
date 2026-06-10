@@ -114,7 +114,102 @@
             </div>
         </section>
 
+        
+        <section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-5">
+                <div class="flex items-center justify-between gap-4 border-b border-neutral-900 pb-4">
+                    <div>
+                        <p class="text-[#00ffcc] font-mono text-xs">// DIAGNOSTICO_RAPIDO</p>
+                        <h2 class="text-2xl font-extrabold text-white mt-1">Contanos que le pasa a tu equipo</h2>
+                    </div>
+                    <span class="text-neutral-500 font-mono text-xs hidden sm:inline">WHATSAPP_DIRECTO</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <select id="diagDevice" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Tipo de equipo</option>
+                        <option value="celular">Celular</option>
+                        <option value="tablet">Tablet</option>
+                        <option value="notebook">Notebook</option>
+                        <option value="consola">Consola</option>
+                    </select>
+                    <select id="diagIssue" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Falla principal</option>
+                        <option value="pantalla rota o sin imagen">Pantalla rota / sin imagen</option>
+                        <option value="no carga">No carga</option>
+                        <option value="no prende">No prende</option>
+                        <option value="se mojo">Se mojo</option>
+                        <option value="bateria dura poco">Bateria dura poco</option>
+                        <option value="pin de carga flojo">Pin de carga flojo</option>
+                    </select>
+                </div>
+                <textarea id="diagDetail" rows="3" placeholder="Marca, modelo y algun detalle extra..." class="w-full bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"></textarea>
+                <div id="diagResult" class="hidden bg-neutral-950 border border-neutral-800 rounded-lg p-4 text-sm text-neutral-300"></div>
+                <button onclick="sendDiagnostic()" class="w-full sm:w-auto bg-[#00ffcc] text-black font-bold text-xs py-3 px-5 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">
+                    ENVIAR_DIAGNOSTICO
+                </button>
+            </div>
+
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
+                <p class="text-[#00ffcc] font-mono text-xs">// CONFIANZA</p>
+                <h2 class="text-2xl font-extrabold text-white">Como trabajamos</h2>
+                <div class="space-y-3 text-sm text-neutral-300">
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">01</span><p>Revisamos el equipo y te contamos la falla real antes de tocar nada.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">02</span><p>Pasamos presupuesto claro y explicamos que repuesto se usa.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">03</span><p>Reparamos solo si aprobas el trabajo y probamos funciones clave.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">04</span><p>Entregamos con garantia escrita segun el tipo de reparacion.</p></div>
+                </div>
+            </div>
+        </section>
+
         <section class="space-y-6">
+            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">Servicios destacados</h2>
+                <span class="text-xs font-mono text-neutral-500">REPARACIONES / ELECTRONICA</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <article class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1581993192008-63e896f4f744?w=700" alt="Cambio de pantalla" class="h-44 w-full object-cover">
+                    <div class="p-5">
+                        <h3 class="text-white font-bold">Pantallas y modulos</h3>
+                        <p class="text-neutral-400 text-sm mt-2">Cambio de modulo, tactil, vidrio y prueba de brillo, sensores y camaras.</p>
+                    </div>
+                </article>
+                <article class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=700" alt="Microsoldadura" class="h-44 w-full object-cover">
+                    <div class="p-5">
+                        <h3 class="text-white font-bold">Placa y microsoldadura</h3>
+                        <p class="text-neutral-400 text-sm mt-2">Diagnostico de corto, humedad, pin de carga, lineas de consumo y componentes.</p>
+                    </div>
+                </article>
+                <article class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1616410011236-7a42121dd981?w=700" alt="Accesorios electronicos" class="h-44 w-full object-cover">
+                    <div class="p-5">
+                        <h3 class="text-white font-bold">Accesorios y electronica</h3>
+                        <p class="text-neutral-400 text-sm mt-2">Base lista para sumar cargadores, cables, vidrios, auriculares y equipos reacondicionados.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5">
+                <p class="text-[#00ffcc] font-mono text-xs">// GARANTIA</p>
+                <h3 class="text-white font-bold mt-2">Reparaciones con respaldo</h3>
+                <p class="text-neutral-400 text-sm mt-2">De 3 a 6 meses segun el trabajo realizado y el repuesto instalado.</p>
+            </div>
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5">
+                <p class="text-[#00ffcc] font-mono text-xs">// REPUESTOS</p>
+                <h3 class="text-white font-bold mt-2">Componentes testeados</h3>
+                <p class="text-neutral-400 text-sm mt-2">Probamos pantalla, carga, bateria, audio, camaras y sensores antes de entregar.</p>
+            </div>
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5">
+                <p class="text-[#00ffcc] font-mono text-xs">// ESCALABLE</p>
+                <h3 class="text-white font-bold mt-2">Catalogo para crecer</h3>
+                <p class="text-neutral-400 text-sm mt-2">La misma base sirve para vender accesorios, electronica y celulares reacondicionados.</p>
+            </div>
+        </section>
+
+<section class="space-y-6">
             <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
                 <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
                 <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
@@ -232,6 +327,9 @@
                         <option value="POWER_CELL">Baterías</option>
                         <option value="MICRO_CORE">Microsoldadura</option>
                         <option value="ACCESORIOS">Accesorios</option>
+                        <option value="CARGADORES">Cargadores</option>
+                        <option value="AURICULARES">Auriculares</option>
+                        <option value="REACONDICIONADOS">Celulares reacondicionados</option>
                     </select>
                                 
             <select id="pIsOffer" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] font-mono">
@@ -610,6 +708,27 @@
         }
 
         function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
+
+        function sendDiagnostic() {
+            const device = document.getElementById("diagDevice").value;
+            const issue = document.getElementById("diagIssue").value;
+            const detail = document.getElementById("diagDetail").value.trim();
+            const result = document.getElementById("diagResult");
+
+            if (!device || !issue) {
+                result.innerText = "Elegi el tipo de equipo y la falla para armar la consulta.";
+                result.classList.remove("hidden");
+                return;
+            }
+
+            const text = encodeURIComponent(
+                `Hola LOOT! Quiero consultar por un ${device} con esta falla: ${issue}.${detail ? " Detalle: " + detail : ""}`
+            );
+
+            result.innerText = "Listo. Te abrimos WhatsApp con la consulta armada para responder mas rapido.";
+            result.classList.remove("hidden");
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+        }
         function changeModalImage(url) {
 
             document.getElementById("modalImg").src =
