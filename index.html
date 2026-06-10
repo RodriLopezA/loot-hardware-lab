@@ -611,42 +611,58 @@
         // VER SESIÓN ACTUAL
         async function checkSession() {
 
-            const { data } =
-                await db.auth.getSession();
+            try {
 
-            if (!data.session) {
-                showLogin();
-                return;
-            }
+                const { data } =
+                    await db.auth.getSession();
 
-            const email =
-                data.session.user.email;
+                console.log("SESSION:", data);
 
-            const {
-                data: admin,
-                error
-            } = await db
-                .from("admins")
-                .select("*")
-                .eq("email", email)
-                .maybeSingle();
+                if (!data.session) {
+                    showLogin();
+                    return;
+                }
 
-            if (error) {
-                console.error(error);
-                return;
-            }
+                const email =
+                    data.session.user.email;
 
-            if (admin) {
+                console.log("EMAIL:", email);
 
-                showAdmin();
+                const {
+                    data: admin,
+                    error
+                } = await db
+                    .from("admins")
+                    .select("*")
+                    .eq("email", email)
+                    .maybeSingle();
 
-            } else {
+                console.log("ADMIN:", admin);
+                console.log("ERROR:", error);
 
-                await db.auth.signOut();
+                if (error) {
+                    alert(error.message);
+                    return;
+                }
 
-                alert("No autorizado");
+                if (admin) {
 
-                showLogin();
+                    showAdmin();
+
+                } else {
+
+                    alert("No autorizado");
+
+                    await db.auth.signOut();
+
+                    showLogin();
+                }
+
+            } catch(err) {
+
+                console.error(err);
+                alert(err.message);
+
             }
         }
         // DETECTAR CAMBIOS EN LOGIN/LOGOUT
