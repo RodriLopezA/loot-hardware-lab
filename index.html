@@ -322,6 +322,8 @@
                     )
                 `)
                 .order("id", { ascending: false });
+            console.log("PRODUCTOS:", data);
+            console.log("ERROR:", error);
 
             if (error) {
                 console.error(error);
