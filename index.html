@@ -164,6 +164,29 @@
     <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CARGAR_PRODUCTO_O_OFERTA</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
+
+            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                <div class="text-xs text-neutral-500 font-mono">PRODUCTOS</div>
+                <div id="statProducts" class="text-2xl font-bold text-white">0</div>
+            </div>
+
+            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                <div class="text-xs text-neutral-500 font-mono">OFERTAS</div>
+                <div id="statOffers" class="text-2xl font-bold text-[#00ffcc]">0</div>
+            </div>
+
+            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                <div class="text-xs text-neutral-500 font-mono">IMÁGENES</div>
+                <div id="statImages" class="text-2xl font-bold text-white">0</div>
+            </div>
+
+            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                <div class="text-xs text-neutral-500 font-mono">VALOR TOTAL</div>
+                <div id="statValue" class="text-xl font-bold text-white">$0</div>
+            </div>
+
+        </div>
             <button onclick="logout()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
         </div>
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -318,6 +341,7 @@
 
             renderAll();
             renderAdminProducts();
+            renderStats();
         }
 
         let currentCategory = "TODOS";
@@ -418,6 +442,44 @@
                 `;
             });
 
+        }
+        function renderStats() {
+
+            const totalProductos =
+                productos.length;
+
+            const totalOfertas =
+                productos.filter(
+                    p => p.isOffer
+                ).length;
+
+            const totalImagenes =
+                productos.reduce((acc, p) => {
+
+                    if (!p.images)
+                        return acc + 1;
+
+                    return acc + p.images.length;
+
+                }, 0);
+
+            const valorTotal =
+                productos.reduce(
+                    (acc, p) => acc + p.price,
+                    0
+                );
+
+            document.getElementById("statProducts").innerText =
+                totalProductos;
+
+            document.getElementById("statOffers").innerText =
+                totalOfertas;
+
+            document.getElementById("statImages").innerText =
+                totalImagenes;
+
+            document.getElementById("statValue").innerText =
+                `$${valorTotal.toLocaleString("es-AR")}`;
         }
 
         function buildCard(p) {
