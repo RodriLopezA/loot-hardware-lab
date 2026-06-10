@@ -314,7 +314,13 @@
 
             const { data, error } = await db
                 .from("productos")
-                .select("*")
+                .select(`
+                    *,
+                    producto_imagenes (
+                        id,
+                        url
+                    )
+                `)
                 .order("id", { ascending: false });
             console.log("PRODUCTOS:", data);
             console.log("ERROR:", error);
