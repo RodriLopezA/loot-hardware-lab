@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOOT Hardware Lab | Inicio y Catálogo</title>
+    <meta name="description" content="Servicio técnico especializado en reparación de celulares, microsoldadura, pantallas, baterías y accesorios en La Plata.">
+    <link rel="icon" href="./img/pnglogo.png">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,9 +102,9 @@
                 </p>
                 <div class="pt-2 flex flex-wrap gap-4">
                     <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-cyan-400 transition-colors tracking-wider cursor-pointer">
-                        VER_CATALOGO_COMPLETO_→
+                        VER_CATÁLOGO_COMPLETO_→
                     </button>
-                    <a href="https://wa.me/5492211234567" target="_blank" class="bg-neutral-900 border border-neutral-800 text-white text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-neutral-800 transition-colors tracking-wider">
+                    <a href="https://wa.me/542215676073" target="_blank" class="bg-neutral-900 border border-neutral-800 text-white text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-neutral-800 transition-colors tracking-wider">
                         EVALUACIÓN_DIRECTA
                     </a>
                 </div>
@@ -124,7 +126,7 @@
         <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
             <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
                 <div class="text-[#00ffcc] font-bold text-sm">📍 UBICACIÓN</div>
-                <p class="text-neutral-400 font-sans">Calle Falsa 123, La Plata, Buenos Aires. Podés traer tu equipo sin turno previo de lunes a viernes.</p>
+                <p class="text-neutral-400 font-sans">La Plata, Buenos Aires. Podés consultar por WhatsApp o traer tu equipo coordinando previamente.</p>
             </div>
             <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
                 <div class="text-[#00ffcc] font-bold text-sm">⏱️ HORARIOS</div>
@@ -397,9 +399,13 @@
             const gridOfertas = document.getElementById('ofertas-grilla');
             gridOfertas.innerHTML = "";
             let ofertas = productos.filter(p => p.isOffer === true);
-            ofertas.forEach(p => {
-                gridOfertas.innerHTML += buildCard(p);
-            });
+            if (ofertas.length === 0) {
+                gridOfertas.innerHTML = emptyState("Todavía no hay ofertas publicadas.");
+            } else {
+                ofertas.forEach(p => {
+                    gridOfertas.innerHTML += buildCard(p);
+                });
+            }
 
             // 2. Renderizar catálogo general completo con filtros aplicados
             const gridCatalogo = document.getElementById('catalogo');
@@ -426,10 +432,22 @@
                 filtered.sort((a, b) => b.price - a.price);
             }
 
-            filtered.forEach(p => {
-                gridCatalogo.innerHTML += buildCard(p);
-            });
+            if (filtered.length === 0) {
+                gridCatalogo.innerHTML = emptyState("No encontramos productos con ese filtro.");
+            } else {
+                filtered.forEach(p => {
+                    gridCatalogo.innerHTML += buildCard(p);
+                });
+            }
         }
+        function emptyState(message) {
+            return `
+                <div class="sm:col-span-2 lg:col-span-3 border border-dashed border-neutral-800 rounded-xl p-8 text-center text-neutral-500 font-mono text-xs bg-[#101010]">
+                    ${message}
+                </div>
+            `;
+        }
+
         function renderAdminProducts() {
 
             const container = document.getElementById('adminProductsList');
