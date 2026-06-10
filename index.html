@@ -178,7 +178,6 @@
                 id="pImg"
                 accept="image/*"
                 class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"
-                required
             >
 
                     <select
@@ -257,9 +256,9 @@
             SUPABASE_URL,
             SUPABASE_ANON_KEY
         );
-
         // Agregamos el parámetro 'isOffer' para saber cuáles se renderizan directo en el Inicio
         let productos = [];
+        let editingProductId = null;
             async function cargarProductos() {
 
             const { data, error } = await db
@@ -365,7 +364,12 @@
                         </div>
 
                         <div class="flex gap-2">
-
+                            <button
+                                onclick="editProduct(${p.id})"
+                                class="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-xs font-bold"
+                            >
+                                Editar
+                            </button>
                             <button
                                 onclick="deleteProduct(${p.id})"
                                 class="bg-red-600 hover:bg-red-500 px-3 py-1 rounded text-xs font-bold"
@@ -510,18 +514,98 @@
 
             e.preventDefault();
 
-            const file = document.getElementById('pImg').files[0];
+            let imageUrl = null;
+
+            // =====================
+            // EDITAR PRODUCTO
+            // =====================
+
+            if (editingProductId) {
+
+                const productoActual =
+                    productos.find(
+                        p => p.id === editingProductId
+                    );
+
+                imageUrl = productoActual.img;
+
+                const file =
+                    document.getElementById('pImg').files[0];
+
+                // Si seleccionó nueva imagen
+                if (file) {
+
+                    const fileName =
+                        `${Date.now()}-${file.name}`;
+
+                    const { error: uploadError } =
+                        await db.storage
+                            .from('productos')
+                            .upload(fileName, file);
+
+                    if (uploadError) {
+                        console.error(uploadError);
+                        alert("Error al subir imagen");
+                        return;
+                    }
+
+                    const { data: publicUrlData } =
+                        db.storage
+                            .from('productos')
+                            .getPublicUrl(fileName);
+
+                    imageUrl =
+                        publicUrlData.publicUrl;
+                }
+
+                const { error } = await db
+                    .from("productos")
+                    .update({
+                        title: document.getElementById('pTitle').value,
+                        price: parseFloat(document.getElementById('pPrice').value),
+                        img: imageUrl,
+                        tag: document.getElementById('pTag').value,
+                        is_offer: document.getElementById('pIsOffer').value === "true",
+                        descripcion: document.getElementById('pDesc').value
+                    })
+                    .eq("id", editingProductId);
+
+                if (error) {
+                    console.error(error);
+                    alert("Error al actualizar");
+                    return;
+                }
+
+                alert("Producto actualizado");
+
+                editingProductId = null;
+
+                document.getElementById('productForm').reset();
+
+                await cargarProductos();
+
+                return;
+            }
+
+            // =====================
+            // CREAR PRODUCTO NUEVO
+            // =====================
+
+            const file =
+                document.getElementById('pImg').files[0];
 
             if (!file) {
                 alert("Seleccioná una imagen");
                 return;
             }
 
-            const fileName = `${Date.now()}-${file.name}`;
+            const fileName =
+                `${Date.now()}-${file.name}`;
 
-            const { error: uploadError } = await db.storage
-                .from('productos')
-                .upload(fileName, file);
+            const { error: uploadError } =
+                await db.storage
+                    .from('productos')
+                    .upload(fileName, file);
 
             if (uploadError) {
                 console.error(uploadError);
@@ -529,11 +613,13 @@
                 return;
             }
 
-            const { data: publicUrlData } = db.storage
-                .from('productos')
-                .getPublicUrl(fileName);
+            const { data: publicUrlData } =
+                db.storage
+                    .from('productos')
+                    .getPublicUrl(fileName);
 
-            const imageUrl = publicUrlData.publicUrl;
+            imageUrl =
+                publicUrlData.publicUrl;
 
             const nuevoProducto = {
                 title: document.getElementById('pTitle').value,
@@ -544,9 +630,10 @@
                 descripcion: document.getElementById('pDesc').value
             };
 
-            const { error } = await db
-                .from('productos')
-                .insert([nuevoProducto]);
+            const { error } =
+                await db
+                    .from('productos')
+                    .insert([nuevoProducto]);
 
             if (error) {
                 console.error(error);
@@ -580,6 +667,36 @@
             }
 
             await cargarProductos();
+        }
+        function editProduct(id) {
+
+            const producto = productos.find(
+                p => p.id === id
+            );
+
+            if (!producto) return;
+
+            editingProductId = id;
+
+            document.getElementById("pTitle").value =
+                producto.title;
+
+            document.getElementById("pPrice").value =
+                producto.price;
+
+            document.getElementById("pTag").value =
+                producto.tag;
+
+            document.getElementById("pDesc").value =
+                producto.desc;
+
+            document.getElementById("pIsOffer").value =
+                producto.isOffer ? "true" : "false";
+
+            window.scrollTo({
+                top: document.getElementById("adminPanel").offsetTop,
+                behavior: "smooth"
+            });
         }
 
         // Ejecución inicial
