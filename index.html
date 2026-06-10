@@ -593,6 +593,8 @@
                 password
             });
 
+            console.log("LOGIN DATA:", data);
+            console.log("LOGIN ERROR:", error);
             if (error) {
                 document.getElementById("loginError").innerText = error.message;
                 return;
