@@ -324,6 +324,24 @@
                 return;
             }
 
+            const { data: imagenes, error: imagenesError } = await db
+                .from("producto_imagenes")
+                .select("producto_id, url");
+
+            if (imagenesError) {
+                console.error(imagenesError);
+            }
+
+            const imagenesPorProducto = {};
+
+            (imagenes || []).forEach(img => {
+                if (!imagenesPorProducto[img.producto_id]) {
+                    imagenesPorProducto[img.producto_id] = [];
+                }
+
+                imagenesPorProducto[img.producto_id].push(img.url);
+            });
+
             productos = data.map(p => ({
 
                 id: p.id,
@@ -336,7 +354,7 @@
 
                 images: [
                     p.img,
-                    ...(p.producto_imagenes || []).map(i => i.url)
+                    ...(imagenesPorProducto[p.id] || [])
                 ]
 
             }));
@@ -496,12 +514,21 @@
         }
 
         function buildCard(p) {
+            const thumbnails = (p.images || [])
+                .filter(Boolean)
+                .slice(0, 4)
+                .map(imgUrl => `
+                    <img src="${imgUrl}" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950">
+                `)
+                .join("");
+
             return `
                 <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                     <div>
                         <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
                             <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
                             <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
+                            ${thumbnails ? `<div class="absolute left-3 bottom-3 flex gap-1.5">${thumbnails}</div>` : ""}
                         </div>
                         <div class="p-5">
                             <h3 class="text-white font-bold text-base group-hover:text-[#00ffcc] transition-colors">${p.title}</h3>
@@ -711,18 +738,20 @@
 
                 imageUrl = productoActual.img;
 
-                const file = document.getElementById('pImg').files[0];
+                const files = document.getElementById('pImg').files;
 
                 // Si seleccionó nueva imagen
-                if (file) {
+                if (files.length > 0) {
+
+                    const mainFile = files[0];
 
                     const fileName =
-                        `${Date.now()}-${file.name}`;
+                        `${Date.now()}-${mainFile.name}`;
 
                     const { error: uploadError } =
                         await db.storage
                             .from('productos')
-                            .upload(fileName, file);
+                            .upload(fileName, mainFile);
 
                     if (uploadError) {
                         console.error(uploadError);
@@ -737,6 +766,43 @@
 
                     imageUrl =
                         publicUrlData.publicUrl;
+
+                    await db
+                        .from("producto_imagenes")
+                        .delete()
+                        .eq("producto_id", editingProductId);
+
+                    for (let i = 1; i < files.length; i++) {
+
+                        const extraFile = files[i];
+
+                        const extraFileName =
+                            `${Date.now()}-${i}-${extraFile.name}`;
+
+                        const { error: uploadExtraError } =
+                            await db.storage
+                                .from('productos')
+                                .upload(extraFileName, extraFile);
+
+                        if (uploadExtraError) {
+                            console.error(uploadExtraError);
+                            continue;
+                        }
+
+                        const { data: extraUrlData } =
+                            db.storage
+                                .from('productos')
+                                .getPublicUrl(extraFileName);
+
+                        await db
+                            .from('producto_imagenes')
+                            .insert([
+                                {
+                                    producto_id: editingProductId,
+                                    url: extraUrlData.publicUrl
+                                }
+                            ]);
+                    }
                 }
 
                 const { error } = await db
@@ -917,15 +983,21 @@
 
             document.getElementById("pIsOffer").value =
                 producto.isOffer ? "true" : "false";
+
+            document.getElementById("pImg").value = "";
+
             const container =
                 document.getElementById("previewContainer");
 
-            container.innerHTML = `
-                <img
-                    src="${producto.img}"
-                    class="w-24 h-24 object-cover rounded border border-neutral-700"
-                >
-            `;
+            container.innerHTML = (producto.images || [producto.img])
+                .filter(Boolean)
+                .map(imgUrl => `
+                    <img
+                        src="${imgUrl}"
+                        class="w-24 h-24 object-cover rounded border border-neutral-700"
+                    >
+                `)
+                .join("");
 
             container.classList.remove("hidden");
 
