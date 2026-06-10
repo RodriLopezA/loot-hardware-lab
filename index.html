@@ -603,7 +603,7 @@
             }
 
             document.getElementById("loginError").innerText = "";
-            showAdmin();
+            await checkSession();
         }
 
         // LOGOUT
@@ -614,22 +614,46 @@
 
         // VER SESIÓN ACTUAL
         async function checkSession() {
-            const { data } = await db.auth.getSession();
 
-            if (data.session) {
+            const { data } =
+                await db.auth.getSession();
+
+            if (!data.session) {
+
+                showLogin();
+                return;
+            }
+
+            const email =
+                data.session.user.email;
+
+            const { data: admin } =
+                await db
+                    .from("admins")
+                    .select("*")
+                    .eq("email", email)
+                    .single();
+
+            if (admin) {
+
                 showAdmin();
+
             } else {
+
+                await db.auth.signOut();
+
+                alert(
+                    "No autorizado"
+                );
+
                 showLogin();
             }
         }
-
         // DETECTAR CAMBIOS EN LOGIN/LOGOUT
-        db.auth.onAuthStateChange((event, session) => {
-            if (session) {
-                showAdmin();
-            } else {
-                showLogin();
-            }
+        db.auth.onAuthStateChange(async () => {
+
+            await checkSession();
+
         });
 
         // UI: MOSTRAR ADMIN
@@ -936,6 +960,7 @@
         });
         // Ejecución inicial
         cargarProductos();
+        checkSession();
     </script>
     
 </body>
