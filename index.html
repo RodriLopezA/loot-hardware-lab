@@ -86,9 +86,6 @@
         </div>
     </section>
 
-
-
-    
     <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
         
         <section class="relative bg-[#121212] border border-neutral-900 rounded-3xl overflow-hidden p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
@@ -114,50 +111,12 @@
             </div>
         </section>
 
-        
-        <section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-5">
-                <div class="flex items-center justify-between gap-4 border-b border-neutral-900 pb-4">
-                    <div>
-                        <p class="text-[#00ffcc] font-mono text-xs">// DIAGNOSTICO_RAPIDO</p>
-                        <h2 class="text-2xl font-extrabold text-white mt-1">Contanos que le pasa a tu equipo</h2>
-                    </div>
-                    <span class="text-neutral-500 font-mono text-xs hidden sm:inline">WHATSAPP_DIRECTO</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <select id="diagDevice" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
-                        <option value="">Tipo de equipo</option>
-                        <option value="celular">Celular</option>
-                        <option value="tablet">Tablet</option>
-                        <option value="notebook">Notebook</option>
-                        <option value="consola">Consola</option>
-                    </select>
-                    <select id="diagIssue" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
-                        <option value="">Falla principal</option>
-                        <option value="pantalla rota o sin imagen">Pantalla rota / sin imagen</option>
-                        <option value="no carga">No carga</option>
-                        <option value="no prende">No prende</option>
-                        <option value="se mojo">Se mojo</option>
-                        <option value="bateria dura poco">Bateria dura poco</option>
-                        <option value="pin de carga flojo">Pin de carga flojo</option>
-                    </select>
-                </div>
-                <textarea id="diagDetail" rows="3" placeholder="Marca, modelo y algun detalle extra..." class="w-full bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"></textarea>
-                <div id="diagResult" class="hidden bg-neutral-950 border border-neutral-800 rounded-lg p-4 text-sm text-neutral-300"></div>
-                <button onclick="sendDiagnostic()" class="w-full sm:w-auto bg-[#00ffcc] text-black font-bold text-xs py-3 px-5 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">
-                    ENVIAR_DIAGNOSTICO
-                </button>
+        <section class="space-y-6">
+            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
+                <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
             </div>
-
-            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
-                <p class="text-[#00ffcc] font-mono text-xs">// CONFIANZA</p>
-                <h2 class="text-2xl font-extrabold text-white">Como trabajamos</h2>
-                <div class="space-y-3 text-sm text-neutral-300">
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">01</span><p>Revisamos el equipo y te contamos la falla real antes de tocar nada.</p></div>
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">02</span><p>Pasamos presupuesto claro y explicamos que repuesto se usa.</p></div>
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">03</span><p>Reparamos solo si aprobas el trabajo y probamos funciones clave.</p></div>
-                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">04</span><p>Entregamos con garantia escrita segun el tipo de reparacion.</p></div>
-                </div>
+            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
         </section>
 
@@ -209,13 +168,50 @@
             </div>
         </section>
 
-<section class="space-y-6">
-            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
-                <h2 class="text-2xl font-extrabold text-white tracking-tight">🔥 Súper Ofertas del Mes</h2>
-                <button onclick="filterCategory('TODOS')" class="text-xs font-mono text-neutral-500 hover:text-[#00ffcc]">Ver todas [ + ]</button>
-            </div>
-            <div id="ofertas-grilla" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-5">
+                <div class="flex items-center justify-between gap-4 border-b border-neutral-900 pb-4">
+                    <div>
+                        <p class="text-[#00ffcc] font-mono text-xs">// DIAGNOSTICO_RAPIDO</p>
+                        <h2 class="text-2xl font-extrabold text-white mt-1">Contanos que le pasa a tu equipo</h2>
+                    </div>
+                    <span class="text-neutral-500 font-mono text-xs hidden sm:inline">WHATSAPP_DIRECTO</span>
                 </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <select id="diagDevice" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Tipo de equipo</option>
+                        <option value="celular">Celular</option>
+                        <option value="tablet">Tablet</option>
+                        <option value="notebook">Notebook</option>
+                        <option value="consola">Consola</option>
+                    </select>
+                    <select id="diagIssue" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+                        <option value="">Falla principal</option>
+                        <option value="pantalla rota o sin imagen">Pantalla rota / sin imagen</option>
+                        <option value="no carga">No carga</option>
+                        <option value="no prende">No prende</option>
+                        <option value="se mojo">Se mojo</option>
+                        <option value="bateria dura poco">Bateria dura poco</option>
+                        <option value="pin de carga flojo">Pin de carga flojo</option>
+                    </select>
+                </div>
+                <textarea id="diagDetail" rows="3" placeholder="Marca, modelo y algun detalle extra..." class="w-full bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"></textarea>
+                <div id="diagResult" class="hidden bg-neutral-950 border border-neutral-800 rounded-lg p-4 text-sm text-neutral-300"></div>
+                <button onclick="sendDiagnostic()" class="w-full sm:w-auto bg-[#00ffcc] text-black font-bold text-xs py-3 px-5 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">
+                    ENVIAR_DIAGNOSTICO
+                </button>
+            </div>
+
+            <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
+                <p class="text-[#00ffcc] font-mono text-xs">// CONFIANZA</p>
+                <h2 class="text-2xl font-extrabold text-white">Como trabajamos</h2>
+                <div class="space-y-3 text-sm text-neutral-300">
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">01</span><p>Revisamos el equipo y te contamos la falla real antes de tocar nada.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">02</span><p>Pasamos presupuesto claro y explicamos que repuesto se usa.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">03</span><p>Reparamos solo si aprobas el trabajo y probamos funciones clave.</p></div>
+                    <div class="flex gap-3"><span class="text-[#00ffcc] font-mono">04</span><p>Entregamos con garantia escrita segun el tipo de reparacion.</p></div>
+                </div>
+            </div>
         </section>
 
         <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
@@ -237,114 +233,72 @@
 
     <main id="view-catalogo" class="hidden max-w-6xl w-full mx-auto p-6 my-4 flex-grow">
         <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
+        </div>
     </main>
-   
 
-    <!-- 👇 PEGAR AQUÍ EL LOGIN PANEL -->
     <div id="loginPanel" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    
         <div class="w-full max-w-md bg-[#121212] border border-neutral-800 rounded-xl p-6">
             <h2 class="text-[#00ffcc] font-mono mb-4">// ADMIN LOGIN</h2>
-
-            <input id="loginEmail" type="email" placeholder="Email"
-                class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
-
-            <input id="loginPassword" type="password" placeholder="Password"
-                class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
-
-            <button onclick="login()"
-                class="w-full bg-[#00ffcc] text-black font-bold py-3 rounded">
-                INGRESAR
-            </button>
-
+            <input id="loginEmail" type="email" placeholder="Email" class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
+            <input id="loginPassword" type="password" placeholder="Password" class="w-full mb-3 bg-[#181818] border border-neutral-800 p-3 text-white rounded">
+            <button onclick="login()" class="w-full bg-[#00ffcc] text-black font-bold py-3 rounded">INGRESAR</button>
             <p id="loginError" class="text-red-500 text-xs mt-3"></p>
         </div>
-
     </div>
-    <!-- 👇 TU ADMIN PANEL (YA EXISTE, NO LO TOQUES) -->
     
     <div id="adminPanel" class="hidden max-w-6xl w-full mx-auto p-6 mb-8 bg-[#121212] border border-dashed border-neutral-800 rounded-xl">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-white font-mono text-sm tracking-wider text-[#00ffcc]">// CARGAR_PRODUCTO_O_OFERTA</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
-
-            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
-                <div class="text-xs text-neutral-500 font-mono">PRODUCTOS</div>
-                <div id="statProducts" class="text-2xl font-bold text-white">0</div>
+                <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                    <div class="text-xs text-neutral-500 font-mono">PRODUCTOS</div>
+                    <div id="statProducts" class="text-2xl font-bold text-white">0</div>
+                </div>
+                <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                    <div class="text-xs text-neutral-500 font-mono">OFERTAS</div>
+                    <div id="statOffers" class="text-2xl font-bold text-[#00ffcc]">0</div>
+                </div>
+                <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                    <div class="text-xs text-neutral-500 font-mono">IMÁGENES</div>
+                    <div id="statImages" class="text-2xl font-bold text-white">0</div>
+                </div>
+                <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
+                    <div class="text-xs text-neutral-500 font-mono">VALOR TOTAL</div>
+                    <div id="statValue" class="text-xl font-bold text-white">$0</div>
+                </div>
             </div>
-
-            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
-                <div class="text-xs text-neutral-500 font-mono">OFERTAS</div>
-                <div id="statOffers" class="text-2xl font-bold text-[#00ffcc]">0</div>
-            </div>
-
-            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
-                <div class="text-xs text-neutral-500 font-mono">IMÁGENES</div>
-                <div id="statImages" class="text-2xl font-bold text-white">0</div>
-            </div>
-
-            <div class="bg-[#181818] p-4 rounded-lg border border-neutral-800">
-                <div class="text-xs text-neutral-500 font-mono">VALOR TOTAL</div>
-                <div id="statValue" class="text-xl font-bold text-white">$0</div>
-            </div>
-
-        </div>
             <button onclick="logout()" class="text-xs text-neutral-500 hover:text-white">Cerrar Sesión ×</button>
         </div>
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
-            <label class="text-xs text-neutral-400 font-mono">
-                IMÁGENES DEL PRODUCTO (podés seleccionar varias)
-            </label>
-            <input      
-                type="file"
-                id="pImg"
-                accept="image/*"
-                class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"
-                multiple
-            >
+            <label class="text-xs text-neutral-400 font-mono">IMÁGENES DEL PRODUCTO (podés seleccionar varias)</label>
+            <input type="file" id="pImg" accept="image/*" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" multiple>
             <div class="md:col-span-2">
-
-                <div
-                    id="previewContainer"
-                    class="hidden flex flex-wrap gap-3 mt-3">
-                </div>
-
+                <div id="previewContainer" class="hidden flex flex-wrap gap-3 mt-3"></div>
             </div>
-
-                    <select
-                        id="pTag"
-                        class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"
-                        required
-                    >
-                        <option value="">Seleccionar categoría</option>
-                        <option value="IPHONE">iPhone</option>
-                        <option value="SAMSUNG">Samsung</option>
-                        <option value="MOTOROLA">Motorola</option>
-                        <option value="DISPLAY_FIX">Pantallas</option>
-                        <option value="POWER_CELL">Baterías</option>
-                        <option value="MICRO_CORE">Microsoldadura</option>
-                        <option value="ACCESORIOS">Accesorios</option>
-                        <option value="CARGADORES">Cargadores</option>
-                        <option value="AURICULARES">Auriculares</option>
-                        <option value="REACONDICIONADOS">Celulares reacondicionados</option>
-                    </select>
-                                
+            <select id="pTag" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+                <option value="">Seleccionar categoría</option>
+                <option value="IPHONE">iPhone</option>
+                <option value="SAMSUNG">Samsung</option>
+                <option value="MOTOROLA">Motorola</option>
+                <option value="DISPLAY_FIX">Pantallas</option>
+                <option value="POWER_CELL">Baterías</option>
+                <option value="MICRO_CORE">Microsoldadura</option>
+                <option value="ACCESORIOS">Accesorios</option>
+                <option value="CARGADORES">Cargadores</option>
+                <option value="AURICULARES">Auriculares</option>
+                <option value="REACONDICIONADOS">Celulares reacondicionados</option>
+            </select>
             <select id="pIsOffer" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] font-mono">
                 <option value="false">No destacar en Inicio</option>
                 <option value="true">Destacar como Oferta en Inicio</option>
             </select>
-            
             <textarea id="pDesc" placeholder="Detalles técnicos..." rows="3" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] md:col-span-2" required></textarea>
             <button type="submit" class="md:col-span-2 bg-[#00ffcc] text-black font-bold text-xs py-3 rounded hover:bg-cyan-400 transition-colors tracking-widest font-mono">PUBLICAR_ELEMENTO</button>
         </form>
         <div class="mt-8 border-t border-neutral-800 pt-6">
-            <h3 class="text-[#00ffcc] font-mono text-sm mb-4">
-                // PRODUCTOS_PUBLICADOS
-            </h3>
-
+            <h3 class="text-[#00ffcc] font-mono text-sm mb-4">// PRODUCTOS_PUBLICADOS</h3>
             <div id="adminProductsList" class="space-y-3"></div>
         </div>
     </div>
@@ -353,21 +307,10 @@
         <div class="bg-[#121212] border border-neutral-800 w-full max-w-4xl rounded-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
             <div class="w-full md:w-1/2 bg-neutral-950 p-4 border-b md:border-b-0 md:border-r border-neutral-900">
-
                 <div class="flex items-center justify-center">
-                    <img
-                        id="modalImg"
-                        src=""
-                        alt=""
-                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded"
-                    >
+                    <img id="modalImg" src="" alt="" class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded">
                 </div>
-
-                <div
-                    id="modalGallery"
-                    class="flex gap-2 mt-4 overflow-x-auto">
-                </div>
-
+                <div id="modalGallery" class="flex gap-2 mt-4 overflow-x-auto"></div>
             </div>
             <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto max-h-[50vh] md:max-h-[90vh]">
                 <div>
@@ -380,9 +323,7 @@
                     </div>
                 </div>
                 <div class="mt-8">
-                    <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">
-                        CONSULTAR_POR_WHATSAPP
-                    </a>
+                    <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">CONSULTAR_POR_WHATSAPP</a>
                 </div>
             </div>
         </div>
@@ -395,55 +336,27 @@
 
     <script>
         const WHATSAPP_NUMBER = "542215676073";
-        
-        
-
         const SUPABASE_URL = "https://kgzffjbwhlrlgxforfgv.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnemZmamJ3aGxybGd4Zm9yZmd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODE3MDUsImV4cCI6MjA5NjU1NzcwNX0.FkaQALy1TU2_S8ae0gxAcmsikNLO72qm0_k3knNw2jo";
 
-        const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnemZmamJ3aGxybGd4Zm9yZmd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODE3MDUsImV4cCI6MjA5NjU1NzcwNX0.FkaQALy1TU2_S8ae0gxAcmsikNLO72qm0_k3knNw2jo";
-
-        const db = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        );
-        // Agregamos el parámetro 'isOffer' para saber cuáles se renderizan directo en el Inicio
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let productos = [];
         let editingProductId = null;
+
         async function cargarProductos() {
+            const { data, error } = await db.from("productos").select("*").order("id", { ascending: false });
+            if (error) { console.error(error); return; }
 
-            const { data, error } = await db
-                .from("productos")
-                .select("*")
-                .order("id", { ascending: false });
-            console.log("PRODUCTOS:", data);
-            console.log("ERROR:", error);
-
-            if (error) {
-                console.error(error);
-                return;
-            }
-
-            const { data: imagenes, error: imagenesError } = await db
-                .from("producto_imagenes")
-                .select("producto_id, url");
-
-            if (imagenesError) {
-                console.error(imagenesError);
-            }
+            const { data: imagenes, error: imagenesError } = await db.from("producto_imagenes").select("producto_id, url");
+            if (imagenesError) { console.error(imagenesError); }
 
             const imagenesPorProducto = {};
-
             (imagenes || []).forEach(img => {
-                if (!imagenesPorProducto[img.producto_id]) {
-                    imagenesPorProducto[img.producto_id] = [];
-                }
-
+                if (!imagenesPorProducto[img.producto_id]) { imagenesPorProducto[img.producto_id] = []; }
                 imagenesPorProducto[img.producto_id].push(img.url);
             });
 
             productos = data.map(p => ({
-
                 id: p.id,
                 title: p.title,
                 price: Number(p.price),
@@ -451,12 +364,7 @@
                 tag: p.tag,
                 isOffer: p.is_offer,
                 desc: p.descripcion,
-
-                images: [
-                    p.img,
-                    ...(imagenesPorProducto[p.id] || [])
-                ]
-
+                images: [p.img, ...(imagenesPorProducto[p.id] || [])]
             }));
 
             renderAll();
@@ -468,7 +376,6 @@
         let currentSort = "default";
         let currentSearch = "";
 
-        // Cambiar dinámicamente entre Inicio y Catálogo General
         function showSection(section) {
             const viewInicio = document.getElementById('view-inicio');
             const viewCatalogo = document.getElementById('view-catalogo');
@@ -491,153 +398,73 @@
             }
         }
 
-        // Renderizar elementos del catálogo e inicio en simultáneo
         function renderAll() {
-            // 1. Renderizar sección Ofertas de Inicio
             const gridOfertas = document.getElementById('ofertas-grilla');
             gridOfertas.innerHTML = "";
             let ofertas = productos.filter(p => p.isOffer === true);
             if (ofertas.length === 0) {
                 gridOfertas.innerHTML = emptyState("Todavía no hay ofertas publicadas.");
             } else {
-                ofertas.forEach(p => {
-                    gridOfertas.innerHTML += buildCard(p);
-                });
+                ofertas.forEach(p => { gridOfertas.innerHTML += buildCard(p); });
             }
 
-            // 2. Renderizar catálogo general completo con filtros aplicados
             const gridCatalogo = document.getElementById('catalogo');
             gridCatalogo.innerHTML = "";
 
             let filtered = productos.filter(p => {
-
-                const categoryMatch =
-                    currentCategory === "TODOS" ||
-                    p.tag.toUpperCase().includes(
-                        currentCategory.toUpperCase()
-                    );
-
-                const searchMatch =
-                    p.title.toLowerCase()
-                    .includes(currentSearch.toLowerCase());
-
+                const categoryMatch = currentCategory === "TODOS" || p.tag.toUpperCase().includes(currentCategory.toUpperCase());
+                const searchMatch = p.title.toLowerCase().includes(currentSearch.toLowerCase());
                 return categoryMatch && searchMatch;
             });
 
-            if (currentSort === "low") {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (currentSort === "high") {
-                filtered.sort((a, b) => b.price - a.price);
-            }
+            if (currentSort === "low") { filtered.sort((a, b) => a.price - b.price); }
+            else if (currentSort === "high") { filtered.sort((a, b) => b.price - a.price); }
 
             if (filtered.length === 0) {
                 gridCatalogo.innerHTML = emptyState("No encontramos productos con ese filtro.");
             } else {
-                filtered.forEach(p => {
-                    gridCatalogo.innerHTML += buildCard(p);
-                });
+                filtered.forEach(p => { gridCatalogo.innerHTML += buildCard(p); });
             }
         }
+
         function emptyState(message) {
-            return `
-                <div class="sm:col-span-2 lg:col-span-3 border border-dashed border-neutral-800 rounded-xl p-8 text-center text-neutral-500 font-mono text-xs bg-[#101010]">
-                    ${message}
-                </div>
-            `;
+            return `<div class="sm:col-span-2 lg:col-span-3 border border-dashed border-neutral-800 rounded-xl p-8 text-center text-neutral-500 font-mono text-xs bg-[#101010]">${message}</div>`;
         }
 
         function renderAdminProducts() {
-
             const container = document.getElementById('adminProductsList');
-
             if (!container) return;
-
             container.innerHTML = "";
 
             productos.forEach(p => {
-
                 container.innerHTML += `
                     <div class="flex items-center justify-between bg-[#181818] border border-neutral-800 rounded-lg p-3">
-
                         <div>
-                            <div class="font-bold text-white">
-                                ${p.title}
-                            </div>
-
-                            <div class="text-xs text-neutral-500">
-                                $${p.price.toLocaleString('es-AR')}
-                            </div>
+                            <div class="font-bold text-white">${p.title}</div>
+                            <div class="text-xs text-neutral-500">$${p.price.toLocaleString('es-AR')}</div>
                         </div>
-
                         <div class="flex gap-2">
-                            <button
-                                onclick="editProduct(${p.id})"
-                                class="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-xs font-bold"
-                            >
-                                Editar
-                            </button>
-                            <button
-                                onclick="deleteProduct(${p.id})"
-                                class="bg-red-600 hover:bg-red-500 px-3 py-1 rounded text-xs font-bold"
-                            >
-                                Eliminar
-                            </button>
-
+                            <button onclick="editProduct(${p.id})" class="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-xs font-bold">Editar</button>
+                            <button onclick="deleteProduct(${p.id})" class="bg-red-600 hover:bg-red-500 px-3 py-1 rounded text-xs font-bold">Eliminar</button>
                         </div>
-
-                    </div>
-                `;
+                    </div>`;
             });
-
         }
+
         function renderStats() {
+            const totalProductos = productos.length;
+            const totalOffers = productos.filter(p => p.isOffer).length;
+            const totalImages = productos.reduce((acc, p) => acc + (p.images ? p.images.length : 1), 0);
+            const valorTotal = productos.reduce((acc, p) => acc + p.price, 0);
 
-            const totalProductos =
-                productos.length;
-
-            const totalOfertas =
-                productos.filter(
-                    p => p.isOffer
-                ).length;
-
-            const totalImagenes =
-                productos.reduce((acc, p) => {
-
-                    if (!p.images)
-                        return acc + 1;
-
-                    return acc + p.images.length;
-
-                }, 0);
-
-            const valorTotal =
-                productos.reduce(
-                    (acc, p) => acc + p.price,
-                    0
-                );
-
-            document.getElementById("statProducts").innerText =
-                totalProductos;
-
-            document.getElementById("statOffers").innerText =
-                totalOfertas;
-
-            document.getElementById("statImages").innerText =
-                totalImagenes;
-
-            document.getElementById("statValue").innerText =
-                `$${valorTotal.toLocaleString("es-AR")}`;
+            document.getElementById("statProducts").innerText = totalProductos;
+            document.getElementById("statOffers").innerText = totalOffers;
+            document.getElementById("statImages").innerText = totalImages;
+            document.getElementById("statValue").innerText = `$${valorTotal.toLocaleString("es-AR")}`;
         }
 
         function buildCard(p) {
-            const thumbnails = (p.images || [])
-                .filter(Boolean)
-                .slice(0, 4)
-                .map(imgUrl => `
-                    <img src="${imgUrl}" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950">
-                `)
-                .join("");
-
+            const thumbnails = (p.images || []).filter(Boolean).slice(0, 4).map(imgUrl => `<img src="${imgUrl}" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950">`).join("");
             return `
                 <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                     <div>
@@ -657,8 +484,7 @@
                             <span class="text-[#00ffcc] text-lg font-extrabold font-mono">$${p.price.toLocaleString('es-AR')}</span>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
         }
 
         function filterCategory(cat) {
@@ -668,35 +494,19 @@
             renderAll();
         }
 
-        function sortProducts(order) {
-            currentSort = order;
-            renderAll();
-        }
+        @sortProducts(order) { currentSort = order; renderAll(); }
 
-        // Modals y Panel Admin
         function openModal(id) {
             const item = productos.find(p => p.id === id);
             if (!item) return;
             document.getElementById('modalImg').src = item.img;
-            const gallery =
-                document.getElementById("modalGallery");
-
+            const gallery = document.getElementById("modalGallery");
             gallery.innerHTML = "";
 
             if (item.images) {
-
                 item.images.forEach(imgUrl => {
-
-                    gallery.innerHTML += `
-                        <img
-                            src="${imgUrl}"
-                            onclick="changeModalImage('${imgUrl}')"
-                            class="w-16 h-16 object-cover rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc]"
-                        >
-                    `;
-
+                    gallery.innerHTML += `<img src="${imgUrl}" onclick="changeModalImage('${imgUrl}')" class="w-16 h-16 object-cover rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc]">`;
                 });
-
             }
             document.getElementById('modalTitle').innerText = item.title;
             document.getElementById('modalPrice').innerText = `$${item.price.toLocaleString('es-AR')}`;
@@ -721,296 +531,109 @@
                 return;
             }
 
-            const text = encodeURIComponent(
-                `Hola LOOT! Quiero consultar por un ${device} con esta falla: ${issue}.${detail ? " Detalle: " + detail : ""}`
-            );
-
+            const text = encodeURIComponent(`Hola LOOT! Quiero consultar por un ${device} con esta falla: ${issue}.${detail ? " Detalle: " + detail : ""}`);
             result.innerText = "Listo. Te abrimos WhatsApp con la consulta armada para responder mas rapido.";
             result.classList.remove("hidden");
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
         }
-        function changeModalImage(url) {
 
-            document.getElementById("modalImg").src =
-                url;
-
-        }
-
-        function checkAccess() {
-            document.getElementById("loginPanel").classList.remove("hidden");
-        }
-
+        function changeModalImage(url) { document.getElementById("modalImg").src = url; }
+        function checkAccess() { document.getElementById("loginPanel").classList.remove("hidden"); }
         function closeAdminPanel() { document.getElementById('adminPanel').classList.add('hidden'); }
 
-
-        // ==========================
-        // 🔐 SUPABASE AUTH SYSTEM
-        // ==========================
-
-        // LOGIN
         async function login() {
             const email = document.getElementById("loginEmail").value;
             const password = document.getElementById("loginPassword").value;
-
-            const { data, error } = await db.auth.signInWithPassword({
-                email,
-                password
-            });
-
-            console.log("LOGIN DATA:", data);
-            console.log("LOGIN ERROR:", error);
-            if (error) {
-                document.getElementById("loginError").innerText = error.message;
-                return;
-            }
-
+            const { data, error } = await db.auth.signInWithPassword({ email, password });
+            if (error) { document.getElementById("loginError").innerText = error.message; return; }
             document.getElementById("loginError").innerText = "";
             await checkSession();
         }
 
-        // LOGOUT
-        async function logout() {
-            await db.auth.signOut();
-            showLogin();
-        }
+        async function logout() { await db.auth.signOut(); showLogin(); }
 
-        // VER SESIÓN ACTUAL
         async function checkSession() {
-
             try {
-
-                const { data } =
-                    await db.auth.getSession();
-
-                console.log("SESSION:", data);
-
-                if (!data.session) {
-                    showLogin();
-                    return;
-                }
-
-                const email =
-                    data.session.user.email;
-
-                console.log("EMAIL:", email);
-
-                const {
-                    data: admin,
-                    error
-                } = await db
-                    .from("admins")
-                    .select("*")
-                    .eq("email", email)
-                    .maybeSingle();
-
-                console.log("ADMIN:", admin);
-                console.log("ERROR:", error);
-
-                if (error) {
-                    alert(error.message);
-                    return;
-                }
-
-                if (admin) {
-
-                    showAdmin();
-
-                } else {
-
-                    alert("No autorizado");
-
-                    await db.auth.signOut();
-
-                    showLogin();
-                }
-
-            } catch(err) {
-
-                console.error(err);
-                alert(err.message);
-
-            }
+                const { data } = await db.auth.getSession();
+                if (!data.session) { showLogin(); return; }
+                const email = data.session.user.email;
+                const { data: admin, error } = await db.from("admins").select("*").eq("email", email).maybeSingle();
+                if (error) { alert(error.message); return; }
+                if (admin) { showAdmin(); } else { alert("No autorizado"); await db.auth.signOut(); showLogin(); }
+            } catch(err) { console.error(err); alert(err.message); }
         }
-        // DETECTAR CAMBIOS EN LOGIN/LOGOUT
-        db.auth.onAuthStateChange(async () => {
 
-            await checkSession();
+        db.auth.onAuthStateChange(async () => { await checkSession(); }); 
 
-        }); 
-
-        // UI: MOSTRAR ADMIN
         function showAdmin() {
             document.getElementById("loginPanel").classList.add("hidden");
             document.getElementById("adminPanel").classList.remove("hidden");
         }
 
-        // UI: MOSTRAR LOGIN
         function showLogin() {
             document.getElementById("adminPanel").classList.add("hidden");
             document.getElementById("loginPanel").classList.add("hidden");
         }
 
-        // INICIALIZAR
-       
-
-
-
-
         async function addProduct(e) {
-
             e.preventDefault();
-
             let imageUrl = null;
 
-            // =====================
-            // EDITAR PRODUCTO
-            // =====================
-
             if (editingProductId) {
-
-                const productoActual =
-                    productos.find(
-                        p => p.id === editingProductId
-                    );
-
+                const productoActual = productos.find(p => p.id === editingProductId);
                 imageUrl = productoActual.img;
-
                 const files = document.getElementById('pImg').files;
 
-                // Si seleccionó nueva imagen
                 if (files.length > 0) {
-
                     const mainFile = files[0];
+                    const fileName = `${Date.now()}-${mainFile.name}`;
+                    const { error: uploadError } = await db.storage.from('productos').upload(fileName, mainFile);
+                    if (uploadError) { alert("Error al subir imagen"); return; }
 
-                    const fileName =
-                        `${Date.now()}-${mainFile.name}`;
+                    const { data: publicUrlData } = db.storage.from('productos').getPublicUrl(fileName);
+                    imageUrl = publicUrlData.publicUrl;
 
-                    const { error: uploadError } =
-                        await db.storage
-                            .from('productos')
-                            .upload(fileName, mainFile);
-
-                    if (uploadError) {
-                        console.error(uploadError);
-                        alert("Error al subir imagen");
-                        return;
-                    }
-
-                    const { data: publicUrlData } =
-                        db.storage
-                            .from('productos')
-                            .getPublicUrl(fileName);
-
-                    imageUrl =
-                        publicUrlData.publicUrl;
-
-                    await db
-                        .from("producto_imagenes")
-                        .delete()
-                        .eq("producto_id", editingProductId);
+                    await db.from("producto_imagenes").delete().eq("producto_id", editingProductId);
 
                     for (let i = 1; i < files.length; i++) {
-
                         const extraFile = files[i];
-
-                        const extraFileName =
-                            `${Date.now()}-${i}-${extraFile.name}`;
-
-                        const { error: uploadExtraError } =
-                            await db.storage
-                                .from('productos')
-                                .upload(extraFileName, extraFile);
-
-                        if (uploadExtraError) {
-                            console.error(uploadExtraError);
-                            continue;
-                        }
-
-                        const { data: extraUrlData } =
-                            db.storage
-                                .from('productos')
-                                .getPublicUrl(extraFileName);
-
-                        await db
-                            .from('producto_imagenes')
-                            .insert([
-                                {
-                                    producto_id: editingProductId,
-                                    url: extraUrlData.publicUrl
-                                }
-                            ]);
+                        const extraFileName = `${Date.now()}-${i}-${extraFile.name}`;
+                        const { error: uploadExtraError } = await db.storage.from('productos').upload(extraFileName, extraFile);
+                        if (uploadExtraError) continue;
+                        const { data: extraUrlData } = db.storage.from('productos').getPublicUrl(extraFileName);
+                        await db.from('producto_imagenes').insert([{ producto_id: editingProductId, url: extraUrlData.publicUrl }]);
                     }
                 }
 
-                const { error } = await db
-                    .from("productos")
-                    .update({
-                        title: document.getElementById('pTitle').value,
-                        price: parseFloat(document.getElementById('pPrice').value),
-                        img: imageUrl,
-                        tag: document.getElementById('pTag').value,
-                        is_offer: document.getElementById('pIsOffer').value === "true",
-                        descripcion: document.getElementById('pDesc').value
-                    })
-                    .eq("id", editingProductId);
+                const { error } = await db.from("productos").update({
+                    title: document.getElementById('pTitle').value,
+                    price: parseFloat(document.getElementById('pPrice').value),
+                    img: imageUrl,
+                    tag: document.getElementById('pTag').value,
+                    is_offer: document.getElementById('pIsOffer').value === "true",
+                    descripcion: document.getElementById('pDesc').value
+                }).eq("id", editingProductId);
 
-                if (error) {
-                    console.error(error);
-                    alert("Error al actualizar");
-                    return;
-                }
-
+                if (error) { alert("Error al actualizar"); return; }
                 alert("Producto actualizado");
-
                 editingProductId = null;
-
                 document.getElementById('productForm').reset();
-                document
-                .getElementById("previewContainer")
-                .classList.add("hidden");
-
-                document
-                .getElementById("previewContainer")
-                .innerHTML = "";
+                document.getElementById("previewContainer").classList.add("hidden");
+                document.getElementById("previewContainer").innerHTML = "";
                 await cargarProductos();
-
                 return;
             }
-
-            // =====================
-            // CREAR PRODUCTO NUEVO
-            // =====================
 
             const files = document.getElementById('pImg').files;
-
-            if (files.length === 0) {
-                alert("Seleccioná al menos una imagen");
-                return;
-            }
+            if (files.length === 0) { alert("Seleccioná al menos una imagen"); return; }
 
             const mainFile = files[0];
+            const fileName = `${Date.now()}-${mainFile.name}`;
+            const { error: uploadError } = await db.storage.from('productos').upload(fileName, mainFile);
+            if (uploadError) { alert("Error al subir imagen"); return; }
 
-            const fileName =
-                `${Date.now()}-${mainFile.name}`;
-
-            const { error: uploadError } =
-                await db.storage
-                    .from('productos')
-                    .upload(fileName, mainFile);
-
-            if (uploadError) {
-                console.error(uploadError);
-                alert("Error al subir imagen");
-                return;
-            }
-
-            const { data: publicUrlData } =
-                db.storage
-                    .from('productos')
-                    .getPublicUrl(fileName);
-
-            imageUrl =
-                publicUrlData.publicUrl;
+            const { data: publicUrlData } = db.storage.from('productos').getPublicUrl(fileName);
+            imageUrl = publicUrlData.publicUrl;
 
             const nuevoProducto = {
                 title: document.getElementById('pTitle').value,
@@ -1021,174 +644,72 @@
                 descripcion: document.getElementById('pDesc').value
             };
 
-            const { data: insertedProduct, error } =
-                await db
-                    .from('productos')
-                    .insert([nuevoProducto])
-                    .select()
-                    .single();
-
-            if (error) {
-                console.error(error);
-                alert("Error al guardar producto");
-                return;
-            }
-            // =======================
-            // IMÁGENES ADICIONALES
-            // =======================
+            const { data: insertedProduct, error } = await db.from('productos').insert([nuevoProducto]).select().single();
+            if (error) { alert("Error al guardar producto"); return; }
 
             for (let i = 1; i < files.length; i++) {
-
                 const extraFile = files[i];
-
-                const extraFileName =
-                    `${Date.now()}-${i}-${extraFile.name}`;
-
-                const { error: uploadExtraError } =
-                    await db.storage
-                        .from('productos')
-                        .upload(extraFileName, extraFile);
-
-                if (uploadExtraError) {
-                    console.error(uploadExtraError);
-                    continue;
-                }
-
-                const { data: extraUrlData } =
-                    db.storage
-                        .from('productos')
-                        .getPublicUrl(extraFileName);
-
-                await db
-                    .from('producto_imagenes')
-                    .insert([
-                        {
-                            producto_id: insertedProduct.id,
-                            url: extraUrlData.publicUrl
-                        }
-                    ]);
+                const extraFileName = `${Date.now()}-${i}-${extraFile.name}`;
+                const { error: uploadExtraError } = await db.storage.from('productos').upload(extraFileName, extraFile);
+                if (uploadExtraError) continue;
+                const { data: extraUrlData } = db.storage.from('productos').getPublicUrl(extraFileName);
+                await db.from('producto_imagenes').insert([{ producto_id: insertedProduct.id, url: extraUrlData.publicUrl }]);
             }
 
             alert("Producto publicado correctamente");
-
             document.getElementById('productForm').reset();
-
             await cargarProductos();
         }
+
         async function deleteProduct(id) {
-
-            const confirmar = confirm(
-                "¿Eliminar este producto?"
-            );
-
+            const confirmar = confirm("¿Eliminar este producto?");
             if (!confirmar) return;
-
-            const { error } = await db
-                .from("productos")
-                .delete()
-                .eq("id", id);
-
-            if (error) {
-                console.error(error);
-                alert("Error al eliminar");
-                return;
-            }
-
+            const { error } = await db.from("productos").delete().eq("id", id);
+            if (error) { alert("Error al eliminar"); return; }
             await cargarProductos();
         }
+
         function editProduct(id) {
-
-            const producto = productos.find(
-                p => p.id === id
-            );
-
+            const producto = productos.find(p => p.id === id);
             if (!producto) return;
-
             editingProductId = id;
 
-            document.getElementById("pTitle").value =
-                producto.title;
-
-            document.getElementById("pPrice").value =
-                producto.price;
-
-            document.getElementById("pTag").value =
-                producto.tag;
-
-            document.getElementById("pDesc").value =
-                producto.desc;
-
-            document.getElementById("pIsOffer").value =
-                producto.isOffer ? "true" : "false";
-
+            document.getElementById("pTitle").value = producto.title;
+            document.getElementById("pPrice").value = producto.price;
+            document.getElementById("pTag").value = producto.tag;
+            document.getElementById("pDesc").value = producto.desc;
+            document.getElementById("pIsOffer").value = producto.isOffer ? "true" : "false";
             document.getElementById("pImg").value = "";
 
-            const container =
-                document.getElementById("previewContainer");
-
-            container.innerHTML = (producto.images || [producto.img])
-                .filter(Boolean)
-                .map(imgUrl => `
-                    <img
-                        src="${imgUrl}"
-                        class="w-24 h-24 object-cover rounded border border-neutral-700"
-                    >
-                `)
-                .join("");
-
+            const container = document.getElementById("previewContainer");
+            container.innerHTML = (producto.images || [producto.img]).filter(Boolean).map(imgUrl => `<img src="${imgUrl}" class="w-24 h-24 object-cover rounded border border-neutral-700">`).join("");
             container.classList.remove("hidden");
 
-            window.scrollTo({
-                top: document.getElementById("adminPanel").offsetTop,
-                behavior: "smooth"
-            });
+            window.scrollTo({ top: document.getElementById("adminPanel").offsetTop, behavior: "smooth" });
         }
-        document
-            .getElementById("pImg")
-            .addEventListener("change", function(e) {
 
-                const files = e.target.files;
+        document.getElementById("pImg").addEventListener("change", function(e) {
+            const files = e.target.files;
+            const container = document.getElementById("previewContainer");
+            container.innerHTML = "";
+            if (files.length === 0) { container.classList.add("hidden"); return; }
+            container.classList.remove("hidden");
 
-                const container =
-                    document.getElementById("previewContainer");
-
-                container.innerHTML = "";
-
-                if (files.length === 0) {
-                    container.classList.add("hidden");
-                    return;
-                }
-
-                container.classList.remove("hidden");
-
-                Array.from(files).forEach(file => {
-
-                    const img =
-                        document.createElement("img");
-
-                    img.src =
-                        URL.createObjectURL(file);
-
-                    img.className =
-                        "w-24 h-24 object-cover rounded border border-neutral-700";
-
-                    container.appendChild(img);
-                });
-
+            Array.from(files).forEach(file => {
+                const img = document.createElement("img");
+                img.src = URL.createObjectURL(file);
+                img.className = "w-24 h-24 object-cover rounded border border-neutral-700";
+                container.appendChild(img);
             });
-        document
-        .getElementById("searchProducts")
-        .addEventListener("input", function(e) {
-
-            currentSearch = e.target.value;
-
-            renderAll();
-
         });
-        // Ejecución inicial
+
+        document.getElementById("searchProducts").addEventListener("input", function(e) {
+            currentSearch = e.target.value;
+            renderAll();
+        });
+
         cargarProductos();
         checkSession();
     </script>
-    
 </body>
 </html>
