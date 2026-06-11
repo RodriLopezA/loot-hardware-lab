@@ -870,6 +870,8 @@
                 navInicio.className = "text-[#00ffcc] font-bold cursor-pointer";
                 navCatalogo.className = "text-neutral-400 hover:text-[#00ffcc] cursor-pointer";
                 navInfo.className = "text-neutral-400 hover:text-[#00ffcc] cursor-pointer";
+                window.scrollTo({ top: 0, behavior: "auto" });
+                requestAnimationFrame(updateHeroFade);
             } else if (section === 'info') {
                 viewInicio.classList.add('hidden');
                 viewCatalogo.classList.add('hidden');
@@ -1907,6 +1909,13 @@
         function updateHeroFade() {
             const hero = document.getElementById("heroFade");
             if (!hero) return;
+            const viewInicio = document.getElementById("view-inicio");
+
+            if (viewInicio && viewInicio.classList.contains("hidden")) {
+                hero.style.opacity = "1";
+                hero.style.transform = "translateY(0)";
+                return;
+            }
 
             const progress = Math.min(window.scrollY / (hero.offsetHeight * 0.75), 1);
             hero.style.opacity = String(Math.max(0, 1 - progress));
