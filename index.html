@@ -50,9 +50,49 @@
                 
                 <div class="relative group py-7">
                     <button class="text-neutral-400 group-hover:text-[#00ffcc] transition-colors flex items-center gap-1 cursor-pointer">
+                        ACCESORIOS <span class="text-[9px] text-neutral-600">▼</span>
+                    </button>
+                    <div class="mega-menu hidden absolute top-full left-1/2 -translate-x-1/2 w-[640px] max-w-[calc(100vw-2rem)] bg-[#121212] border border-neutral-800 rounded-xl p-6 shadow-2xl z-50">
+                        <div class="grid grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// CELULARES</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('ACCESORIOS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Todos los accesorios</button></li>
+                                    <li><button onclick="filterCategory('FUNDAS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Fundas</button></li>
+                                    <li><button onclick="filterCategory('VIDRIOS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Vidrios templados</button></li>
+                                    <li><button onclick="filterCategory('CARGADORES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Cargadores</button></li>
+                                    <li><button onclick="filterCategory('CABLES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Cables USB</button></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// PERIFERICOS</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('AURICULARES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Auriculares</button></li>
+                                    <li><button onclick="filterCategory('TECLADOS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Teclados</button></li>
+                                    <li><button onclick="filterCategory('MOUSES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Mouses</button></li>
+                                    <li><button onclick="filterCategory('PARLANTES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Parlantes</button></li>
+                                    <li><button onclick="filterCategory('SOPORTES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Soportes</button></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// DROPSHIPPING</h4>
+                                <ul class="space-y-2 text-neutral-400 font-sans text-sm">
+                                    <li><button onclick="filterCategory('PELUCHES')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Peluches</button></li>
+                                    <li><button onclick="filterCategory('GADGETS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Gadgets</button></li>
+                                    <li><button onclick="filterCategory('SMARTWATCH')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Smartwatch</button></li>
+                                    <li><button onclick="filterCategory('GAMING')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Gaming</button></li>
+                                    <li><button onclick="filterCategory('DROPSHIPPING')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Variedad importada</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group py-7">
+                    <button class="text-neutral-400 group-hover:text-[#00ffcc] transition-colors flex items-center gap-1 cursor-pointer">
                         REPARACIONES <span class="text-[9px] text-neutral-600">▼</span>
                     </button>
-                    <div class="mega-menu hidden absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-[#121212] border border-neutral-800 rounded-xl p-6 shadow-2xl">
+                    <div class="mega-menu hidden absolute top-full left-1/2 -translate-x-1/2 w-[640px] max-w-[calc(100vw-2rem)] bg-[#121212] border border-neutral-800 rounded-xl p-6 shadow-2xl z-50">
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <h4 class="text-[#00ffcc] text-[11px] border-b border-neutral-800 pb-2 mb-3">// POR_MARCA</h4>
@@ -60,6 +100,7 @@
                                     <li><button onclick="filterCategory('IPHONE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Apple iPhone</button></li>
                                     <li><button onclick="filterCategory('SAMSUNG')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Samsung Galaxy</button></li>
                                     <li><button onclick="filterCategory('MOTOROLA')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Motorola Moto</button></li>
+                                    <li><button onclick="filterCategory('XIAOMI')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Xiaomi / Redmi</button></li>
                                 </ul>
                             </div>
                             <div>
@@ -68,13 +109,19 @@
                                     <li><button onclick="filterCategory('DISPLAY_FIX')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Pantallas / Módulos</button></li>
                                     <li><button onclick="filterCategory('POWER_CELL')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Baterías</button></li>
                                     <li><button onclick="filterCategory('MICRO_CORE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Placas / Soldadura</button></li>
+                                    <li><button onclick="filterCategory('PIN_CARGA')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Pin de carga</button></li>
+                                    <li><button onclick="filterCategory('HUMEDAD')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Equipos mojados</button></li>
+                                    <li><button onclick="filterCategory('SOFTWARE')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Software / Backup</button></li>
+                                    <li><button onclick="filterCategory('TABLETS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Tablets</button></li>
+                                    <li><button onclick="filterCategory('NOTEBOOK')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Notebooks</button></li>
+                                    <li><button onclick="filterCategory('CONSOLAS')" class="hover:text-white transition-colors w-full text-left cursor-pointer">Consolas</button></li>
+                                    <li><button onclick="filterCategory('PC_REPAIR')" class="hover:text-white transition-colors w-full text-left cursor-pointer">PC / Hardware</button></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button onclick="filterCategory('ACCESORIOS')" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">ACCESORIOS</button>
                 <button onclick="showSection('info')" id="nav-info" class="text-neutral-400 hover:text-[#00ffcc] transition-colors cursor-pointer">INFO</button>
             </nav>
 
@@ -450,12 +497,32 @@
                         <option value="IPHONE">iPhone</option>
                         <option value="SAMSUNG">Samsung</option>
                         <option value="MOTOROLA">Motorola</option>
+                        <option value="XIAOMI">Xiaomi / Redmi</option>
                         <option value="DISPLAY_FIX">Pantallas</option>
+                        <option value="PIN_CARGA">Pin de carga</option>
+                        <option value="HUMEDAD">Equipos mojados</option>
+                        <option value="SOFTWARE">Software / Backup</option>
+                        <option value="TABLETS">Tablets</option>
+                        <option value="NOTEBOOK">Notebooks</option>
+                        <option value="CONSOLAS">Consolas</option>
+                        <option value="PC_REPAIR">PC / Hardware</option>
                         <option value="POWER_CELL">Baterías</option>
                         <option value="MICRO_CORE">Microsoldadura</option>
                         <option value="ACCESORIOS">Accesorios</option>
+                        <option value="FUNDAS">Fundas</option>
+                        <option value="VIDRIOS">Vidrios templados</option>
                         <option value="CARGADORES">Cargadores</option>
+                        <option value="CABLES">Cables USB</option>
                         <option value="AURICULARES">Auriculares</option>
+                        <option value="TECLADOS">Teclados</option>
+                        <option value="MOUSES">Mouses</option>
+                        <option value="PARLANTES">Parlantes</option>
+                        <option value="SOPORTES">Soportes</option>
+                        <option value="SMARTWATCH">Smartwatch</option>
+                        <option value="GAMING">Gaming</option>
+                        <option value="PELUCHES">Peluches</option>
+                        <option value="GADGETS">Gadgets</option>
+                        <option value="DROPSHIPPING">Dropshipping / Importados</option>
                         <option value="REACONDICIONADOS">Celulares reacondicionados</option>
                     </select>
                                 
