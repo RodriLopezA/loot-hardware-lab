@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>LOOT Hardware Lab | Inicio y Catálogo</title>
     <meta property="og:title" content="LOOT Hardware Lab | Servicio tecnico y electronica">
     <meta property="og:description" content="Reparacion de celulares, microsoldadura, accesorios y consultas por WhatsApp en La Plata.">
@@ -664,6 +667,31 @@
 
     <script>
         const WHATSAPP_NUMBER = "542215676073";
+        const APP_VERSION = "loot-2026-06-11-cache-fix-1";
+        const APP_VERSION_KEY = "loot_app_version";
+        const SUPABASE_CACHE_FIX_KEY = "loot_supabase_cache_fix_2026_06_11";
+
+        function resetStaleAppCache() {
+            try {
+                const previousVersion = localStorage.getItem(APP_VERSION_KEY);
+                const needsSupabaseCacheFix = !localStorage.getItem(SUPABASE_CACHE_FIX_KEY);
+
+                if ((previousVersion && previousVersion !== APP_VERSION) || needsSupabaseCacheFix) {
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith("sb-") || key.toLowerCase().includes("supabase")) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                }
+
+                localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
+                localStorage.setItem(SUPABASE_CACHE_FIX_KEY, "done");
+            } catch (error) {
+                console.warn("No se pudo limpiar cache local", error);
+            }
+        }
+
+        resetStaleAppCache();
         
         
 
@@ -674,7 +702,14 @@
 
         const db = window.supabase.createClient(
             SUPABASE_URL,
-            SUPABASE_ANON_KEY
+            SUPABASE_ANON_KEY,
+            {
+                auth: {
+                    autoRefreshToken: true,
+                    persistSession: true,
+                    detectSessionInUrl: true
+                }
+            }
         );
         // Agregamos el parámetro 'isOffer' para saber cuáles se renderizan directo en el Inicio
         let productos = [];
@@ -1406,23 +1441,50 @@
             showLogin();
         }
 
+        async function getFreshSession() {
+            const { data, error } = await db.auth.getSession();
+
+            if (error) {
+                console.error("SESSION ERROR:", error);
+                await db.auth.signOut();
+                return null;
+            }
+
+            const session = data.session;
+            if (!session) return null;
+
+            const expiresAt = (session.expires_at || 0) * 1000;
+            const expiresSoon = expiresAt && expiresAt - Date.now() < 5 * 60 * 1000;
+
+            if (!expiresSoon) return session;
+
+            const refreshed = await db.auth.refreshSession();
+
+            if (refreshed.error) {
+                console.error("REFRESH ERROR:", refreshed.error);
+                await db.auth.signOut();
+                return null;
+            }
+
+            return refreshed.data.session;
+        }
+
         // VER SESIÓN ACTUAL
         async function checkSession() {
 
             try {
 
-                const { data } =
-                    await db.auth.getSession();
+                const session = await getFreshSession();
 
-                console.log("SESSION:", data);
+                console.log("SESSION:", session);
 
-                if (!data.session) {
+                if (!session) {
                     showLogin();
                     return;
                 }
 
                 const email =
-                    data.session.user.email;
+                    session.user.email;
 
                 console.log("EMAIL:", email);
 
