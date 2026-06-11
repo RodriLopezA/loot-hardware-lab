@@ -110,7 +110,7 @@
     
     <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
         
-                <section id="heroFade" class="relative left-1/2 w-screen -translate-x-1/2 min-h-[82vh] md:min-h-[88vh] overflow-hidden border-b border-neutral-900 transition-opacity duration-200 bg-black">
+                <section id="heroFade" style="width: 100vw; margin-left: calc(50% - 50vw);" class="relative min-h-[82vh] md:min-h-[88vh] overflow-hidden border-b border-neutral-900 transition-opacity duration-200 bg-black">
             <img src="https://i.postimg.cc/bJ5VyMCN/Post-IG-para-emprendimiento-tecnico-celular.png" alt="" class="absolute inset-0 w-full h-full object-cover object-center blur-2xl scale-125 opacity-30">
             <div class="absolute inset-0 bg-black/35"></div>
             <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#0b0b0b] to-transparent"></div>
@@ -1460,7 +1460,7 @@
 
             const progress = Math.min(window.scrollY / (hero.offsetHeight * 0.75), 1);
             hero.style.opacity = String(Math.max(0, 1 - progress));
-            hero.style.transform = `translateX(-50%) translateY(${progress * -28}px)`;
+            hero.style.transform = `translateY(${progress * -28}px)`;
         }
 
         window.addEventListener("scroll", updateHeroFade, { passive: true });
