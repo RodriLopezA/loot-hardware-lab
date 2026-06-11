@@ -15,9 +15,19 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         .group:hover .mega-menu { display: block; }
+        @keyframes ticker {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body class="bg-[#0b0b0b] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-[#00ffcc] selection:text-black">
+
+    <div id="shippingTicker" class="bg-[#00ffcc] text-black overflow-hidden whitespace-nowrap font-mono text-[11px] font-bold py-2">
+        <div class="inline-block min-w-full animate-[ticker_18s_linear_infinite]">
+            COMPRAS MAYORES A $100.000 TIENEN ENVIO GRATIS  //  CONSULTA STOCK Y DISPONIBILIDAD POR WHATSAPP
+        </div>
+    </div>
 
     <header class="border-b border-neutral-900 bg-[#121212] sticky top-0 z-40">
         <div class="max-w-6xl mx-auto w-full h-20 flex items-center justify-between px-6 relative">
@@ -295,6 +305,7 @@
         <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
+            <input type="text" id="pDiscount" placeholder="Descuento visible (Ej: 15% OFF / OFERTA)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
             <label class="text-xs text-neutral-400 font-mono">
                 IMÁGENES DEL PRODUCTO (podés seleccionar varias)
             </label>
@@ -376,10 +387,18 @@
                     <div id="modalPrice" class="text-[#00ffcc] text-3xl font-extrabold font-mono my-4"></div>
                     <div class="border-t border-neutral-900 pt-4 mt-4">
                         <h4 class="text-xs text-neutral-400 font-mono uppercase mb-2">Descripción del Servicio</h4>
-                        <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed whitespace-pre-line"></p>
+                        <div id="modalDescBox" class="relative">
+                            <p id="modalDesc" class="text-neutral-300 text-sm leading-relaxed whitespace-pre-line max-h-28 overflow-hidden"></p>
+                            <button id="modalDescToggle" onclick="toggleModalDescription()" class="hidden mt-3 text-[#00ffcc] text-xs font-bold font-mono hover:text-cyan-300">
+                                MOSTRAR_MAS
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-8">
+                <div class="mt-5">
+                    <button onclick="openFullscreenImage()" class="w-full mb-3 block text-center bg-neutral-900 border border-neutral-700 text-white font-bold text-xs py-3 rounded-xl hover:border-[#00ffcc] transition-colors tracking-wider font-mono">
+                        VER_FOTOS_EN_PANTALLA_COMPLETA
+                    </button>
                     <a id="modalWaBtn" href="" target="_blank" class="w-full block text-center bg-white text-black font-bold text-xs py-4 rounded-xl hover:bg-[#00ffcc] transition-colors tracking-wider font-mono shadow-lg">
                         CONSULTAR_POR_WHATSAPP
                     </a>
@@ -388,6 +407,15 @@
         </div>
     </div>
 
+
+    <div id="fullscreenModal" class="hidden fixed inset-0 bg-black z-[80] p-4">
+        <button onclick="closeFullscreenImage()" class="absolute top-4 right-4 z-10 bg-white text-black font-bold rounded-full w-10 h-10">X</button>
+        <button onclick="prevFullscreenImage()" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 text-black font-bold rounded-full w-10 h-10">‹</button>
+        <button onclick="nextFullscreenImage()" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 text-black font-bold rounded-full w-10 h-10">›</button>
+        <div class="w-full h-full flex items-center justify-center">
+            <img id="fullscreenImg" src="" alt="" class="max-w-full max-h-full object-contain">
+        </div>
+    </div>
 
     <section class="border-t border-neutral-900 bg-[#0e0e0e] px-6 py-8">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -398,11 +426,15 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full md:w-auto">
                 <a href="https://wa.me/542215676073" target="_blank" class="bg-[#00ffcc] text-black font-bold text-xs text-center py-3 px-5 rounded hover:bg-cyan-400 transition-colors font-mono">WHATSAPP</a>
-                <a href="https://www.instagram.com/" target="_blank" class="bg-[#181818] border border-neutral-800 text-white font-bold text-xs text-center py-3 px-5 rounded hover:border-[#00ffcc] transition-colors font-mono">INSTAGRAM</a>
+                <a href="https://www.instagram.com/loot.rl/" target="_blank" class="bg-[#181818] border border-neutral-800 text-white font-bold text-xs text-center py-3 px-5 rounded hover:border-[#00ffcc] transition-colors font-mono">INSTAGRAM</a>
                 <a href="https://www.facebook.com/" target="_blank" class="bg-[#181818] border border-neutral-800 text-white font-bold text-xs text-center py-3 px-5 rounded hover:border-[#00ffcc] transition-colors font-mono">FACEBOOK</a>
             </div>
         </div>
     </section>
+
+    <a id="floatingWhatsapp" href="https://wa.me/542215676073?text=Hola%20LOOT!%20Quiero%20hacer%20una%20consulta." target="_blank" class="fixed right-4 bottom-4 z-50 w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 text-black flex items-center justify-center shadow-2xl border border-green-300 font-black text-lg" title="WhatsApp">
+        WA
+    </a>
 
     <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
         <div>&copy; 2026 LOOT HARDWARE LAB - SYSTEM_REPAIR_LAB</div>
@@ -467,6 +499,7 @@
                 tag: p.tag,
                 isOffer: p.is_offer,
                 desc: p.descripcion,
+                discount: p.discount || p.descuento || p.discount_label || p.descuento_label || "",
 
                 images: [
                     p.img,
@@ -483,6 +516,9 @@
         let currentCategory = "TODOS";
         let currentSort = "default";
         let currentSearch = "";
+        let offerStartIndex = 0;
+        let currentModalImages = [];
+        let currentModalIndex = 0;
 
         // Cambiar dinámicamente entre Inicio y Catálogo General
         function showSection(section) {
@@ -514,9 +550,10 @@
             gridOfertas.innerHTML = "";
             let ofertas = productos.filter(p => p.isOffer === true);
             if (ofertas.length === 0) {
-                gridOfertas.innerHTML = emptyState("Todavía no hay ofertas publicadas.");
+                gridOfertas.innerHTML = emptyState("TodavÃ­a no hay ofertas publicadas.");
             } else {
-                ofertas.forEach(p => {
+                const visibles = getVisibleOffers(ofertas);
+                visibles.forEach(p => {
                     gridOfertas.innerHTML += buildCard(p);
                 });
             }
@@ -554,6 +591,23 @@
                 });
             }
         }
+        function getVisibleOffers(ofertas) {
+            if (ofertas.length <= 3) return ofertas;
+
+            const visibles = [];
+            for (let i = 0; i < 3; i++) {
+                visibles.push(ofertas[(offerStartIndex + i) % ofertas.length]);
+            }
+            return visibles;
+        }
+
+        function rotateOffers() {
+            const ofertas = productos.filter(p => p.isOffer === true);
+            if (ofertas.length <= 3) return;
+            offerStartIndex = (offerStartIndex + 1) % ofertas.length;
+            renderAll();
+        }
+
         function emptyState(message) {
             return `
                 <div class="sm:col-span-2 lg:col-span-3 border border-dashed border-neutral-800 rounded-xl p-8 text-center text-neutral-500 font-mono text-xs bg-[#101010]">
@@ -658,8 +712,9 @@
                 <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                     <div>
                         <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
-                            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
+                            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
                             <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
+                            ${p.discount ? `<span class="absolute top-3 right-3 bg-[#00ffcc] text-black font-mono text-[10px] px-2 py-1 rounded font-bold">${p.discount}</span>` : ""}
                             ${thumbnails ? `<div class="absolute left-3 bottom-3 flex gap-1.5">${thumbnails}</div>` : ""}
                         </div>
                         <div class="p-5">
@@ -693,7 +748,9 @@
         function openModal(id) {
             const item = productos.find(p => p.id === id);
             if (!item) return;
-            document.getElementById('modalImg').src = item.img;
+            currentModalImages = (item.images || [item.img]).filter(Boolean);
+            currentModalIndex = 0;
+            document.getElementById('modalImg').src = currentModalImages[0] || item.img;
             const gallery =
                 document.getElementById("modalGallery");
 
@@ -701,12 +758,12 @@
 
             if (item.images) {
 
-                item.images.forEach(imgUrl => {
+                item.images.forEach((imgUrl, index) => {
 
                     gallery.innerHTML += `
                         <img
                             src="${imgUrl}"
-                            onclick="changeModalImage('${imgUrl}')"
+                            onclick="changeModalImage('${imgUrl}', ${index})"
                             class="w-16 h-16 object-cover rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc]"
                         >
                     `;
@@ -717,13 +774,53 @@
             document.getElementById('modalTitle').innerText = item.title;
             document.getElementById('modalPrice').innerText = `$${item.price.toLocaleString('es-AR')}`;
             document.getElementById('modalTag').innerText = `[ ${item.tag} ]`;
-            document.getElementById('modalDesc').innerText = item.desc;
+            const itemDesc = item.desc || "";
+            const modalDesc = document.getElementById('modalDesc');
+            const modalDescToggle = document.getElementById('modalDescToggle');
+            modalDesc.innerText = itemDesc;
+            modalDesc.classList.add("max-h-28", "overflow-hidden");
+            modalDescToggle.innerText = "MOSTRAR_MAS";
+            modalDescToggle.classList.toggle("hidden", itemDesc.length < 180);
             const msj = encodeURIComponent(`Hola! Vi "${item.title}" en LOOT Lab y quiero consultar.`);
             document.getElementById('modalWaBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msj}`;
             document.getElementById('mlModal').classList.remove('hidden');
         }
 
         function closeModal() { document.getElementById('mlModal').classList.add('hidden'); }
+
+        function toggleModalDescription() {
+            const modalDesc = document.getElementById("modalDesc");
+            const modalDescToggle = document.getElementById("modalDescToggle");
+            const collapsed = modalDesc.classList.contains("max-h-28");
+
+            modalDesc.classList.toggle("max-h-28", !collapsed);
+            modalDesc.classList.toggle("overflow-hidden", !collapsed);
+            modalDescToggle.innerText = collapsed ? "MOSTRAR_MENOS" : "MOSTRAR_MAS";
+        }
+
+        function openFullscreenImage() {
+            if (currentModalImages.length === 0) return;
+            document.getElementById("fullscreenImg").src = currentModalImages[currentModalIndex];
+            document.getElementById("fullscreenModal").classList.remove("hidden");
+        }
+
+        function closeFullscreenImage() {
+            document.getElementById("fullscreenModal").classList.add("hidden");
+        }
+
+        function nextFullscreenImage() {
+            if (currentModalImages.length === 0) return;
+            currentModalIndex = (currentModalIndex + 1) % currentModalImages.length;
+            document.getElementById("fullscreenImg").src = currentModalImages[currentModalIndex];
+            document.getElementById("modalImg").src = currentModalImages[currentModalIndex];
+        }
+
+        function prevFullscreenImage() {
+            if (currentModalImages.length === 0) return;
+            currentModalIndex = (currentModalIndex - 1 + currentModalImages.length) % currentModalImages.length;
+            document.getElementById("fullscreenImg").src = currentModalImages[currentModalIndex];
+            document.getElementById("modalImg").src = currentModalImages[currentModalIndex];
+        }
 
         function sendDiagnostic() {
             const device = document.getElementById("diagDevice").value;
@@ -745,8 +842,9 @@
             result.classList.remove("hidden");
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
         }
-        function changeModalImage(url) {
+        function changeModalImage(url, index = 0) {
 
+            currentModalIndex = index;
             document.getElementById("modalImg").src =
                 url;
 
@@ -958,17 +1056,28 @@
                     }
                 }
 
-                const { error } = await db
+                const updatePayload = {
+                    title: document.getElementById('pTitle').value,
+                    price: parseFloat(document.getElementById('pPrice').value),
+                    img: imageUrl,
+                    tag: document.getElementById('pTag').value,
+                    is_offer: document.getElementById('pIsOffer').value === "true",
+                    descripcion: document.getElementById('pDesc').value,
+                    discount: document.getElementById('pDiscount').value.trim()
+                };
+
+                let { error } = await db
                     .from("productos")
-                    .update({
-                        title: document.getElementById('pTitle').value,
-                        price: parseFloat(document.getElementById('pPrice').value),
-                        img: imageUrl,
-                        tag: document.getElementById('pTag').value,
-                        is_offer: document.getElementById('pIsOffer').value === "true",
-                        descripcion: document.getElementById('pDesc').value
-                    })
+                    .update(updatePayload)
                     .eq("id", editingProductId);
+
+                if (error && error.message && error.message.toLowerCase().includes("discount")) {
+                    delete updatePayload.discount;
+                    ({ error } = await db
+                        .from("productos")
+                        .update(updatePayload)
+                        .eq("id", editingProductId));
+                }
 
                 if (error) {
                     console.error(error);
@@ -1034,15 +1143,26 @@
                 img: imageUrl,
                 tag: document.getElementById('pTag').value,
                 is_offer: document.getElementById('pIsOffer').value === "true",
-                descripcion: document.getElementById('pDesc').value
+                descripcion: document.getElementById('pDesc').value,
+                discount: document.getElementById('pDiscount').value.trim()
             };
 
-            const { data: insertedProduct, error } =
+            let { data: insertedProduct, error } =
                 await db
                     .from('productos')
                     .insert([nuevoProducto])
                     .select()
                     .single();
+
+            if (error && error.message && error.message.toLowerCase().includes("discount")) {
+                delete nuevoProducto.discount;
+                ({ data: insertedProduct, error } =
+                    await db
+                        .from('productos')
+                        .insert([nuevoProducto])
+                        .select()
+                        .single());
+            }
 
             if (error) {
                 console.error(error);
@@ -1137,6 +1257,9 @@
             document.getElementById("pIsOffer").value =
                 producto.isOffer ? "true" : "false";
 
+            document.getElementById("pDiscount").value =
+                producto.discount || "";
+
             document.getElementById("pImg").value = "";
 
             const container =
@@ -1203,6 +1326,7 @@
         });
         // Ejecución inicial
         cargarProductos();
+        setInterval(rotateOffers, 5000);
         checkSession();
     </script>
     
