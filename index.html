@@ -481,13 +481,14 @@
             <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
             <div class="w-full md:w-1/2 bg-neutral-950 p-4 border-b md:border-b-0 md:border-r border-neutral-900">
 
-                <div class="flex items-center justify-center overflow-hidden rounded" onmousemove="moveModalZoom(event)" onmouseleave="resetModalZoom()">
+                <div id="modalImageZoomArea" class="relative flex items-center justify-center overflow-hidden rounded bg-neutral-950 h-[40vh] md:h-[60vh]" onmousemove="moveModalZoom(event)" onmouseleave="resetModalZoom()">
                     <img
                         id="modalImg"
                         src=""
                         alt=""
-                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded transition-transform duration-150"
+                        class="w-full h-full object-contain rounded"
                     >
+                    <div id="modalZoomLens" class="hidden md:block absolute w-32 h-32 rounded-full border-2 border-[#00ffcc] shadow-2xl pointer-events-none bg-no-repeat bg-neutral-950"></div>
                 </div>
 
                 <div
@@ -1103,19 +1104,26 @@
         function moveModalZoom(event) {
             if (window.innerWidth < 768) return;
 
-            const img = document.getElementById("modalImg");
+            const lens = document.getElementById("modalZoomLens");
             const rect = event.currentTarget.getBoundingClientRect();
-            const x = ((event.clientX - rect.left) / rect.width) * 100;
-            const y = ((event.clientY - rect.top) / rect.height) * 100;
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const zoom = 2.1;
+            const lensSize = 128;
 
-            img.style.transformOrigin = `${x}% ${y}%`;
-            img.style.transform = "scale(1.8)";
+            lens.style.display = "block";
+            lens.style.left = `${x - lensSize / 2}px`;
+            lens.style.top = `${y - lensSize / 2}px`;
+            lens.style.backgroundImage = `url("${currentModalImages[currentModalIndex]}")`;
+            lens.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
+            lens.style.backgroundPosition = `-${x * zoom - lensSize / 2}px -${y * zoom - lensSize / 2}px`;
         }
 
         function resetModalZoom() {
-            const img = document.getElementById("modalImg");
-            img.style.transformOrigin = "center center";
-            img.style.transform = "scale(1)";
+            const lens = document.getElementById("modalZoomLens");
+            if (lens) {
+                lens.style.display = "none";
+            }
         }
 
         function nextFullscreenImage() {
