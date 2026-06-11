@@ -481,12 +481,12 @@
             <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-2xl z-10 bg-neutral-900/60 w-10 h-10 rounded-full flex items-center justify-center">×</button>
             <div class="w-full md:w-1/2 bg-neutral-950 p-4 border-b md:border-b-0 md:border-r border-neutral-900">
 
-                <div class="flex items-center justify-center">
+                <div class="flex items-center justify-center overflow-hidden rounded" onmousemove="moveModalZoom(event)" onmouseleave="resetModalZoom()">
                     <img
                         id="modalImg"
                         src=""
                         alt=""
-                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded transition-transform duration-300 md:hover:scale-125"
+                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded transition-transform duration-150"
                     >
                 </div>
 
@@ -897,7 +897,7 @@
             if (!url) return "";
             if (url.includes("/storage/v1/object/public/")) {
                 const separator = url.includes("?") ? "&" : "?";
-                return url.replace("/storage/v1/object/public/", "/storage/v1/render/image/public/") + `${separator}width=${width}&quality=72&resize=contain`;
+                return url.replace("/storage/v1/object/public/", "/storage/v1/render/image/public/") + `${separator}width=${width}&quality=72&resize=cover`;
             }
             return url;
         }
@@ -917,7 +917,7 @@
                 .filter(Boolean)
                 .slice(0, 4)
                 .map(imgUrl => `
-                    <img src="${optimizedImage(imgUrl, 120)}" loading="lazy" decoding="async" class="w-10 h-10 object-contain rounded border border-neutral-700 bg-neutral-950 p-1">
+                    <img src="${optimizedImage(imgUrl, 120)}" loading="lazy" decoding="async" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950 scale-110">
                 `)
                 .join("");
 
@@ -925,7 +925,7 @@
                 <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                     <div>
                         <div class="w-full h-56 md:h-60 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
-                            <img src="${optimizedImage(p.img, 700)}" alt="${p.title}" loading="lazy" decoding="async" class="w-full h-full object-contain p-3" onerror="this.onerror=null;this.src='${p.img || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'}'">
+                            <img src="${optimizedImage(p.img, 700)}" alt="${p.title}" loading="lazy" decoding="async" class="w-full h-full object-cover scale-[1.06]" onerror="this.onerror=null;this.src='${p.img || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'}'">
                             <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
                             ${p.stock > 0 && p.stock <= 3 ? `<span class="absolute top-10 right-3 bg-red-500 text-white font-mono text-[10px] px-2 py-1 rounded font-bold">BAJO_STOCK</span>` : ""}
                             ${p.isOffer ? `<span class="absolute top-10 left-3 bg-yellow-400 text-black font-mono text-[10px] px-2 py-1 rounded font-bold">OFERTA</span>` : ""}
@@ -1042,6 +1042,7 @@
             currentModalImages = (item.images || [item.img]).filter(Boolean);
             currentModalIndex = 0;
             document.getElementById('modalImg').src = currentModalImages[0] || item.img;
+            resetModalZoom();
             const gallery =
                 document.getElementById("modalGallery");
 
@@ -1055,7 +1056,7 @@
                         <img
                             src="${imgUrl}"
                             onclick="changeModalImage('${imgUrl}', ${index})"
-                            class="w-16 h-16 object-contain bg-neutral-950 rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc] p-1"
+                            class="w-16 h-16 object-cover bg-neutral-950 rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc] scale-105"
                         >
                     `;
 
@@ -1099,6 +1100,24 @@
             document.getElementById("fullscreenModal").classList.add("hidden");
         }
 
+        function moveModalZoom(event) {
+            if (window.innerWidth < 768) return;
+
+            const img = document.getElementById("modalImg");
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 100;
+            const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+            img.style.transformOrigin = `${x}% ${y}%`;
+            img.style.transform = "scale(1.8)";
+        }
+
+        function resetModalZoom() {
+            const img = document.getElementById("modalImg");
+            img.style.transformOrigin = "center center";
+            img.style.transform = "scale(1)";
+        }
+
         function nextFullscreenImage() {
             if (currentModalImages.length === 0) return;
             currentModalIndex = (currentModalIndex + 1) % currentModalImages.length;
@@ -1138,6 +1157,7 @@
             currentModalIndex = index;
             document.getElementById("modalImg").src =
                 url;
+            resetModalZoom();
 
         }
 
