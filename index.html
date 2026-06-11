@@ -101,26 +101,28 @@
     
     <div id="view-inicio" class="max-w-6xl w-full mx-auto p-6 my-4 space-y-12">
         
-        <section class="relative bg-[#121212] border border-neutral-900 rounded-3xl overflow-hidden p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
-            <div class="flex-1 space-y-4">
-                <span class="text-xs bg-neutral-950 border border-neutral-800 text-[#00ffcc] px-3 py-1 rounded-full font-mono tracking-widest uppercase">✨ SERVICIO TÉCNICO ESPECIALIZADO</span>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-none">
-                    Reviví tu dispositivo con precisión de laboratorio.
-                </h1>
-                <p class="text-neutral-400 text-sm md:text-base leading-relaxed max-w-lg">
-                    En LOOT Hardware Lab nos especializamos en microsoldadura de placas, cambios de módulos táctiles y restauración de batería con componentes testeados de máxima calidad.
-                </p>
-                <div class="pt-2 flex flex-wrap gap-4">
-                    <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-cyan-400 transition-colors tracking-wider cursor-pointer">
-                        VER_CATÁLOGO_COMPLETO_→
-                    </button>
-                    <a href="https://wa.me/542215676073" target="_blank" class="bg-neutral-900 border border-neutral-800 text-white text-xs font-bold font-mono py-3.5 px-6 rounded-xl hover:bg-neutral-800 transition-colors tracking-wider">
-                        EVALUACIÓN_DIRECTA
-                    </a>
+                <section id="heroFade" class="relative left-1/2 w-screen -translate-x-1/2 min-h-[78vh] md:min-h-[82vh] overflow-hidden border-b border-neutral-900 transition-opacity duration-200">
+            <img src="https://i.postimg.cc/bJ5VyMCN/Post-IG-para-emprendimiento-tecnico-celular.png" alt="LOOT Hardware Lab servicio tecnico" class="absolute inset-0 w-full h-full object-cover object-center">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/10"></div>
+            <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0b0b0b] to-transparent"></div>
+            <div class="relative z-10 max-w-6xl mx-auto min-h-[78vh] md:min-h-[82vh] px-6 py-14 flex items-center">
+                <div class="max-w-2xl space-y-5">
+                    <span class="text-xs bg-black/70 border border-neutral-700 text-[#00ffcc] px-3 py-1 rounded-full font-mono tracking-widest uppercase">SERVICIO TECNICO ESPECIALIZADO</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-none">
+                        Reparacion de celulares con precision de laboratorio.
+                    </h1>
+                    <p class="text-neutral-200 text-sm md:text-lg leading-relaxed max-w-xl">
+                        Diagnostico claro, repuestos testeados, garantia escrita y atencion directa por WhatsApp.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <button onclick="filterCategory('TODOS')" class="bg-[#00ffcc] text-black text-xs font-bold font-mono py-3.5 px-6 rounded hover:bg-cyan-400 transition-colors tracking-wider cursor-pointer">
+                            VER_CATALOGO_COMPLETO
+                        </button>
+                        <a href="https://wa.me/542215676073?text=Hola%20LOOT!%20Quiero%20hacer%20una%20consulta." target="_blank" class="bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-bold font-mono py-3.5 px-6 rounded hover:bg-white/20 transition-colors tracking-wider">
+                            CONSULTA_DIRECTA
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="w-full md:w-1/2 h-64 md:h-80 bg-neutral-950 rounded-2xl overflow-hidden border border-neutral-900">
-                <img src="https://i.pinimg.com/736x/d3/13/bd/d313bd13c436e366d075ae78175d01f2.jpg" alt="Laboratorio Técnico Celulares" class="w-full h-full object-cover">
             </div>
         </section>
 
@@ -432,8 +434,10 @@
         </div>
     </section>
 
-    <a id="floatingWhatsapp" href="https://wa.me/542215676073?text=Hola%20LOOT!%20Quiero%20hacer%20una%20consulta." target="_blank" class="fixed right-4 bottom-4 z-50 w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 text-black flex items-center justify-center shadow-2xl border border-green-300 font-black text-lg" title="WhatsApp">
-        WA
+    <a id="floatingWhatsapp" href="https://wa.me/542215676073?text=Hola%20LOOT!%20Quiero%20hacer%20una%20consulta." target="_blank" class="fixed right-4 bottom-4 z-50 w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 text-white flex items-center justify-center shadow-2xl border border-green-300" title="WhatsApp" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" class="w-7 h-7" fill="currentColor" aria-hidden="true">
+            <path d="M16.01 3.2A12.7 12.7 0 0 0 5.2 22.55L3.6 28.8l6.42-1.53A12.7 12.7 0 1 0 16.01 3.2Zm0 2.35a10.35 10.35 0 0 1 8.79 15.82 10.32 10.32 0 0 1-13.95 3.63l-.44-.26-3.42.82.85-3.31-.29-.46A10.35 10.35 0 0 1 16.01 5.55Zm-4.3 5.38c-.24 0-.62.09-.95.46-.33.36-1.25 1.22-1.25 2.98 0 1.75 1.28 3.45 1.46 3.69.18.24 2.47 3.95 6.13 5.38 3.04 1.2 3.66.96 4.32.9.66-.06 2.13-.87 2.43-1.71.3-.84.3-1.56.21-1.71-.09-.15-.33-.24-.69-.42-.36-.18-2.13-1.05-2.46-1.17-.33-.12-.57-.18-.81.18-.24.36-.93 1.17-1.14 1.41-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.9-1.78-1.07-.95-1.79-2.13-2-2.49-.21-.36-.02-.55.16-.73.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.95-1.11-2.67-.29-.7-.59-.6-.81-.61h-.69Z"/>
+        </svg>
     </a>
 
     <footer class="border-t border-neutral-900 p-6 bg-[#121212] flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-neutral-600 font-mono">
@@ -1325,6 +1329,19 @@
 
         });
         // Ejecución inicial
+        function updateHeroFade() {
+            const hero = document.getElementById("heroFade");
+            if (!hero) return;
+
+            const progress = Math.min(window.scrollY / (hero.offsetHeight * 0.75), 1);
+            hero.style.opacity = String(Math.max(0, 1 - progress));
+            hero.style.transform = `translateX(-50%) translateY(${progress * -28}px)`;
+        }
+
+        window.addEventListener("scroll", updateHeroFade, { passive: true });
+        window.addEventListener("resize", updateHeroFade);
+        window.addEventListener("load", updateHeroFade);
+
         cargarProductos();
         setInterval(rotateOffers, 5000);
         checkSession();
