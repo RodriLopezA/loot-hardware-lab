@@ -94,12 +94,23 @@
             <div class="text-xs text-neutral-400 font-mono">
                 FILTRO_ACTIVO: <span id="activeSection" class="text-[#00ffcc]">TODOS</span>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
                 <label for="sortPrices" class="text-xs text-neutral-500 font-mono">ORDENAR_POR:</label>
                 <select id="sortPrices" onchange="sortProducts(this.value)" class="bg-[#121212] border border-neutral-800 text-xs text-neutral-300 rounded px-3 py-1.5 focus:outline-none focus:border-[#00ffcc] font-mono cursor-pointer">
                     <option value="default">Relevancia</option>
                     <option value="low">Menor Precio</option>
                     <option value="high">Mayor Precio</option>
+                </select>
+                <select id="priceRange" onchange="setPriceRange(this.value)" class="bg-[#121212] border border-neutral-800 text-xs text-neutral-300 rounded px-3 py-1.5 focus:outline-none focus:border-[#00ffcc] font-mono cursor-pointer">
+                    <option value="all">Todos los precios</option>
+                    <option value="budget">Hasta $20.000</option>
+                    <option value="mid">$20.000 a $80.000</option>
+                    <option value="premium">Premium +$80.000</option>
+                </select>
+                <select id="stockFilter" onchange="setStockFilter(this.value)" class="bg-[#121212] border border-neutral-800 text-xs text-neutral-300 rounded px-3 py-1.5 focus:outline-none focus:border-[#00ffcc] font-mono cursor-pointer">
+                    <option value="all">Todo stock</option>
+                    <option value="available">Entrega inmediata</option>
+                    <option value="low">Bajo stock</option>
                 </select>
             </div>
         </div>
@@ -235,15 +246,28 @@
 
         
 
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+
+        <section class="space-y-6">
+            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4">
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">Marcas soportadas</h2>
+                <span class="text-xs font-mono text-neutral-500">MARCAS_SOPORTADAS</span>
+            </div>
+            <div class="overflow-hidden border border-neutral-900 bg-[#121212] rounded-xl py-5">
+                <div class="flex gap-8 whitespace-nowrap animate-[ticker_22s_linear_infinite] text-neutral-300 font-mono text-sm font-bold px-6">
+                    <span>APPLE</span><span>SAMSUNG</span><span>XIAOMI</span><span>MOTOROLA</span><span>ASUS</span><span>LENOVO</span><span>HP</span><span>SONY</span><span>NINTENDO</span><span>APPLE</span><span>SAMSUNG</span><span>XIAOMI</span><span>MOTOROLA</span><span>ASUS</span>
+                </div>
+            </div>
+        </section>
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
                 <p class="text-[#00ffcc] font-mono text-xs">// PAGOS_Y_LOGISTICA</p>
                 <h2 class="text-2xl font-extrabold text-white">Pagos, retiros y envios</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4"><strong class="text-white block mb-1">Efectivo</strong><span class="text-neutral-400">Abonas al retirar o al confirmar el trabajo.</span></div>
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4"><strong class="text-white block mb-1">Transferencia</strong><span class="text-neutral-400">Se acepta transferencia bancaria o CVU.</span></div>
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4"><strong class="text-white block mb-1">Plataformas</strong><span class="text-neutral-400">Consultanos por billeteras digitales disponibles.</span></div>
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4"><strong class="text-white block mb-1">Entrega</strong><span class="text-neutral-400">Retiro coordinado y envios segun zona o compra.</span></div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4 text-center"><div class="text-white font-black text-lg">VISA</div><span class="text-neutral-500 text-xs">Tarjetas</span></div>
+                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4 text-center"><div class="text-white font-black text-lg">MP</div><span class="text-neutral-500 text-xs">Billetera</span></div>
+                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4 text-center"><div class="text-white font-black text-lg">CVU</div><span class="text-neutral-500 text-xs">Transferencia</span></div>
+                    <div class="bg-neutral-950 border border-neutral-800 rounded p-4 text-center"><div class="text-white font-black text-lg">$</div><span class="text-neutral-500 text-xs">Efectivo</span></div>
                 </div>
             </div>
 
@@ -302,7 +326,19 @@
             </div>
         </section>
 
-        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
+        
+
+        <section class="bg-[#121212] border border-neutral-900 rounded-xl p-6 space-y-4">
+            <p class="text-[#00ffcc] font-mono text-xs">// TERMINOS_SERVICIO</p>
+            <h2 class="text-2xl font-extrabold text-white">Terminos y condiciones del servicio</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-neutral-400">
+                <p>Los presupuestos pueden variar si al abrir el equipo aparecen fallas no visibles en el diagnostico inicial.</p>
+                <p>La garantia no cubre golpes, humedad, manipulacion de terceros, fallas de software ni daños posteriores a la entrega.</p>
+                <p>Los equipos no retirados dentro de 30 dias desde el aviso de finalizacion pueden generar costos de guarda.</p>
+                <p>Para pruebas funcionales puede solicitarse clave temporal, patron o presencia del cliente al momento de testear.</p>
+            </div>
+        </section>
+<section class="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-xs">
             <div class="bg-[#121212] border border-neutral-900 rounded-xl p-5 space-y-2">
                 <div class="text-[#00ffcc] font-bold text-sm">📍 UBICACIÓN</div>
                 <p class="text-neutral-400 font-sans">La Plata, Buenos Aires. Podés consultar por WhatsApp o traer tu equipo coordinando previamente.</p>
@@ -380,6 +416,7 @@
             <input type="text" id="pTitle" placeholder="Título (Ej: Cambio de Módulo Moto G22)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="number" id="pPrice" placeholder="Precio en números (Ej: 14000)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]" required>
             <input type="text" id="pDiscount" placeholder="Descuento visible (Ej: 15% OFF / OFERTA)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
+            <input type="number" id="pStock" placeholder="Stock disponible (Ej: 3)" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]">
             <label class="text-xs text-neutral-400 font-mono">
                 IMÁGENES DEL PRODUCTO (podés seleccionar varias)
             </label>
@@ -481,6 +518,20 @@
         </div>
     </div>
 
+
+    <div id="cartPanel" class="hidden fixed inset-0 bg-black/70 z-[70] p-4">
+        <div class="ml-auto w-full max-w-md bg-[#121212] border border-neutral-800 rounded-xl p-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-neutral-900 pb-4 mb-4">
+                <h2 class="text-white font-bold text-xl">Carrito WhatsApp</h2>
+                <button onclick="toggleCart()" class="text-neutral-400 hover:text-white text-2xl">×</button>
+            </div>
+            <div id="cartItems" class="space-y-3"></div>
+            <div class="border-t border-neutral-900 pt-4 mt-4">
+                <div class="flex justify-between text-sm mb-4"><span class="text-neutral-400">Total estimado</span><strong id="cartTotal" class="text-[#00ffcc]">$0</strong></div>
+                <button onclick="sendCartToWhatsapp()" class="w-full bg-[#00ffcc] text-black font-bold text-xs py-3 rounded font-mono">ENVIAR_PEDIDO</button>
+            </div>
+        </div>
+    </div>
 
     <div id="fullscreenModal" class="hidden fixed inset-0 bg-black z-[80] p-4">
         <button onclick="closeFullscreenImage()" class="absolute top-4 right-4 z-10 bg-white text-black font-bold rounded-full w-10 h-10">X</button>
@@ -591,6 +642,7 @@
                 isOffer: p.is_offer,
                 desc: p.descripcion,
                 discount: p.discount || p.descuento || p.discount_label || p.descuento_label || "",
+                stock: Number(p.stock ?? p.stock_count ?? p.cantidad ?? 0),
 
                 images: [
                     p.img,
@@ -602,6 +654,7 @@
             renderAll();
             renderAdminProducts();
             renderStats();
+            openProductFromUrl();
         }
 
         let currentCategory = "TODOS";
@@ -610,6 +663,9 @@
         let offerStartIndex = 0;
         let currentModalImages = [];
         let currentModalIndex = 0;
+        let cart = [];
+        let currentPriceRange = "all";
+        let currentStockFilter = "all";
 
         // Cambiar dinámicamente entre Inicio y Catálogo General
         function showSection(section) {
@@ -665,7 +721,18 @@
                     p.title.toLowerCase()
                     .includes(currentSearch.toLowerCase());
 
-                return categoryMatch && searchMatch;
+                const priceMatch =
+                    currentPriceRange === "all" ||
+                    (currentPriceRange === "budget" && p.price <= 20000) ||
+                    (currentPriceRange === "mid" && p.price > 20000 && p.price <= 80000) ||
+                    (currentPriceRange === "premium" && p.price > 80000);
+
+                const stockMatch =
+                    currentStockFilter === "all" ||
+                    (currentStockFilter === "available" && p.stock > 0) ||
+                    (currentStockFilter === "low" && p.stock > 0 && p.stock <= 3);
+
+                return categoryMatch && searchMatch && priceMatch && stockMatch;
             });
 
             if (currentSort === "low") {
@@ -790,12 +857,31 @@
                 `$${valorTotal.toLocaleString("es-AR")}`;
         }
 
+        function optimizedImage(url, width = 600) {
+            if (!url) return "";
+            if (url.includes("/storage/v1/object/public/")) {
+                const separator = url.includes("?") ? "&" : "?";
+                return url.replace("/storage/v1/object/public/", "/storage/v1/render/image/public/") + `${separator}width=${width}&quality=72&resize=cover`;
+            }
+            return url;
+        }
+
+        function productLink(id) {
+            return `${window.location.origin}${window.location.pathname}?producto=${id}`;
+        }
+
+        function copyProductLink(event, id) {
+            event.stopPropagation();
+            navigator.clipboard.writeText(productLink(id));
+            alert("Link del producto copiado");
+        }
+
         function buildCard(p) {
             const thumbnails = (p.images || [])
                 .filter(Boolean)
                 .slice(0, 4)
                 .map(imgUrl => `
-                    <img src="${imgUrl}" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950">
+                    <img src="${optimizedImage(imgUrl, 120)}" loading="lazy" decoding="async" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950">
                 `)
                 .join("");
 
@@ -803,8 +889,10 @@
                 <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                     <div>
                         <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
-                            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'">
+                            <img src="${optimizedImage(p.img, 700)}" alt="${p.title}" loading="lazy" decoding="async" class="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null;this.src='${p.img || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'}'">
                             <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
+                            ${p.stock > 0 && p.stock <= 3 ? `<span class="absolute top-10 right-3 bg-red-500 text-white font-mono text-[10px] px-2 py-1 rounded font-bold">BAJO_STOCK</span>` : ""}
+                            ${p.isOffer ? `<span class="absolute top-10 left-3 bg-yellow-400 text-black font-mono text-[10px] px-2 py-1 rounded font-bold">OFERTA</span>` : ""}
                             ${p.discount ? `<span class="absolute top-3 right-3 bg-[#00ffcc] text-black font-mono text-[10px] px-2 py-1 rounded font-bold">${p.discount}</span>` : ""}
                             ${thumbnails ? `<div class="absolute left-3 bottom-3 flex gap-1.5">${thumbnails}</div>` : ""}
                         </div>
@@ -813,14 +901,80 @@
                             <p class="text-neutral-400 text-xs mt-2 line-clamp-2">${p.desc}</p>
                         </div>
                     </div>
-                    <div class="p-5 pt-0">
+                    <div class="p-5 pt-0 space-y-3">
                         <div class="flex justify-between items-baseline">
                             <span class="text-neutral-500 text-xs font-mono">PRECIO:</span>
-                            <span class="text-[#00ffcc] text-lg font-extrabold font-mono">$${p.price.toLocaleString('es-AR')}</span>
+                            <span class="text-[#00ffcc] text-lg font-extrabold font-mono">${p.price.toLocaleString('es-AR')}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="addToCart(event, ${p.id})" class="bg-[#00ffcc] text-black text-[10px] font-bold font-mono py-2 rounded">AGREGAR</button>
+                            <button onclick="copyProductLink(event, ${p.id})" class="bg-neutral-900 border border-neutral-800 text-neutral-300 text-[10px] font-bold font-mono py-2 rounded">COPIAR_LINK</button>
                         </div>
                     </div>
                 </div>
             `;
+        }
+
+        function addToCart(event, id) {
+            event.stopPropagation();
+            const item = productos.find(p => p.id === id);
+            if (!item) return;
+
+            const existing = cart.find(p => p.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id: item.id, title: item.title, price: item.price, qty: 1 });
+            }
+
+            renderCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(p => p.id !== id);
+            renderCart();
+        }
+
+        function renderCart() {
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+            document.getElementById("cartCount").innerText = count;
+            document.getElementById("cartTotal").innerText = `${total.toLocaleString("es-AR")}`;
+            document.getElementById("cartItems").innerHTML = cart.length
+                ? cart.map(item => `
+                    <div class="bg-neutral-950 border border-neutral-800 rounded p-3 flex justify-between gap-3">
+                        <div>
+                            <div class="text-white font-bold text-sm">${item.title}</div>
+                            <div class="text-neutral-500 text-xs">Cantidad: ${item.qty} · ${item.price.toLocaleString("es-AR")}</div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-400 text-xs font-bold">QUITAR</button>
+                    </div>
+                `).join("")
+                : '<div class="text-neutral-500 text-sm">Todavia no agregaste productos.</div>';
+        }
+
+        function toggleCart() {
+            renderCart();
+            document.getElementById("cartPanel").classList.toggle("hidden");
+        }
+
+        function sendCartToWhatsapp() {
+            if (cart.length === 0) {
+                alert("Agrega algun producto primero");
+                return;
+            }
+
+            const lines = cart.map(item => `- ${item.qty}x ${item.title} (${item.price.toLocaleString("es-AR")})`).join("\n");
+            const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+            const text = encodeURIComponent(`Hola LOOT! Quiero consultar por este pedido:\n${lines}\nTotal estimado: ${total.toLocaleString("es-AR")}`);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+        }
+
+        function openProductFromUrl() {
+            const id = Number(new URLSearchParams(window.location.search).get("producto"));
+            if (!id) return;
+            const exists = productos.some(p => p.id === id);
+            if (exists) openModal(id);
         }
 
         function filterCategory(cat) {
@@ -832,6 +986,16 @@
 
         function sortProducts(order) {
             currentSort = order;
+            renderAll();
+        }
+
+        function setPriceRange(value) {
+            currentPriceRange = value;
+            renderAll();
+        }
+
+        function setStockFilter(value) {
+            currentStockFilter = value;
             renderAll();
         }
 
@@ -1192,7 +1356,8 @@
                     tag: document.getElementById('pTag').value,
                     is_offer: document.getElementById('pIsOffer').value === "true",
                     descripcion: document.getElementById('pDesc').value,
-                    discount: document.getElementById('pDiscount').value.trim()
+                    discount: document.getElementById('pDiscount').value.trim(),
+                    stock: Number(document.getElementById('pStock').value || 0)
                 };
 
                 let { error } = await db
@@ -1200,8 +1365,9 @@
                     .update(updatePayload)
                     .eq("id", editingProductId);
 
-                if (error && error.message && error.message.toLowerCase().includes("discount")) {
+                if (error && error.message && (error.message.toLowerCase().includes("discount") || error.message.toLowerCase().includes("stock"))) {
                     delete updatePayload.discount;
+                    delete updatePayload.stock;
                     ({ error } = await db
                         .from("productos")
                         .update(updatePayload)
@@ -1273,7 +1439,8 @@
                 tag: document.getElementById('pTag').value,
                 is_offer: document.getElementById('pIsOffer').value === "true",
                 descripcion: document.getElementById('pDesc').value,
-                discount: document.getElementById('pDiscount').value.trim()
+                discount: document.getElementById('pDiscount').value.trim(),
+                    stock: Number(document.getElementById('pStock').value || 0)
             };
 
             let { data: insertedProduct, error } =
@@ -1283,8 +1450,9 @@
                     .select()
                     .single();
 
-            if (error && error.message && error.message.toLowerCase().includes("discount")) {
+            if (error && error.message && (error.message.toLowerCase().includes("discount") || error.message.toLowerCase().includes("stock"))) {
                 delete nuevoProducto.discount;
+                delete nuevoProducto.stock;
                 ({ data: insertedProduct, error } =
                     await db
                         .from('productos')
@@ -1388,6 +1556,9 @@
 
             document.getElementById("pDiscount").value =
                 producto.discount || "";
+
+            document.getElementById("pStock").value =
+                producto.stock || "";
 
             document.getElementById("pImg").value = "";
 
