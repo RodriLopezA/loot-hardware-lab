@@ -486,7 +486,7 @@
                         id="modalImg"
                         src=""
                         alt=""
-                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded"
+                        class="max-w-full max-h-[40vh] md:max-h-[60vh] object-contain rounded transition-transform duration-300 md:hover:scale-125"
                     >
                 </div>
 
@@ -569,9 +569,9 @@
             <div class="w-full border-t border-neutral-900 pt-5 mt-2">
                 <p class="text-[#00ffcc] font-mono text-[10px] mb-3">// PAGOS_RAPIDOS</p>
                 <div class="flex flex-wrap items-center gap-2">
-                    <span class="bg-white rounded px-3 py-2 h-10 flex items-center"><img src="./img/visa.webp" alt="Visa" class="h-5 w-auto"></span>
-                    <span class="bg-white rounded px-3 py-2 h-10 flex items-center"><img src="./img/mastercardbrand.png" alt="Mastercard" class="h-6 w-auto"></span>
-                    <span class="bg-white rounded px-3 py-2 h-10 flex items-center"><img src="./img/mercado-pago.webp" alt="Mercado Pago" class="h-6 w-auto"></span>
+                    <span class="bg-neutral-950 border border-neutral-800 rounded px-3 py-2 h-10 flex items-center"><img src="https://cdn.simpleicons.org/visa/FFFFFF" alt="Visa" class="h-5 w-auto"></span>
+                    <span class="bg-neutral-950 border border-neutral-800 rounded px-3 py-2 h-10 flex items-center"><img src="https://cdn.simpleicons.org/mastercard/FFFFFF" alt="Mastercard" class="h-6 w-auto"></span>
+                    <span class="bg-neutral-950 border border-neutral-800 rounded px-3 py-2 h-10 flex items-center"><img src="https://cdn.simpleicons.org/mercadopago/FFFFFF" alt="Mercado Pago" class="h-6 w-auto"></span>
                     <span class="bg-neutral-950 border border-neutral-800 text-white px-3 py-2 rounded text-[10px] font-mono h-10 flex items-center">EFECTIVO</span>
                     <span class="text-neutral-500 px-1 py-2 text-[10px] font-mono">Retiro coordinado / envios segun zona</span>
                 </div>
@@ -897,7 +897,7 @@
             if (!url) return "";
             if (url.includes("/storage/v1/object/public/")) {
                 const separator = url.includes("?") ? "&" : "?";
-                return url.replace("/storage/v1/object/public/", "/storage/v1/render/image/public/") + `${separator}width=${width}&quality=72&resize=cover`;
+                return url.replace("/storage/v1/object/public/", "/storage/v1/render/image/public/") + `${separator}width=${width}&quality=72&resize=contain`;
             }
             return url;
         }
@@ -917,15 +917,15 @@
                 .filter(Boolean)
                 .slice(0, 4)
                 .map(imgUrl => `
-                    <img src="${optimizedImage(imgUrl, 120)}" loading="lazy" decoding="async" class="w-10 h-10 object-cover rounded border border-neutral-700 bg-neutral-950">
+                    <img src="${optimizedImage(imgUrl, 120)}" loading="lazy" decoding="async" class="w-10 h-10 object-contain rounded border border-neutral-700 bg-neutral-950 p-1">
                 `)
                 .join("");
 
             return `
                 <div onclick="openModal(${p.id})" class="bg-[#121212] border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
                     <div>
-                        <div class="w-full h-48 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
-                            <img src="${optimizedImage(p.img, 700)}" alt="${p.title}" loading="lazy" decoding="async" class="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null;this.src='${p.img || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'}'">
+                        <div class="w-full h-56 md:h-60 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
+                            <img src="${optimizedImage(p.img, 700)}" alt="${p.title}" loading="lazy" decoding="async" class="w-full h-full object-contain p-3" onerror="this.onerror=null;this.src='${p.img || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'}'">
                             <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
                             ${p.stock > 0 && p.stock <= 3 ? `<span class="absolute top-10 right-3 bg-red-500 text-white font-mono text-[10px] px-2 py-1 rounded font-bold">BAJO_STOCK</span>` : ""}
                             ${p.isOffer ? `<span class="absolute top-10 left-3 bg-yellow-400 text-black font-mono text-[10px] px-2 py-1 rounded font-bold">OFERTA</span>` : ""}
@@ -1055,7 +1055,7 @@
                         <img
                             src="${imgUrl}"
                             onclick="changeModalImage('${imgUrl}', ${index})"
-                            class="w-16 h-16 object-cover rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc]"
+                            class="w-16 h-16 object-contain bg-neutral-950 rounded border border-neutral-700 cursor-pointer hover:border-[#00ffcc] p-1"
                         >
                     `;
 
