@@ -490,7 +490,8 @@
 
                     <select
                         id="pTag"
-                        class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc]"
+                        class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] min-h-44"
+                        multiple
                         required
                     >
                         <option value="">Seleccionar categoría</option>
@@ -525,6 +526,9 @@
                         <option value="DROPSHIPPING">Dropshipping / Importados</option>
                         <option value="REACONDICIONADOS">Celulares reacondicionados</option>
                     </select>
+                    <p class="text-[11px] text-neutral-500 font-mono md:col-span-2 -mt-2">
+                        CTRL + CLICK para elegir varias categorias. El producto aparece en todos esos filtros.
+                    </p>
                                 
             <select id="pIsOffer" class="bg-[#181818] border border-neutral-800 rounded p-3 text-sm text-white focus:outline-none focus:border-[#00ffcc] font-mono">
                 <option value="false">No destacar en Inicio</option>
@@ -704,12 +708,22 @@
                 return;
             }
 
-            const { data: imagenes, error: imagenesError } = await db
+            let { data: imagenes, error: imagenesError } = await db
                 .from("producto_imagenes")
-                .select("producto_id, url");
+                .select("*")
+                .order("id", { ascending: true });
 
             if (imagenesError) {
-                console.error(imagenesError);
+                const fallbackImagenes = await db
+                    .from("producto_imagenes")
+                    .select("producto_id, url");
+
+                imagenes = fallbackImagenes.data || [];
+                imagenesError = fallbackImagenes.error;
+
+                if (imagenesError) {
+                    console.error(imagenesError);
+                }
             }
 
             const imagenesPorProducto = {};
@@ -756,6 +770,87 @@
         let cart = [];
         let currentPriceRange = "all";
         let currentStockFilter = "all";
+        let selectedImageFiles = [];
+        let editableImageUrls = [];
+
+        function splitProductTags(tagText) {
+            return String(tagText || "")
+                .split(",")
+                .map(tag => tag.trim())
+                .filter(Boolean);
+        }
+
+        function getProductTags(product) {
+            return splitProductTags(product.tag);
+        }
+
+        function getSelectedTags() {
+            return Array
+                .from(document.getElementById("pTag").selectedOptions)
+                .map(option => option.value)
+                .filter(Boolean);
+        }
+
+        function setSelectedTags(tagText) {
+            const selectedTags = getProductTags({ tag: tagText });
+            Array
+                .from(document.getElementById("pTag").options)
+                .forEach(option => {
+                    option.selected = selectedTags.includes(option.value);
+                });
+        }
+
+        const categoryGroups = {
+            ACCESORIOS: [
+                "ACCESORIOS",
+                "FUNDAS",
+                "VIDRIOS",
+                "CARGADORES",
+                "CABLES",
+                "AURICULARES",
+                "TECLADOS",
+                "MOUSES",
+                "PARLANTES",
+                "SOPORTES",
+                "SMARTWATCH",
+                "GAMING",
+                "PELUCHES",
+                "GADGETS",
+                "DROPSHIPPING",
+                "REACONDICIONADOS"
+            ],
+            REPARACIONES: [
+                "IPHONE",
+                "SAMSUNG",
+                "MOTOROLA",
+                "XIAOMI",
+                "DISPLAY_FIX",
+                "POWER_CELL",
+                "PIN_CARGA",
+                "MICRO_CORE",
+                "HUMEDAD",
+                "SOFTWARE",
+                "TABLETS",
+                "NOTEBOOK",
+                "CONSOLAS",
+                "PC_REPAIR"
+            ]
+        };
+
+        function productMatchesCategory(product, category) {
+            if (category === "TODOS") return true;
+
+            const productTags = getProductTags(product).map(tag => tag.toUpperCase());
+            const categoryUpper = category.toUpperCase();
+            const group = categoryGroups[categoryUpper];
+
+            if (group) {
+                return productTags.some(tag => group.includes(tag));
+            }
+
+            return productTags.includes(categoryUpper) ||
+                String(product.tag || "").toUpperCase().includes(categoryUpper);
+        }
 
         // Cambiar dinámicamente entre Inicio y Catálogo General
         function showSection(section) {
@@ -815,11 +910,7 @@
 
             let filtered = productos.filter(p => {
 
-                const categoryMatch =
-                    currentCategory === "TODOS" ||
-                    p.tag.toUpperCase().includes(
-                        currentCategory.toUpperCase()
-                    );
+                const categoryMatch = productMatchesCategory(p, currentCategory);
 
                 const searchMatch =
                     p.title.toLowerCase()
@@ -981,6 +1072,7 @@
         }
 
         function buildCard(p) {
+            const primaryTag = getProductTags(p)[0] || "PRODUCTO";
             const thumbnails = (p.images || [])
                 .filter(Boolean)
                 .slice(0, 4)
@@ -994,7 +1086,7 @@
                     <div>
                         <div class="w-full h-56 md:h-60 bg-neutral-950 overflow-hidden relative border-b border-neutral-900">
                             <img src="${optimizedImage(p.img, 700)}" alt="${p.title}" loading="lazy" decoding="async" class="w-full h-full object-cover scale-[1.06]" onerror="this.onerror=null;this.src='${p.img || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500'}'">
-                            <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${p.tag.split(' ')[0]}</span>
+                            <span class="absolute top-3 left-3 bg-neutral-950/80 text-[#00ffcc] font-mono text-[10px] px-2 py-1 rounded border border-neutral-800">${primaryTag}</span>
                             ${p.stock > 0 && p.stock <= 3 ? `<span class="absolute top-10 right-3 bg-red-500 text-white font-mono text-[10px] px-2 py-1 rounded font-bold">BAJO_STOCK</span>` : ""}
                             ${p.isOffer ? `<span class="absolute top-10 left-3 bg-yellow-400 text-black font-mono text-[10px] px-2 py-1 rounded font-bold">OFERTA</span>` : ""}
                             ${p.discount ? `<span class="absolute top-3 right-3 bg-[#00ffcc] text-black font-mono text-[10px] px-2 py-1 rounded font-bold">${p.discount}</span>` : ""}
@@ -1413,7 +1505,13 @@
 
                 imageUrl = productoActual.img;
 
-                const files = document.getElementById('pImg').files;
+                const files = selectedImageFiles;
+                const selectedTags = getSelectedTags();
+
+                if (selectedTags.length === 0) {
+                    alert("Selecciona al menos una categoria");
+                    return;
+                }
 
                 // Si seleccionó nueva imagen
                 if (files.length > 0) {
@@ -1478,13 +1576,32 @@
                                 }
                             ]);
                     }
+                } else if (editableImageUrls.length > 0) {
+
+                    imageUrl = editableImageUrls[0];
+
+                    await db
+                        .from("producto_imagenes")
+                        .delete()
+                        .eq("producto_id", editingProductId);
+
+                    for (let i = 1; i < editableImageUrls.length; i++) {
+                        await db
+                            .from('producto_imagenes')
+                            .insert([
+                                {
+                                    producto_id: editingProductId,
+                                    url: editableImageUrls[i]
+                                }
+                            ]);
+                    }
                 }
 
                 const updatePayload = {
                     title: document.getElementById('pTitle').value,
                     price: parseFloat(document.getElementById('pPrice').value),
                     img: imageUrl,
-                    tag: document.getElementById('pTag').value,
+                    tag: selectedTags.join(", "),
                     is_offer: document.getElementById('pIsOffer').value === "true",
                     descripcion: document.getElementById('pDesc').value,
                     discount: document.getElementById('pDiscount').value.trim(),
@@ -1516,6 +1633,8 @@
                 editingProductId = null;
 
                 document.getElementById('productForm').reset();
+                selectedImageFiles = [];
+                editableImageUrls = [];
                 document
                 .getElementById("previewContainer")
                 .classList.add("hidden");
@@ -1532,7 +1651,13 @@
             // CREAR PRODUCTO NUEVO
             // =====================
 
-            const files = document.getElementById('pImg').files;
+            const files = selectedImageFiles;
+            const selectedTags = getSelectedTags();
+
+            if (selectedTags.length === 0) {
+                alert("Selecciona al menos una categoria");
+                return;
+            }
 
             if (files.length === 0) {
                 alert("Seleccioná al menos una imagen");
@@ -1567,7 +1692,7 @@
                 title: document.getElementById('pTitle').value,
                 price: parseFloat(document.getElementById('pPrice').value),
                 img: imageUrl,
-                tag: document.getElementById('pTag').value,
+                tag: selectedTags.join(", "),
                 is_offer: document.getElementById('pIsOffer').value === "true",
                 descripcion: document.getElementById('pDesc').value,
                 discount: document.getElementById('pDiscount').value.trim(),
@@ -1636,6 +1761,15 @@
             alert("Producto publicado correctamente");
 
             document.getElementById('productForm').reset();
+            selectedImageFiles = [];
+            editableImageUrls = [];
+            document
+                .getElementById("previewContainer")
+                .classList.add("hidden");
+
+            document
+                .getElementById("previewContainer")
+                .innerHTML = "";
 
             await cargarProductos();
         }
@@ -1676,8 +1810,7 @@
             document.getElementById("pPrice").value =
                 producto.price;
 
-            document.getElementById("pTag").value =
-                producto.tag;
+            setSelectedTags(producto.tag);
 
             document.getElementById("pDesc").value =
                 producto.desc;
@@ -1693,58 +1826,73 @@
 
             document.getElementById("pImg").value = "";
 
-            const container =
-                document.getElementById("previewContainer");
-
-            container.innerHTML = (producto.images || [producto.img])
-                .filter(Boolean)
-                .map(imgUrl => `
-                    <img
-                        src="${imgUrl}"
-                        class="w-24 h-24 object-cover rounded border border-neutral-700"
-                    >
-                `)
-                .join("");
-
-            container.classList.remove("hidden");
+            selectedImageFiles = [];
+            editableImageUrls = (producto.images || [producto.img]).filter(Boolean);
+            renderImageOrderPreview("existing");
 
             window.scrollTo({
                 top: document.getElementById("adminPanel").offsetTop,
                 behavior: "smooth"
             });
         }
+        function renderImageOrderPreview(mode) {
+            const container = document.getElementById("previewContainer");
+            const items = mode === "files" ? selectedImageFiles : editableImageUrls;
+
+            container.innerHTML = "";
+
+            if (!items || items.length === 0) {
+                container.classList.add("hidden");
+                return;
+            }
+
+            container.classList.remove("hidden");
+
+            items.forEach((item, index) => {
+                const imageSrc = mode === "files" ? URL.createObjectURL(item) : item;
+                const isMain = index === 0;
+                const moveFunction = mode === "files" ? "moveSelectedImage" : "moveEditableImage";
+
+                container.innerHTML += `
+                    <div class="relative bg-neutral-950 border border-neutral-800 rounded p-2 w-32">
+                        <img
+                            src="${imageSrc}"
+                            class="w-full h-24 object-cover rounded border border-neutral-700"
+                        >
+                        <div class="mt-2 text-[10px] font-mono ${isMain ? "text-[#00ffcc]" : "text-neutral-500"}">
+                            ${isMain ? "PRINCIPAL" : `FOTO_${index + 1}`}
+                        </div>
+                        <div class="mt-2 grid grid-cols-2 gap-1">
+                            <button type="button" onclick="${moveFunction}(${index}, -1)" class="bg-neutral-900 border border-neutral-700 rounded text-neutral-300 text-xs py-1 disabled:opacity-30" ${index === 0 ? "disabled" : ""}>↑</button>
+                            <button type="button" onclick="${moveFunction}(${index}, 1)" class="bg-neutral-900 border border-neutral-700 rounded text-neutral-300 text-xs py-1 disabled:opacity-30" ${index === items.length - 1 ? "disabled" : ""}>↓</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function moveSelectedImage(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= selectedImageFiles.length) return;
+            const [item] = selectedImageFiles.splice(index, 1);
+            selectedImageFiles.splice(newIndex, 0, item);
+            renderImageOrderPreview("files");
+        }
+
+        function moveEditableImage(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= editableImageUrls.length) return;
+            const [item] = editableImageUrls.splice(index, 1);
+            editableImageUrls.splice(newIndex, 0, item);
+            renderImageOrderPreview("existing");
+        }
+
         document
             .getElementById("pImg")
             .addEventListener("change", function(e) {
-
-                const files = e.target.files;
-
-                const container =
-                    document.getElementById("previewContainer");
-
-                container.innerHTML = "";
-
-                if (files.length === 0) {
-                    container.classList.add("hidden");
-                    return;
-                }
-
-                container.classList.remove("hidden");
-
-                Array.from(files).forEach(file => {
-
-                    const img =
-                        document.createElement("img");
-
-                    img.src =
-                        URL.createObjectURL(file);
-
-                    img.className =
-                        "w-24 h-24 object-cover rounded border border-neutral-700";
-
-                    container.appendChild(img);
-                });
-
+                selectedImageFiles = Array.from(e.target.files);
+                editableImageUrls = [];
+                renderImageOrderPreview("files");
             });
         document
         .getElementById("searchProducts")
